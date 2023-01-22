@@ -8,4 +8,5 @@ Description
 
 ## Contributors
 
-Michael Pangas, Pranet Allu, Ansh Kalariya, Tyler Berndt
+**Front End**: Pranet Allu & Ansh Kalariya<br />
+**Back End**: Michael Pangas & Tyler Berndt
