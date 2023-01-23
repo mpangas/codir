@@ -1,10 +1,10 @@
-# Project Name
+# Codir
 
-Slogan
+Community-sourced coding tutorials. 
 
 ## Description
 
-Description
+
 
 ## Contributors
 
