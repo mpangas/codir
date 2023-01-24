@@ -4,7 +4,9 @@ Community-sourced coding tutorials.
 
 ## Description
 
-Codir allows users to post and rate coding tutorials from around the Internet. Our goal is to create a centralized location to find the best tutorials for a variety of programming languages, libraries, frameworks, and other technologies. Users can indicate their preferred style of learning, experience level, and desired timeframe, allowing them to be matched to the perfect tutorials.
+Codir is a platform for discovering and sharing coding tutorials from around the web. It aims to create a one-stop destination for developers to find high-quality, relevant tutorials for a wide range of programming languages, libraries, frameworks, and other technologies. 
+<br /><br />
+With Codir, users can easily find tutorials tailored to their preferred learning style, experience level, and desired duration. Whether you're a beginner just starting out or an experienced developer looking to expand your skills, Codir has something for everyone.
 
 ## Contributors
 
