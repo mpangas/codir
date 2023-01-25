@@ -10,5 +10,5 @@ With Codir, users can easily find tutorials tailored to their preferred learning
 
 ## Contributors
 
-**Front End**: Pranet Allu & Ansh Kalariya<br />
-**Back End**: Michael Pangas & Tyler Berndt
+**Front End**: [Pranet Allu](https://github.com/PRANETALLU) & [Ansh Kalariya](https://github.com/ansh-kalariya)<br />
+**Back End**: [Michael Pangas](https://github.com/mpangas) & [Tyler Berndt](https://github.com/tylerberndt03)
