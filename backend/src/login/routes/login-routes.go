@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gorilla/mux"
-	//"login/logic" need to do import path
+	//"github.com/mpangas/codir/backend/src/login/logic" //need to do import path
 )
 
 func LoginRoutes(router *mux.Router) {

@@ -16,7 +16,10 @@ type UserInfo struct {
 func Signup(w http.ResponseWriter, r *http.Request) {
 	// turn json into user info
 	var newInfo UserInfo
-	json.NewDecoder(r.Body).Decode(&newInfo)
+	if err := json.NewDecoder(r.Body).Decode(&newInfo); err != nil {
+		http.Error(w, "Malformed request", 400)
+		return
+	}
 
 	// turn password into hash
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newInfo.password), 10)
@@ -27,5 +30,10 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 }
 
 func Signin(w http.ResponseWriter, r *http.Request) {
+	var checkInfo UserInfo
+	if err := json.NewDecoder(r.Body).Decode(&checkInfo); err != nil {
+		http.Error(w, "Malformed request", 400)
+		return
+	}
 
 }
