@@ -17,7 +17,7 @@ var loginDb *gorm.DB
 
 func init() {
 	loginDb, _ = gorm.Open("mysql", "") // fill this in later
-	db.AutoMigrate(&Book{})
+	loginDb.AutoMigrate(&UserInfo{})
 }
 
 func Signup(w http.ResponseWriter, r *http.Request) {
