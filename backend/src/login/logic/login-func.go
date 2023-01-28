@@ -1,4 +1,4 @@
-package login
+package logic
 
 import (
 	"github.com/jinzhu/gorm"
@@ -16,7 +16,7 @@ type UserInfo struct {
 var loginDb *gorm.DB
 
 func init() {
-	loginDb, _ = gorm.Open("mysql", "") // fill this in later
+	loginDb, _ = gorm.Open("mysql", "") //todo: fill this in later
 	loginDb.AutoMigrate(&UserInfo{})
 }
 
@@ -28,11 +28,11 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// todo: prevent duplicate unames
+
 	// turn password into hash
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newInfo.password), 10)
 	newInfo.password = string(hashPwd)
-
-	// todo: prevent duplicate unames
 
 	loginDb.Create(newInfo)
 
@@ -46,6 +46,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var checkInfo UserInfo
+	// todo: get info from db
 
 	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.password), []byte(requestInfo.password)); err != nil {
 		http.Error(w, "Incorrect password", 401)
