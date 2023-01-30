@@ -5,11 +5,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"encoding/json"
+	"errors"
 	"net/http"
 )
 
 type UserInfo struct {
-	uname    string `json:"uname"`
+	gorm.Model
+	uname    string `gorm:"primaryKey" json:"uname"`
 	password string `json:"password"`
 }
 
@@ -28,7 +30,11 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// todo: prevent duplicate unames
+	// prevent duplicate unames
+	result := loginDb.First(newInfo.uname)
+	if !(errors.Is(result.Error, gorm.ErrRecordNotFound)) {
+		http.Error(w, "This username is already in use", 400) // Not sure if this is an http error yet
+	}
 
 	// turn password into hash
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newInfo.password), 10)
@@ -46,7 +52,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var checkInfo UserInfo
-	// todo: get info from db
+	loginDb.First(&checkInfo, "id = ?", requestInfo.uname)
 
 	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.password), []byte(requestInfo.password)); err != nil {
 		http.Error(w, "Incorrect password", 401)
