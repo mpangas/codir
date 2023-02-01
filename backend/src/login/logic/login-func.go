@@ -1,8 +1,11 @@
 package logic
 
 import (
-	"github.com/jinzhu/gorm"
+	"log"
+
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 
 	"encoding/json"
 	"errors"
@@ -10,17 +13,18 @@ import (
 	"net/http"
 )
 
+var loginDb *gorm.DB
+var dsn = "mpangas:Pippa2481@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
+
 type UserInfo struct {
 	gorm.Model
 	uname    string `gorm:"primaryKey" json:"uname"`
 	password string `json:"password"`
 }
 
-var loginDb *gorm.DB
-
 func init() {
 	var err error
-	loginDb, err = gorm.Open("mysql", "") //todo: fill this in later
+	loginDb, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println("Database did not open: ", err)
 		return
@@ -30,7 +34,10 @@ func init() {
 
 func Signup(w http.ResponseWriter, r *http.Request) {
 	// turn json into user info
-	var newInfo UserInfo
+	newInfo := UserInfo{
+		uname:    "mpangas",
+		password: "test123",
+	}
 	if err := json.NewDecoder(r.Body).Decode(&newInfo); err != nil {
 		http.Error(w, "Malformed request", 400)
 		return
@@ -45,11 +52,16 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// turn password into hash
-	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newInfo.password), 10)
-	newInfo.password = string(hashPwd)
+	//hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newInfo.password), 10)
+	//newInfo.password = string(hashPwd)
 
 	loginDb.Create(newInfo)
+	if err := loginDb.Create(&newInfo).Error; err != nil {
+		log.Fatalln(err)
+	}
 
+	json.NewEncoder(w).Encode(newInfo)
+	fmt.Println("Fields Added", newInfo)
 }
 
 func Signin(w http.ResponseWriter, r *http.Request) {
