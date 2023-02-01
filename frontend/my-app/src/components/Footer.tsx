@@ -7,7 +7,6 @@ function Footer() {
             <a href="https://github.com/mpangas/codir" target="_blank">
                 <img src={github} id="git"></img>
             </a>
-            {/*<div className="git"></div>*/}
         </div>
       );
 }
