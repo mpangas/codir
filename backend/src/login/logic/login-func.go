@@ -18,8 +18,8 @@ var dsn = "mpangas:Pippa2481@tcp(codir-users.mysql.database.azure.com:3306)/codi
 
 type UserInfo struct {
 	gorm.Model
-	uname    string `gorm:"primaryKey" json:"uname"`
-	password string `json:"password"`
+	Username string `gorm:"primaryKey" json:"uname"`
+	Password string `json:"password"`
 }
 
 func init() {
@@ -35,8 +35,8 @@ func init() {
 func Signup(w http.ResponseWriter, r *http.Request) {
 	// turn json into user info
 	newInfo := UserInfo{
-		uname:    "mpangas",
-		password: "test123",
+		Username: "mpangas",
+		Password: "test123",
 	}
 	if err := json.NewDecoder(r.Body).Decode(&newInfo); err != nil {
 		http.Error(w, "Malformed request", 400)
@@ -44,7 +44,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// prevent duplicate unames
-	result := loginDb.First(newInfo.uname)
+	result := loginDb.First(newInfo.Username)
 	if !(errors.Is(result.Error, gorm.ErrRecordNotFound)) {
 		fmt.Println("This username is already in use")
 		// error
@@ -74,11 +74,11 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 
 	// get user info with that username from the db
 	var checkInfo UserInfo
-	loginDb.First(&checkInfo, "id = ?", requestInfo.uname)
+	loginDb.First(&checkInfo, "id = ?", requestInfo.Username)
 
 	// check if the passwords match
-	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.password), []byte(requestInfo.password)); err != nil {
-		http.Error(w, "Incorrect password", 401)
+	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(requestInfo.Password)); err != nil {
+		http.Error(w, "Incorrect password", http.StatusUnauthorized)
 		return
 	}
 
