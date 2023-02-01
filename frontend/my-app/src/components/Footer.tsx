@@ -1,5 +1,5 @@
 import React from 'react';
-import github from './image/github.png';
+import github from '../image/github.png';
 function Footer() {
     return (
         <div className="footer">
