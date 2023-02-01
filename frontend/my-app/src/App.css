@@ -119,13 +119,10 @@
   
   margin-left: 10%;
 }
-.git {
+#git {
   width: 33px;
   height: 31px;
-  background-image: url('./image/github.png');
-  align-self: center;
 
   margin-top: 1%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 50%
 }
