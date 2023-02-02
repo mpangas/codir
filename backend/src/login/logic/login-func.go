@@ -10,11 +10,12 @@ import (
 	"encoding/json"
 	// "errors"
 	"fmt"
+	"io"
 	"net/http"
 )
 
 var loginDb *gorm.DB
-var dsn = "mpangas:Pippa2481@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
+var dsn = "mpangas:@CodirUF@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
 
 type UserInfo struct {
 	Username string
@@ -33,9 +34,12 @@ func init() {
 
 func Signup(w http.ResponseWriter, r *http.Request) {
 	// turn json into user info
-	newUser := UserInfo{
-		Username: "bob",
-		Password: "ilikewaffles",
+	newUser := &UserInfo{}
+	if body, err := io.ReadAll(r.Body); err == nil {
+		if err := json.Unmarshal([]byte(body), newUser); err != nil {
+			http.Error(w, "Malformed request", 400)
+			return
+		}
 	}
 	/*if err := json.NewDecoder(r.Body).Decode(&newUser); err != nil {
 		http.Error(w, "Malformed request", 400)
@@ -58,7 +62,8 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	if err := loginDb.Create(&newUser).Error; err != nil {
 		log.Fatalln(err)
 	}
-
+	res, _ := json.Marshal(newUser)
+	w.Write(res)
 	json.NewEncoder(w).Encode(newUser)
 	fmt.Println("Fields Added", newUser)
 }

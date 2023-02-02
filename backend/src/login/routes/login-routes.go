@@ -6,7 +6,7 @@ import (
 )
 
 func LoginRoutes(router *mux.Router) {
-	router.HandleFunc("/getusers", logic.GetUsers).Methods("GET")
-	router.HandleFunc("/login/signup", logic.Signup).Methods("POST")
-	router.HandleFunc("/login/signin", logic.Signin).Methods("GET")
+	router.HandleFunc("/users", logic.GetUsers).Methods("GET")
+	router.HandleFunc("/signup", logic.Signup).Methods("POST")
+	router.HandleFunc("/signin", logic.Signin).Methods("GET")
 }

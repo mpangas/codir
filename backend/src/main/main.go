@@ -9,6 +9,10 @@ import (
 	"github.com/mpangas/codir/backend/src/login/routes"
 )
 
+// Command to Open Database in Terminal:
+// mysql --host=codir-users.mysql.database.azure.com --user=mpangas -p
+// Enter password
+
 func main() {
 	router := mux.NewRouter()
 	routes.LoginRoutes(router)
