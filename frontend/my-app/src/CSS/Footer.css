@@ -1,0 +1,18 @@
+/*Footer*/
+.footer {
+    margin-top: 12%;
+  }
+  .horz {
+    width: 1160px;
+    height: 0px;
+    border: 2px solid #C5C2C2;
+    
+    margin-left: 10%;
+  }
+  #git {
+    width: 33px;
+    height: 31px;
+  
+    margin-top: 1%;
+    margin-left: 50%
+  }
