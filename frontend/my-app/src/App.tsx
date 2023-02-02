@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './CSS/App.css';
 import './CSS/Header.css';
 import './CSS/Footer.css';
