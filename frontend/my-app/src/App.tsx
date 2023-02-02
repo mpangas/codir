@@ -16,15 +16,15 @@ import Signup from './Pages/Signup'
 function App() {
   return (
     <BrowserRouter>
+    <div className="App">
       <Header />
-      <div className="App">
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
-      </div>
       <Footer />
+    </div>
     </BrowserRouter>
   );
 }
