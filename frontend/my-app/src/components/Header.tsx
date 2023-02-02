@@ -14,6 +14,7 @@ function Header() {
         else if(value === 2)
             navigate("/signup");
     }, [value, navigate])
+    
     return (
          <div className="header">
           <h1 id="logo" onClick={() => {setValue(0)}}>CODIR</h1>
