@@ -95,11 +95,10 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Incorrect password", http.StatusUnauthorized)
 		return
 	}
-	w.Write([]byte("User successfully logged in."))
 
-	/*res, _ := json.Marshal(requestInfo)
+	res, _ := json.Marshal("User successfully logged in")
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)*/
+	w.Write(res)
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
