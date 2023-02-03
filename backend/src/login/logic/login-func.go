@@ -82,17 +82,24 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 
 	// get user info with that username from the db
 	var checkInfo UserInfo
-	loginDb.First(&checkInfo, "username = ?", requestInfo.Username)
+	resultUsername := loginDb.First(&checkInfo, "username = ?", requestInfo.Username)
+
+	// check if the username exists
+	if errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
+		http.Error(w, "This username does not exist.", 400)
+		return
+	}
 
 	// check if the passwords match
 	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(requestInfo.Password)); err != nil {
 		http.Error(w, "Incorrect password", http.StatusUnauthorized)
 		return
 	}
+	w.Write([]byte("User successfully logged in."))
 
-	res, _ := json.Marshal(requestInfo)
+	/*res, _ := json.Marshal(requestInfo)
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+	w.Write(res)*/
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
