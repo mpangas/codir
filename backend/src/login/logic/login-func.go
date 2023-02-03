@@ -47,10 +47,12 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// prevent duplicate unames
-	resultUsern := loginDb.First(newUser.Username)
-	resultEmail := loginDb.First(newUser.Email)
-	if !(errors.Is(resultUsern.Error, gorm.ErrRecordNotFound) && errors.Is(resultEmail.Error, gorm.ErrRecordNotFound)) {
-		fmt.Println("This username is already in use")
+	resultUsername := loginDb.Where("username = ?", newUser.Username).First(newUser)
+	resultEmail := loginDb.Where("email = ?", newUser.Email).First(newUser)
+
+	if !(errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) && errors.Is(resultEmail.Error, gorm.ErrRecordNotFound)) {
+		fmt.Println("This username or email is already in use")
+		http.Error(w, "This username or email is already in use", 400)
 		// error
 		return
 	}
@@ -97,15 +99,6 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	var users []UserInfo
 	loginDb.Find(&users)
 	res, _ := json.Marshal(users)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
-}
-
-func GetUserById(w http.ResponseWriter, r *http.Request) {
-	var user UserInfo
-	loginDb.First(&user, "id = ?", r.URL.Query().Get("id"))
-	json.NewEncoder(w).Encode(user)
-	res, _ := json.Marshal(user)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
