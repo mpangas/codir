@@ -102,3 +102,18 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
+
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	var user UserInfo
+	if body, err := io.ReadAll(r.Body); err == nil {
+		if err := json.Unmarshal([]byte(body), &user); err != nil {
+			http.Error(w, "Malformed request", 400)
+			return
+		}
+	}
+
+	loginDb.Delete(&user, "username = ?", user.Username)
+	res, _ := json.Marshal(user)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
