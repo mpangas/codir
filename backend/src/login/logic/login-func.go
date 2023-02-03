@@ -3,6 +3,8 @@ package logic
 import (
 	"log"
 
+	"errors"
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -19,6 +21,7 @@ var pass = os.Getenv("PASS")
 var dsn = "mpangas:" + pass + "@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
 
 type UserInfo struct {
+	Email    string
 	Username string
 	Password string
 }
@@ -43,18 +46,19 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	/*
-		// prevent duplicate unames
-		result := loginDb.First(newUser.Username)
-		if !(errors.Is(result.Error, gorm.ErrRecordNotFound)) {
-			fmt.Println("This username is already in use")
-			// error
-			return
-		}
 
-		// turn password into hash
-		//hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.password), 10)
-		//newUser.password = string(hashPwd)*/
+	// prevent duplicate unames
+	resultUsern := loginDb.First(newUser.Username)
+	resultEmail := loginDb.First(newUser.Email)
+	if !(errors.Is(resultUsern.Error, gorm.ErrRecordNotFound) && errors.Is(resultEmail.Error, gorm.ErrRecordNotFound)) {
+		fmt.Println("This username is already in use")
+		// error
+		return
+	}
+
+	// turn password into hash
+	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
+	newUser.Password = string(hashPwd)
 
 	// Add user to DB and check for errors
 	if err := loginDb.Create(&newUser).Error; err != nil {
