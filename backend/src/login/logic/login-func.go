@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"errors"
 	"log"
 
 	"golang.org/x/crypto/bcrypt"
@@ -19,6 +20,7 @@ var pass = os.Getenv("PASS")
 var dsn = "mpangas:" + pass + "@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
 
 type UserInfo struct {
+	Email    string
 	Username string
 	Password string
 }
@@ -43,18 +45,18 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	/*
-		// prevent duplicate unames
-		result := loginDb.First(newUser.Username)
-		if !(errors.Is(result.Error, gorm.ErrRecordNotFound)) {
-			fmt.Println("This username is already in use")
-			// error
-			return
-		}
 
-		// turn password into hash
-		//hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.password), 10)
-		//newUser.password = string(hashPwd)*/
+	// prevent duplicate unames
+	result := loginDb.First(newUser.Username)
+	if !(errors.Is(result.Error, gorm.ErrRecordNotFound)) {
+		fmt.Println("This username is already in use")
+		// error
+		return
+	}
+
+	// turn password into hash
+	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
+	newUser.Password = string(hashPwd)
 
 	// Add user to DB and check for errors
 	if err := loginDb.Create(&newUser).Error; err != nil {
@@ -62,34 +64,47 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 	res, _ := json.Marshal(newUser)
 	w.Write(res)
-	json.NewEncoder(w).Encode(newUser)
 	fmt.Println("Fields Added", newUser)
 }
 
 func Signin(w http.ResponseWriter, r *http.Request) {
 	// turn json in request into info
 	var requestInfo UserInfo
-	if err := json.NewDecoder(r.Body).Decode(&requestInfo); err != nil {
-		http.Error(w, "Malformed request", 400)
-		return
+	if body, err := io.ReadAll(r.Body); err == nil {
+		if err := json.Unmarshal([]byte(body), &requestInfo); err != nil {
+			http.Error(w, "Malformed request", 400)
+			return
+		}
 	}
 
 	// get user info with that username from the db
 	var checkInfo UserInfo
-	loginDb.First(&checkInfo, "id = ?", requestInfo.Username)
+	loginDb.First(&checkInfo, "username = ?", requestInfo.Username)
 
 	// check if the passwords match
 	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(requestInfo.Password)); err != nil {
 		http.Error(w, "Incorrect password", http.StatusUnauthorized)
 		return
 	}
+
+	res, _ := json.Marshal(requestInfo)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	var users []UserInfo
 	loginDb.Find(&users)
-	json.NewEncoder(w).Encode(users)
 	res, _ := json.Marshal(users)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
+
+func GetUserById(w http.ResponseWriter, r *http.Request) {
+	var user UserInfo
+	loginDb.First(&user, "id = ?", r.URL.Query().Get("id"))
+	json.NewEncoder(w).Encode(user)
+	res, _ := json.Marshal(user)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
