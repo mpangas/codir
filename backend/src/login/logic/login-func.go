@@ -47,8 +47,9 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// prevent duplicate unames
-	result := loginDb.First(newUser.Username)
-	if !(errors.Is(result.Error, gorm.ErrRecordNotFound)) {
+	resultUsern := loginDb.First(newUser.Username)
+	resultEmail := loginDb.First(newUser.Email)
+	if !(errors.Is(resultUsern.Error, gorm.ErrRecordNotFound) && errors.Is(resultEmail.Error, gorm.ErrRecordNotFound)) {
 		fmt.Println("This username is already in use")
 		// error
 		return
