@@ -21,7 +21,7 @@ var dsn = "mpangas:" + pass + "@tcp(codir-users.mysql.database.azure.com:3306)/c
 
 type UserInfo struct {
 	Email    string
-	Username string
+	Username string `gorm:"primaryKey"`
 	Password string
 }
 
@@ -117,7 +117,20 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	var checkInfo UserInfo
+	resultUsername := loginDb.First(&checkInfo, "username = ?", user.Username)
 
+	// check if the username exists
+	if errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
+		http.Error(w, "This username does not exist.", 400)
+		return
+	}
+
+	// check if the passwords match
+	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(user.Password)); err != nil {
+		http.Error(w, "Incorrect password", http.StatusUnauthorized)
+		return
+	}
 	loginDb.Delete(&user, "username = ?", user.Username)
 	res, _ := json.Marshal(user)
 	w.Header().Set("Content-Type", "application/json")
