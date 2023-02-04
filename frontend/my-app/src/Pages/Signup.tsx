@@ -9,8 +9,7 @@ function Signup() {
             <input className="boxMargin" id="emailbox" placeholder='Enter your Email'></input>
             <input className="boxMargin" id="usernamebox" placeholder='Enter your Username'></input>
             <input className="boxMargin" id="passwordbox" placeholder='Enter your Password'></input>
-            
-            <button id="signupbox">SIGN UP</button>
+            <button className="boxMargin" id="signupbox">SIGN UP</button>
     <p id="alreadyhaveaccount">already have an account? click here to sign in</p>
 
             

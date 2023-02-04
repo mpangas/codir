@@ -54,53 +54,6 @@ margin-right: auto;
   
     }
 
-#email{
-width: 118px;
-height: 33px;
-
-font-family: 'JetBrains Mono';
-font-style: normal;
-font-weight: 400;
-font-size: 20px;
-line-height: 26px;
-
-color: #000000;
-margin-left: 3%;
-margin-top: 10%;
-}
-
-#username{
-    
-    width: 118px;
-    height: 33px;
-    
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 26px;
-    
-    color: #000000;
-    margin-left: 3%;
-    margin-top: 8%;
-    
-}
-
-#password{
-    
-    width: 118px;
-    height: 33px;
-    
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 26px;
-    
-    color: #000000;
-    margin-left: 3%;
-    margin-top: 10%;
-}
 
 #emailbox{
     box-sizing: border-box;
@@ -153,8 +106,9 @@ margin-top: 10%;
 margin-left: 20%;
 background: #000000;
 border: 2px solid #000000;
-margin-top: 4%;
-margin-left: 30%
+margin-left: 34%;
+margin-top: 5%;
+
 
 }
 
@@ -171,6 +125,7 @@ line-height: 21px;
 
 color: #000000;
 margin-top: 1%;
-margin-left: 19%
+margin-left: 19%;
+margin-bottom: 5%;
 
 }
