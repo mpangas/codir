@@ -1,19 +1,22 @@
 /*Main*/
+* {
+  margin: 0;
+}
 .main {
     display: flex;
     padding-top: 35px;
-  }
-  #rectangle {
+}
+.rectangle {
     width: 626px;
     height: 343px;
     background: #FFFFFF;
     border: 1px solid #B8ACAC;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-  
+    display: flex;
+    flex-direction: column;
     margin-left: 5%;
-  }
-  #bigText {
-    position: absolute;
+}
+#bigText {
     width: 533px;
     height: 150px;
     font-family: 'Playfair Display';
@@ -23,9 +26,9 @@
     color: #000000;
   
     margin-left: 3%;
-    margin-top: 2.5%;
-  }
-  #smallText {
+    margin-top: 4%;
+}
+#smallText {
     width: 482px;
     height: 113px;
     font-family: 'Merriweather';
@@ -34,14 +37,14 @@
     font-size: 17px;
     color: #000000;
   
-    margin-left: 8%;
-    margin-top: 24%;
-  }
-  #studyImg {
+    margin-left: 3.5%;
+    margin-bottom: 20%;
+}
+#studyImg {
     background-image: url('../image/study.png');
     width: 634px;
     height: 343px;
     
     margin-left: 6%;
-  }
+}
   

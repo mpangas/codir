@@ -18,8 +18,10 @@ function Header() {
     return (
          <div className="header">
           <h1 id="logo" onClick={() => {setValue(0)}}>CODIR</h1>
-          <button className="cred" id="login" onClick={() => {setValue(1)}}>LOGIN</button>
-          <button className="cred" id="signup" onClick={() => {setValue(2)}}>SIGN UP</button>
+          <div className="cred">
+            <button id="login" onClick={() => {setValue(1)}}>LOGIN</button>
+            <button id="signup" onClick={() => {setValue(2)}}>SIGN UP</button>
+          </div>
          </div>
       );
 }
