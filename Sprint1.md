@@ -1,4 +1,4 @@
-# Sprint 1 Synopsis
+# Sprint 1 Reflection
 
 ## User Stories
 
