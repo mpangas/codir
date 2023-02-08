@@ -15,6 +15,10 @@ Front-end
 - The login page contains a field to input the username and the password to be able to login to the website
 - The sign in page contains a field to input the email to register for the accoumt, a username, and a password
   along with a text that says "already have an account? click here to sign in" to be redirected to the login page.
+Back-end
+- User information consists of emails, usernames, and encrypted passwords will be stored in a database.
+- HTTP routes based on the CRUD model along with sign-up and sign-in will be implemented to operate on the database.
+- Login will be persistent across sessions.
 
 ## Issues Successfully Addressed
 Front-end
@@ -22,9 +26,17 @@ Front-end
 - The footer which consists of the Github logo which redirects to our Github repository was successfuly implemented
 - The login page and sign up page was sucessfully implemented 
 - Information can be inputted in the login and sign in page 
+Back-end
+- A MySQL database was created to store user information, which is accessed using Gorm.
+- Routes were implemented to retrieve and delete user info, as well as to create info (sign-up) and check for existence (sign-in).
+  - This includes password encryption for security and checking for duplicate information.
+  - Also for security, GET requests w=do not retrieve password info.
 
 ## Why Some Issues Weren't Addressed
 Front-end
 - In attempting to work with the front end and back end progress together, the functionality of the text/link 
 "already have an account? click here to sign in." was not implemented and successfully addressed due to our efforts to focus on and fix the essential features of the website and to test if the necessary information
 can be sent to the backend. 
+Back-end
+- PUT requests for updating user information were not implemented, since layers of security would likely be needed to prevent this functionality being abused, and the essential functionality (sign-up, sign-in, etc.) was prioritized. This functionality is planned to be implemented in the future.
+- Login persistence across sessions is being implemented using JWT authentication, but is still in progress.
