@@ -18,6 +18,9 @@ func main() {
 	routes.LoginRoutes(router)
 	// as more functionality is added, more routes will be added.
 
+	// Middleware for CORS
+	router.Use(mux.CORSMethodMiddleware(router))
+
 	fmt.Println("Starting server")
 	if err := http.ListenAndServe(":8000", router); err != nil {
 		log.Fatal(err)

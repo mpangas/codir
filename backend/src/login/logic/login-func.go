@@ -3,6 +3,7 @@ package logic
 import (
 	"errors"
 	"log"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
@@ -13,16 +14,20 @@ import (
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/dgrijalva/jwt-go/v4"
 )
 
 var loginDb *gorm.DB
 var pass = os.Getenv("PASS")
 var dsn = "mpangas:" + pass + "@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
 
+const SecretKey = "secret"
+
 type UserInfo struct {
-	Email    string
-	Username string `gorm:"primaryKey"`
-	Password string
+	Email    string `json:"email"`
+	Username string `json:"username" gorm:"primaryKey"`
+	Password string `json:"-"`
 }
 
 func init() {
@@ -96,7 +101,30 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, _ := json.Marshal("User successfully logged in")
+	// Create JWT Token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		Issuer:    requestInfo.Username,
+		ExpiresAt: jwt.At(jwt.Now().Add(24 * time.Hour)), // 1 day
+	})
+
+	tokenStr, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		http.Error(w, "Error signing token", http.StatusInternalServerError)
+		return
+	}
+
+	// Create cookie
+	cookie := &http.Cookie{
+		Name:     "jwt",
+		Value:    tokenStr,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+	}
+
+	http.SetCookie(w, cookie)
+
+	// return success message
+	res, _ := json.Marshal("Success")
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
@@ -132,6 +160,29 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	loginDb.Delete(&user, "username = ?", user.Username)
+	res, _ := json.Marshal(user)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
+
+func User(w http.ResponseWriter, r *http.Request) {
+	// Get cookie with name jwt
+	cookie, _ := r.Cookie("jwt")
+	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+	if err != nil {
+		http.Error(w, "Unauthenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user UserInfo
+	loginDb.First(&user, "username = ?", claims.Issuer)
+
 	res, _ := json.Marshal(user)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
