@@ -27,7 +27,7 @@ const SecretKey = "secret"
 type UserInfo struct {
 	Email    string `json:"email"`
 	Username string `json:"username"`
-	Password string `json:"-"`
+	Password string `json:"password"`
 }
 
 func init() {
