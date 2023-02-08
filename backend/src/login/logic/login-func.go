@@ -26,7 +26,7 @@ const SecretKey = "secret"
 
 type UserInfo struct {
 	Email    string `json:"email"`
-	Username string `json:"username" gorm:"primaryKey"`
+	Username string `json:"username"`
 	Password string `json:"-"`
 }
 
@@ -51,14 +51,17 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// prevent duplicate unames
+	// prevent duplicate usernames
 	resultUsername := loginDb.Where("username = ?", newUser.Username).First(newUser)
-	resultEmail := loginDb.Where("email = ?", newUser.Email).First(newUser)
+	if !errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
+		http.Error(w, "This username is already in use", 400)
+		return
+	}
 
-	if !(errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) && errors.Is(resultEmail.Error, gorm.ErrRecordNotFound)) {
-		fmt.Println("This username or email is already in use")
-		http.Error(w, "This username or email is already in use", 400)
-		// error
+	// prevent duplicate emails
+	resultEmail := loginDb.Where("email = ?", newUser.Email).First(newUser)
+	if !errors.Is(resultEmail.Error, gorm.ErrRecordNotFound) {
+		http.Error(w, "This email is already in use", 400)
 		return
 	}
 
