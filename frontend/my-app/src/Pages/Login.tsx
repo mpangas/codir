@@ -1,13 +1,25 @@
 import React from 'react';
 
 function Login() {
+    const [user, setUser] = React.useState("");
+    const [pass, setPass] = React.useState("");
+    function userChange(e: React.ChangeEvent<HTMLInputElement>) {
+      setUser(e.target.value); 
+    }
+    function passChange(e: React.ChangeEvent<HTMLInputElement>) {
+      setPass(e.target.value); 
+    }
+    function printInput() {
+      console.log("Username: " + user);
+      console.log("Password: " + pass);
+    }
     return (
       <div className="main">
       <div id="mainloginbox">
         <p id="promptedlogintext">Login to your Codir account</p>
-        <input className="boxMargin" id="loginusernamebox" placeholder='Enter your Username'></input>
-        <input type={'password'} className="boxMargin" id="loginpasswordbox" placeholder='Enter your Password'></input>
-        <button className="boxMargin" id="loginbox">LOGIN</button>
+        <input value={user} className="boxMargin" id="loginusernamebox" placeholder='Enter your Username' onChange={userChange}></input>
+        <input value={pass} type={'password'} className="boxMargin" id="loginpasswordbox" placeholder='Enter your Password' onChange={passChange}></input>
+        <button className="boxMargin" id="loginbox" onClick={printInput}>LOGIN</button>
       </div>
     </div>
       );
