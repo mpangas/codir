@@ -31,7 +31,7 @@
 - A MySQL database was created using Microsoft Azure to store user information, which is accessed using the GORM library.
 - Routes were implemented to retrieve and delete user info, as well as to create info (sign-up) and check for existence (sign-in).
   - This includes password encryption for security and checking for duplicate information.
-  - Also for security, GET requests w=do not retrieve password info.
+  - Also for security, GET requests do not retrieve password info.
 
 ## Why Some Issues Weren't Addressed
 ### Front-end
