@@ -18,3 +18,5 @@ type Tutorial struct {
 	Time     int    `json:"time"` // frontend: would time be better as an int or string?
 	Score    int    `json:"score"`
 }
+
+func PostTutorial (*http.Request r, w http.ResponseWriter)
