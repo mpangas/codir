@@ -1,12 +1,9 @@
 package logic
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
 	"net/http"
 
-	"gorm.io/driver/mysql"
+	"github.com/mpangas/codir/backend/src/utilities"
 	"gorm.io/gorm"
 )
 
@@ -19,4 +16,13 @@ type Tutorial struct {
 	Score    int    `json:"score"`
 }
 
-func PostTutorial (*http.Request r, w http.ResponseWriter)
+var postDb *gorm.DB
+
+func PostTutorial(r *http.Request, w http.ResponseWriter) {
+	newPost := &Tutorial{}
+	if err := utilities.ReadJson(r, newPost); err != nil {
+		http.Error(w, "Malformed request", 400)
+	}
+
+	// not done
+}
