@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/mpangas/codir/backend/src/login/routes"
+	"github.com/mpangas/codir/backend/src/posts/routes"
 )
 
 // Command to Open Database in Terminal:
@@ -16,6 +17,7 @@ import (
 func main() {
 	router := mux.NewRouter()
 	routes.LoginRoutes(router)
+	routes.TutorialsRoutes(router)
 	// as more functionality is added, more routes will be added.
 
 	// Middleware for CORS
