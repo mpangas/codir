@@ -11,4 +11,5 @@ func LoginRoutes(router *mux.Router) {
 	router.HandleFunc("/user/signup", logic.Signup).Methods("POST")
 	router.HandleFunc("/user/signin", logic.Signin).Methods("POST")
 	router.HandleFunc("/user/delete", logic.DeleteUser).Methods("DELETE")
+	router.HandleFunc("/user/logout", logic.Logout).Methods("POST")
 }

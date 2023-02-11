@@ -25,8 +25,8 @@ var dsn = "mpangas:" + pass + "@tcp(codir-users.mysql.database.azure.com:3306)/c
 const SecretKey = "secret"
 
 type UserInfo struct {
-	Email    string `json:"email"`
-	Username string `json:"username"`
+	Email    string `json:"email" gorm:"unique"`
+	Username string `json:"username" gorm:"unique"`
 	Password string `json:"password"`
 }
 
@@ -170,7 +170,11 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 func User(w http.ResponseWriter, r *http.Request) {
 	// Get cookie with name jwt
-	cookie, _ := r.Cookie("jwt")
+	cookie, err := r.Cookie("jwt")
+	if err != nil {
+		http.Error(w, "Unauthenticated", http.StatusUnauthorized)
+		return
+	}
 	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
 	})
@@ -187,6 +191,23 @@ func User(w http.ResponseWriter, r *http.Request) {
 	loginDb.First(&user, "username = ?", claims.Issuer)
 
 	res, _ := json.Marshal(user)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(res)
+}
+
+func Logout(w http.ResponseWriter, r *http.Request) {
+	// Remove cookie
+	cookie := &http.Cookie{
+		Name:     "jwt",
+		Value:    "",
+		Expires:  time.Now().Add(-time.Hour),
+		HttpOnly: true,
+	}
+
+	http.SetCookie(w, cookie)
+
+	// return success message
+	res, _ := json.Marshal("Success")
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
