@@ -19,9 +19,9 @@ function Login() {
       <div className="main">
       <div id="mainloginbox">
         <p id="promptedlogintext">Login to your Codir account</p>
-        <TextField sx={{ ml: 8 , mb: 3}} id="loginusernamebox" label="Username" type="Username" />
+        <TextField sx={{ml: 9 , mb: 2}} id="loginusernamebox" label="Username" type="Username" />
         <TextField
-          sx={{ ml: 8 , mb: 1}}
+          sx={{ ml: 9 , mb: 1}}
           id="loginpasswordbox"
           label="Password"
           type="password"
