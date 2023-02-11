@@ -28,7 +28,7 @@ function Signup() {
             <TextField sx={{ml: 9 , mb: 2}} id="emailbox" label="Email" type="email" />
             <TextField sx={{ml: 9 , mb: 2}} id="usernamebox" label="Username" type="Username" />
             <TextField
-              sx={{ ml: 9 , mb: 1}}
+              sx={{ ml: 9 , mb: 0.5}}
               id="passwordbox"
               label="Password"
               type="password"

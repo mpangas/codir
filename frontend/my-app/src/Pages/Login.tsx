@@ -21,7 +21,7 @@ function Login() {
         <p id="promptedlogintext">Login to your Codir account</p>
         <TextField sx={{ml: 9 , mb: 2}} id="loginusernamebox" label="Username" type="Username" />
         <TextField
-          sx={{ ml: 9 , mb: 1}}
+          sx={{ ml: 9 , mb: 0.5}}
           id="loginpasswordbox"
           label="Password"
           type="password"
