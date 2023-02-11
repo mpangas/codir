@@ -74,6 +74,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 	res, _ := json.Marshal(newUser)
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 	fmt.Println("Fields Added", newUser)
 }
