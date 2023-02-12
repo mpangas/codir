@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/mpangas/codir/backend/src/login/routes"
 )
 
@@ -14,28 +11,15 @@ import (
 // Enter password
 
 func main() {
-	router := mux.NewRouter()
-	routes.LoginRoutes(router)
-	// as more functionality is added, more routes will be added.
+	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "*",
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowCredentials: true,
+	}))
 
-	// Middleware for CORS
-	router.HandleFunc("/", corsHandler).Methods(http.MethodGet, http.MethodPut, http.MethodPatch, http.MethodDelete, http.MethodPost, http.MethodOptions)
-	router.Use(mux.CORSMethodMiddleware(router))
+	routes.LoginRoutes(app)
 
-	fmt.Println("Starting server")
-	if err := http.ListenAndServe(":8000", router); err != nil {
-		log.Fatal(err)
-	}
-}
-
-func corsHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	if r.Method == http.MethodOptions {
-		return
-	}
-	w.Write([]byte("/"))
+	app.Listen(":8000")
 }

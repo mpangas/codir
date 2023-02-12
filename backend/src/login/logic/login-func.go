@@ -3,19 +3,14 @@ package logic
 import (
 	"errors"
 	"log"
-	"time"
 
+	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
-
-	"github.com/dgrijalva/jwt-go/v4"
 )
 
 var loginDb *gorm.DB
@@ -40,45 +35,50 @@ func init() {
 	loginDb.AutoMigrate(&UserInfo{})
 }
 
-func Signup(w http.ResponseWriter, r *http.Request) {
+func Signup(c *fiber.Ctx) error {
 	// Initialize empty user
-	newUser := &UserInfo{}
-	// Read the body into a byte array and store in newUser
-	if body, err := io.ReadAll(r.Body); err == nil {
-		if err := json.Unmarshal([]byte(body), newUser); err != nil {
-			http.Error(w, "Malformed request", 400)
-			return
-		}
+	newUser := new(UserInfo)
+
+	// Read the body into the new User object
+	if err := c.BodyParser(newUser); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
 	}
 
+	// Hash password
+	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
+	newUser.Password = string(hashPwd)
+
 	// prevent duplicate usernames
-	resultUsername := loginDb.Where("username = ?", newUser.Username).First(newUser)
+	var checkInfo UserInfo
+	resultUsername := loginDb.Where("username = ?", newUser.Username).First(&checkInfo)
 	if !errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
-		http.Error(w, "This username is already in use", 400)
-		return
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "This username is already in use",
+		})
 	}
 
 	// prevent duplicate emails
-	resultEmail := loginDb.Where("email = ?", newUser.Email).First(newUser)
+	resultEmail := loginDb.Where("email = ?", newUser.Email).First(&checkInfo)
 	if !errors.Is(resultEmail.Error, gorm.ErrRecordNotFound) {
-		http.Error(w, "This email is already in use", 400)
-		return
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "This email is already in use",
+		})
 	}
-
-	// turn password into hash
-	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
-	newUser.Password = string(hashPwd)
 
 	// Add user to DB and check for errors
 	if err := loginDb.Create(&newUser).Error; err != nil {
 		log.Fatalln(err)
 	}
-	res, _ := json.Marshal(newUser)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
-	fmt.Println("Fields Added", newUser)
+
+	return c.JSON(newUser)
 }
 
+/*
 func Signin(w http.ResponseWriter, r *http.Request) {
 	// turn json in request into info
 	var requestInfo UserInfo
@@ -131,16 +131,15 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal("Success")
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
-}
+}*/
 
-func GetUsers(w http.ResponseWriter, r *http.Request) {
+func GetUsers(c *fiber.Ctx) error {
 	var users []UserInfo
 	loginDb.Find(&users)
-	res, _ := json.Marshal(users)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+	return c.JSON(users)
 }
 
+/*
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	var user UserInfo
 	if body, err := io.ReadAll(r.Body); err == nil {
@@ -212,3 +211,4 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 }
+*/
