@@ -32,6 +32,10 @@ main {
   z-index: 2;
 }
 
+input {
+  margin: 10px 0px;
+}
+
 .form-signin input[type="name"] {
   margin: 10px 0px;
 }
