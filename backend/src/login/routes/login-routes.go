@@ -1,14 +1,15 @@
 package routes
 
 import (
-	"github.com/gorilla/mux"
+	"github.com/gofiber/fiber/v2"
 	"github.com/mpangas/codir/backend/src/login/logic"
 )
 
-func LoginRoutes(router *mux.Router) {
-	router.HandleFunc("/users", logic.GetUsers).Methods("GET")
-	router.HandleFunc("/user", logic.User).Methods("GET")
-	router.HandleFunc("/user/signup", logic.Signup).Methods("POST")
-	router.HandleFunc("/user/signin", logic.Signin).Methods("POST")
-	router.HandleFunc("/user/delete", logic.DeleteUser).Methods("DELETE")
+func LoginRoutes(app *fiber.App) {
+	app.Get("/api/get", logic.GetUsers)
+	//app.Get("/api/user", logic.User)
+	app.Post("/api/signup", logic.Signup)
+	//app.Post("/api/signin", logic.Signin)
+	//app.Delete("/api/delete", logic.DeleteUser)
+	//app.Post("/api/logout", logic.Logout)
 }

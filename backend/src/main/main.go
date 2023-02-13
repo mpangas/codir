@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/mpangas/codir/backend/src/login/routes"
 	"github.com/mpangas/codir/backend/src/posts/routes"
 )
@@ -15,16 +12,22 @@ import (
 // Enter password
 
 func main() {
+<<<<<<< HEAD
 	router := mux.NewRouter()
 	routes.LoginRoutes(router)
 	routes.TutorialsRoutes(router)
 	// as more functionality is added, more routes will be added.
+=======
+	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "*",
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowCredentials: true,
+	}))
+>>>>>>> makefolders
 
-	// Middleware for CORS
-	router.Use(mux.CORSMethodMiddleware(router))
+	routes.LoginRoutes(app)
 
-	fmt.Println("Starting server")
-	if err := http.ListenAndServe(":8000", router); err != nil {
-		log.Fatal(err)
-	}
+	app.Listen(":8000")
 }
