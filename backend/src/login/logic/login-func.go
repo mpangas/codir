@@ -3,7 +3,9 @@ package logic
 import (
 	"errors"
 	"log"
+	"time"
 
+	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
@@ -78,60 +80,64 @@ func Signup(c *fiber.Ctx) error {
 	return c.JSON(newUser)
 }
 
-/*
-func Signin(w http.ResponseWriter, r *http.Request) {
+func Signin(c *fiber.Ctx) error {
 	// turn json in request into info
-	var requestInfo UserInfo
-	if body, err := io.ReadAll(r.Body); err == nil {
-		if err := json.Unmarshal([]byte(body), &requestInfo); err != nil {
-			http.Error(w, "Malformed request", 400)
-			return
-		}
+	requestUser := new(UserInfo)
+	if err := c.BodyParser(requestUser); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
 	}
 
 	// get user info with that username from the db
 	var checkInfo UserInfo
-	resultUsername := loginDb.First(&checkInfo, "username = ?", requestInfo.Username)
+	resultUsername := loginDb.First(&checkInfo, "username = ?", requestUser.Username)
 
 	// check if the username exists
 	if errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
-		http.Error(w, "This username does not exist.", 400)
-		return
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "This username does not exist.",
+		})
 	}
 
 	// check if the passwords match
-	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(requestInfo.Password)); err != nil {
-		http.Error(w, "Incorrect password", http.StatusUnauthorized)
-		return
+	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(requestUser.Password)); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Incorrect password.",
+		})
 	}
 
 	// Create JWT Token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer:    requestInfo.Username,
+		Issuer:    requestUser.Username,
 		ExpiresAt: jwt.At(jwt.Now().Add(24 * time.Hour)), // 1 day
 	})
 
 	tokenStr, err := token.SignedString([]byte(SecretKey))
 	if err != nil {
-		http.Error(w, "Error signing token", http.StatusInternalServerError)
-		return
+		c.Status(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"message": "Login error. Please try again.",
+		})
 	}
 
 	// Create cookie
-	cookie := &http.Cookie{
+	cookie := fiber.Cookie{
 		Name:     "jwt",
 		Value:    tokenStr,
 		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
+		HTTPOnly: true,
 	}
-
-	http.SetCookie(w, cookie)
+	c.Cookie(&cookie)
 
 	// return success message
-	res, _ := json.Marshal("Success")
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
-}*/
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
+}
 
 func GetUsers(c *fiber.Ctx) error {
 	var users []UserInfo
@@ -140,7 +146,7 @@ func GetUsers(c *fiber.Ctx) error {
 }
 
 /*
-func DeleteUser(w http.ResponseWriter, r *http.Request) {
+func DeleteUser(c *fiber.Ctx) {
 	var user UserInfo
 	if body, err := io.ReadAll(r.Body); err == nil {
 		if err := json.Unmarshal([]byte(body), &user); err != nil {
@@ -168,7 +174,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func User(w http.ResponseWriter, r *http.Request) {
+func User(c *fiber.Ctx) {
 	// Get cookie with name jwt
 	cookie, err := r.Cookie("jwt")
 	if err != nil {
@@ -195,7 +201,7 @@ func User(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
+func Logout(c *fiber.Ctx) {
 	// Remove cookie
 	cookie := &http.Cookie{
 		Name:     "jwt",
