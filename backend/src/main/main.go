@@ -3,8 +3,9 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/mpangas/codir/backend/src/login/routes"
-	"github.com/mpangas/codir/backend/src/posts/routes"
+	loginRoutes "github.com/mpangas/codir/backend/src/login/routes"
+	postsRoutes "github.com/mpangas/codir/backend/src/posts/routes"
+	// yeah I blew this but I don't want to go back and fix it all while we're on different branches
 )
 
 // Command to Open Database in Terminal:
@@ -12,12 +13,6 @@ import (
 // Enter password
 
 func main() {
-<<<<<<< HEAD
-	router := mux.NewRouter()
-	routes.LoginRoutes(router)
-	routes.TutorialsRoutes(router)
-	// as more functionality is added, more routes will be added.
-=======
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     "*",
@@ -25,9 +20,9 @@ func main() {
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
 	}))
->>>>>>> makefolders
 
-	routes.LoginRoutes(app)
+	loginRoutes.LoginRoutes(app)
+	postsRoutes.TutorialsRoutes(app)
 
 	app.Listen(":8000")
 }
