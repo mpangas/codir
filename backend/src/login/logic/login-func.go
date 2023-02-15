@@ -145,48 +145,55 @@ func GetUsers(c *fiber.Ctx) error {
 	return c.JSON(users)
 }
 
-/*
-func DeleteUser(c *fiber.Ctx) {
-	var user UserInfo
-	if body, err := io.ReadAll(r.Body); err == nil {
-		if err := json.Unmarshal([]byte(body), &user); err != nil {
-			http.Error(w, "Malformed request", 400)
-			return
-		}
+func DeleteUser(c *fiber.Ctx) error {
+	user := new(UserInfo)
+
+	if err := c.BodyParser(user); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
 	}
 	var checkInfo UserInfo
 	resultUsername := loginDb.First(&checkInfo, "username = ?", user.Username)
 
 	// check if the username exists
 	if errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
-		http.Error(w, "This username does not exist.", 400)
-		return
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "This username does not exist.",
+		})
 	}
 
 	// check if the passwords match
 	if err := bcrypt.CompareHashAndPassword([]byte(checkInfo.Password), []byte(user.Password)); err != nil {
-		http.Error(w, "Incorrect password", http.StatusUnauthorized)
-		return
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Passwords do not match.",
+		})
 	}
+
 	loginDb.Delete(&user, "username = ?", user.Username)
-	res, _ := json.Marshal(user)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
 }
 
-func User(c *fiber.Ctx) {
+func User(c *fiber.Ctx) error {
 	// Get cookie with name jwt
-	cookie, err := r.Cookie("jwt")
-	if err != nil {
-		http.Error(w, "Unauthenticated", http.StatusUnauthorized)
-		return
-	}
-	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
 	})
+
 	if err != nil {
-		http.Error(w, "Unauthenticated", http.StatusUnauthorized)
-		return
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
 	}
 
 	// Get claims from token
@@ -196,25 +203,23 @@ func User(c *fiber.Ctx) {
 	var user UserInfo
 	loginDb.First(&user, "username = ?", claims.Issuer)
 
-	res, _ := json.Marshal(user)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+	// Return user info
+	return c.JSON(user)
 }
 
-func Logout(c *fiber.Ctx) {
+func Logout(c *fiber.Ctx) error {
 	// Remove cookie
-	cookie := &http.Cookie{
+	cookie := fiber.Cookie{
 		Name:     "jwt",
 		Value:    "",
 		Expires:  time.Now().Add(-time.Hour),
-		HttpOnly: true,
+		HTTPOnly: true,
 	}
 
-	http.SetCookie(w, cookie)
+	c.Cookie(&cookie)
 
 	// return success message
-	res, _ := json.Marshal("Success")
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
 }
-*/
