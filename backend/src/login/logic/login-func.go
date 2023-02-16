@@ -12,12 +12,11 @@ import (
 	"gorm.io/gorm"
 
 	"fmt"
-	"os"
 )
 
 var loginDb *gorm.DB
-var pass = os.Getenv("PASS")
-var dsn = "mpangas:" + pass + "@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
+var pass string
+var dsn = "@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
 
 const SecretKey = "secret"
 
@@ -27,9 +26,11 @@ type UserInfo struct {
 	Password string `json:"password"`
 }
 
-func init() {
+// Change this back to init when we make database a seperate file
+func OpenDB(password string) {
+	pass = password
 	var err error
-	loginDb, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	loginDb, err = gorm.Open(mysql.Open("mpangas:"+pass+dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println("Database did not open: ", err)
 		return
