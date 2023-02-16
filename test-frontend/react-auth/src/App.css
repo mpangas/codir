@@ -47,3 +47,9 @@ input {
 .form-signin input[type="password"] {
   margin-bottom: 15px;
 }
+
+.home {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}

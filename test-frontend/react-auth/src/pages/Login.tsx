@@ -20,7 +20,11 @@ const Login = () => {
         })
 
         const data = await response.json();
-        console.log(data);
+        if(response.status === 200) {
+            navigate("/");
+        } else {
+            console.log(data.message);
+        }
     }
     
     return (
