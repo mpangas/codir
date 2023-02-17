@@ -1,7 +1,13 @@
-## API Documentation
+# API Documentation
 
-# Login
+## Login
 
 Login Information has the following structure:
 
 wip
+
+### Routes
+
+[POST /api/signup](post-api-signup)
+
+#### POST /api/signup
