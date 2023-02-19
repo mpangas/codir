@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Nav = (props: { username: string, setUsername: (username: string) => void }) => {
+  
   const logout = async () => {
-    console.log("Test");
     fetch('http://localhost:8000/api/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
