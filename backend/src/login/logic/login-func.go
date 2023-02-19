@@ -7,40 +7,17 @@ import (
 
 	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gofiber/fiber/v2"
+	"github.com/mpangas/codir/backend/src/database"
+	"github.com/mpangas/codir/backend/src/models"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-
-	"fmt"
 )
-
-var loginDb *gorm.DB
-var pass string
-var dsn = "@tcp(codir-users.mysql.database.azure.com:3306)/codir_users?charset=utf8mb4&parseTime=True&loc=Local"
 
 const SecretKey = "secret"
 
-type UserInfo struct {
-	Email    string `json:"email" gorm:"unique"`
-	Username string `json:"username" gorm:"unique"`
-	Password string `json:"password"`
-}
-
-// Change this back to init when we make database a seperate file
-func OpenDB(password string) {
-	pass = password
-	var err error
-	loginDb, err = gorm.Open(mysql.Open("mpangas:"+pass+dsn), &gorm.Config{})
-	if err != nil {
-		fmt.Println("Database did not open: ", err)
-		return
-	}
-	loginDb.AutoMigrate(&UserInfo{})
-}
-
 func Signup(c *fiber.Ctx) error {
 	// Initialize empty user
-	newUser := new(UserInfo)
+	newUser := new(models.UserInfo)
 
 	// Read the body into the new User object
 	if err := c.BodyParser(newUser); err != nil {
@@ -55,8 +32,8 @@ func Signup(c *fiber.Ctx) error {
 	newUser.Password = string(hashPwd)
 
 	// prevent duplicate usernames
-	var checkInfo UserInfo
-	resultUsername := loginDb.Where("username = ?", newUser.Username).First(&checkInfo)
+	var checkInfo models.UserInfo
+	resultUsername := database.DB.Where("username = ?", newUser.Username).First(&checkInfo)
 	if !errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
@@ -65,7 +42,7 @@ func Signup(c *fiber.Ctx) error {
 	}
 
 	// prevent duplicate emails
-	resultEmail := loginDb.Where("email = ?", newUser.Email).First(&checkInfo)
+	resultEmail := database.DB.Where("email = ?", newUser.Email).First(&checkInfo)
 	if !errors.Is(resultEmail.Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
@@ -74,7 +51,7 @@ func Signup(c *fiber.Ctx) error {
 	}
 
 	// Add user to DB and check for errors
-	if err := loginDb.Create(&newUser).Error; err != nil {
+	if err := database.DB.Create(&newUser).Error; err != nil {
 		log.Fatalln(err)
 	}
 
@@ -83,7 +60,7 @@ func Signup(c *fiber.Ctx) error {
 
 func Signin(c *fiber.Ctx) error {
 	// turn json in request into info
-	requestUser := new(UserInfo)
+	requestUser := new(models.UserInfo)
 	if err := c.BodyParser(requestUser); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
@@ -92,8 +69,8 @@ func Signin(c *fiber.Ctx) error {
 	}
 
 	// get user info with that username from the db
-	var checkInfo UserInfo
-	resultUsername := loginDb.First(&checkInfo, "username = ?", requestUser.Username)
+	var checkInfo models.UserInfo
+	resultUsername := database.DB.First(&checkInfo, "username = ?", requestUser.Username)
 
 	// check if the username exists
 	if errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
@@ -141,13 +118,13 @@ func Signin(c *fiber.Ctx) error {
 }
 
 func GetUsers(c *fiber.Ctx) error {
-	var users []UserInfo
-	loginDb.Find(&users)
+	var users []models.UserInfo
+	database.DB.Find(&users)
 	return c.JSON(users)
 }
 
 func DeleteUser(c *fiber.Ctx) error {
-	user := new(UserInfo)
+	user := new(models.UserInfo)
 
 	if err := c.BodyParser(user); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -155,8 +132,8 @@ func DeleteUser(c *fiber.Ctx) error {
 			"message": "Invalid data",
 		})
 	}
-	var checkInfo UserInfo
-	resultUsername := loginDb.First(&checkInfo, "username = ?", user.Username)
+	var checkInfo models.UserInfo
+	resultUsername := database.DB.First(&checkInfo, "username = ?", user.Username)
 
 	// check if the username exists
 	if errors.Is(resultUsername.Error, gorm.ErrRecordNotFound) {
@@ -174,7 +151,7 @@ func DeleteUser(c *fiber.Ctx) error {
 		})
 	}
 
-	loginDb.Delete(&user, "username = ?", user.Username)
+	database.DB.Delete(&user, "username = ?", user.Username)
 
 	return c.JSON(fiber.Map{
 		"message": "success",
@@ -201,8 +178,8 @@ func User(c *fiber.Ctx) error {
 	claims := token.Claims.(*jwt.StandardClaims)
 
 	// Get user info from db
-	var user UserInfo
-	loginDb.First(&user, "username = ?", claims.Issuer)
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
 
 	// Return user info
 	return c.JSON(user)
