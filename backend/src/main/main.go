@@ -8,7 +8,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"github.com/mpangas/codir/backend/src/login/logic"
-	"github.com/mpangas/codir/backend/src/login/routes"
+  postsRoutes "github.com/mpangas/codir/backend/src/posts/routes"
+	loginRoutes "github.com/mpangas/codir/backend/src/login/routes"
 )
 
 // Command to Open Database in Terminal:
@@ -30,7 +31,8 @@ func main() {
 	}
 
 	logic.OpenDB(os.Getenv("DB_PASS"))
-	routes.LoginRoutes(app)
+	loginRoutes.LoginRoutes(app)
+  postsRoutes.TutorialsRoutes(app)
 
 	app.Listen(":8000")
 }

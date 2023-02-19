@@ -2,14 +2,10 @@ module github.com/mpangas/codir
 
 go 1.19
 
-require (
-	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
-	gorm.io/gorm v1.24.4
-)
+require gorm.io/gorm v1.24.4
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/gofiber/utils v0.0.10 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
@@ -30,7 +26,6 @@ require (
 
 require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
-	github.com/gofiber/fiber v1.14.6
 	github.com/gofiber/fiber/v2 v2.42.0
 	github.com/gorilla/mux v1.8.0
 	github.com/jinzhu/inflection v1.0.0 // indirect

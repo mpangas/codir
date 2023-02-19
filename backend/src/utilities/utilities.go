@@ -1,5 +1,7 @@
 package utilities
 
+// This file doesn't do anything anymore.
+
 import (
 	"encoding/json"
 	"io"
