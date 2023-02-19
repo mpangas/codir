@@ -1,11 +1,15 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/joho/godotenv"
+	"github.com/mpangas/codir/backend/src/login/logic"
+  postsRoutes "github.com/mpangas/codir/backend/src/posts/routes"
 	loginRoutes "github.com/mpangas/codir/backend/src/login/routes"
-	postsRoutes "github.com/mpangas/codir/backend/src/posts/routes"
-	// yeah I blew this but I don't want to go back and fix it all while we're on different branches
 )
 
 // Command to Open Database in Terminal:
@@ -21,8 +25,14 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
+
+	logic.OpenDB(os.Getenv("DB_PASS"))
 	loginRoutes.LoginRoutes(app)
-	postsRoutes.TutorialsRoutes(app)
+  postsRoutes.TutorialsRoutes(app)
 
 	app.Listen(":8000")
 }
