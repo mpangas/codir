@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props: {setUsername: (username: string) => void }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -22,6 +22,7 @@ const Login = () => {
         const data = await response.json();
         if(response.status === 200) {
             navigate("/");
+            props.setUsername(username);
         } else {
             console.log(data.message);
         }
