@@ -21,4 +21,5 @@ func Connect(password string) {
 	DB = connection
 
 	DB.AutoMigrate(&models.UserInfo{})
+	DB.AutoMigrate(&models.Tutorial{})
 }
