@@ -9,16 +9,6 @@ const Login = (props: {setUsername: (username: string) => void }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    {/*function userChange(e: React.ChangeEvent<HTMLInputElement>) {
-      setUser(e.target.value); 
-    }
-    function passChange(e: React.ChangeEvent<HTMLInputElement>) {
-      setPass(e.target.value); 
-    }
-    function printInput() {
-      console.log("Username: " + user);
-      console.log("Password: " + pass);
-    }*/}
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
