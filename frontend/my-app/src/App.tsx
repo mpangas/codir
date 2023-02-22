@@ -36,7 +36,7 @@ function App() {
       <Header username={username} setUsername={setUsername}/>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUsername={setUsername}/>} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
       <Footer />
