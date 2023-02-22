@@ -31,9 +31,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   return (
          <div className="header">
           <a id="headerLink" href="/"><h1 id="logo">CODIR</h1></a>
-          <div className="cred">
-            {menu}
-          </div>
+          {menu}
          </div>
   );
 }

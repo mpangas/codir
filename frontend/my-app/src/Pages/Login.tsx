@@ -9,9 +9,24 @@ const Login = (props: {setUsername: (username: string) => void }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    let option;
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
+      e.preventDefault(); 
+      if(username==="" || username===undefined) {
+        option = (
+            <div id="lowerText">
+            <p id="warningText">Invalid Username and Password</p>
+            </div>
+        )
+        return;
+      }
+      else {
+        option = (
+          <div id="lowerText">
+            <p id="warningText">Invalivdgband Password</p>
+          </div>
+        )
+      }
       const response = await fetch('http://localhost:8000/api/signin', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -27,7 +42,11 @@ const Login = (props: {setUsername: (username: string) => void }) => {
           navigate("/");
           props.setUsername(username);
       } else {
-          console.log(data.message);
+        option = (
+          <div id="lowerText">
+          <p id="warningText">{data.message}</p>
+          </div>
+      )
       }
   }
     return (
@@ -50,8 +69,11 @@ const Login = (props: {setUsername: (username: string) => void }) => {
           autoComplete="current-password"
           onChange={e => setPassword(e.target.value)}
         />
+        <div id="lowerText">
+        </div>
         <Button variant="contained" color="primary" className="boxMargin" id="loginbox" type="submit">LOGIN</Button>
       </form>
+      {option}
       </div>
     </div>
       );
