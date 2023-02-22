@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { useEffect } from 'react';
 import './CSS/App.css';
 import './CSS/Header.css';
 import './CSS/Footer.css';
@@ -14,11 +15,25 @@ import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 
 function App() {
-  
+  const [username, setUsername] = React.useState('');
+  useEffect(() => {
+    (
+      async () => {
+        const response = await fetch('http://localhost:8000/api/user', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+        })
+
+        const data = await response.json();
+        setUsername(data.username);
+      }
+    )();
+  });
   return (
     <BrowserRouter>
     <div className="App">
-      <Header />
+      <Header username={username} setUsername={setUsername}/>
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
