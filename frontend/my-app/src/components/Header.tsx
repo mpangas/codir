@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
@@ -38,12 +39,17 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                 {/*<Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>*/}
                 <React.Fragment>
                     <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                      <Tooltip title="Account Settings">
                         <IconButton onClick={handleClick}
                             size="small"
                             sx={{ ml: 2 }}
                             aria-controls={open ? 'account-menu' : undefined}
                             aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}><Avatar sx={{ width: 52, height: 47, bgcolor: deepOrange[500] }}>{props.username.substring(0, 1).toUpperCase()}</Avatar></IconButton>
+                            aria-expanded={open ? 'true' : undefined}>
+                            <Avatar sx={{ width: 52, height: 47, bgcolor: deepOrange[500] }}>{props.username.substring(0, 1).toUpperCase()}
+                            </Avatar>
+                          </IconButton>
+                      </Tooltip>
                     </Box>
                     <Menu anchorEl={anchorEl}
                         id="account-menu"
