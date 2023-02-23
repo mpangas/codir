@@ -47,7 +47,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                             aria-controls={open ? 'account-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}>
-                            <Avatar sx={{ width: 52, height: 47, bgcolor: deepOrange[500] }}>
+                            <Avatar sx={{ width: 47, height: 47, bgcolor: deepOrange[500] }}>
                               {props.username.substring(0, 1).toUpperCase()}
                             </Avatar>
                           </IconButton>
