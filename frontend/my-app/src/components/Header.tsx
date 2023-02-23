@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from '@mui/material/colors';
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -42,7 +43,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                             sx={{ ml: 2 }}
                             aria-controls={open ? 'account-menu' : undefined}
                             aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}><Avatar sx={{ width: 32, height: 32 }}>{props.username.substring(0, 1).toUpperCase()}</Avatar></IconButton>
+                            aria-expanded={open ? 'true' : undefined}><Avatar sx={{ width: 52, height: 47, bgcolor: deepOrange[500] }}>{props.username.substring(0, 1).toUpperCase()}</Avatar></IconButton>
                     </Box>
                     <Menu anchorEl={anchorEl}
                         id="account-menu"
