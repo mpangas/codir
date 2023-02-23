@@ -1,6 +1,7 @@
 .main {
     display: flex;
     padding-top: 35px;
+   
   }
 .boxMargin {
     margin-left: 20%;
@@ -67,9 +68,8 @@
     box-sizing: border-box;
     width: 146px;
     height: 45px;
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 15px;
     font-size: 24px;
     line-height: 32px;
     

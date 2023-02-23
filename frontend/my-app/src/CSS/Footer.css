@@ -1,20 +1,21 @@
 /*Footer*/
 .footer {
-    margin-top: 12%;
-    height: 100px;
+    /*margin-top: 12%;*/
+    height: 165px;
+    /*background-color: rgb(255, 179, 92);*/
   }
-.horz {
+/*.horz {
     width: 80%;
     height: 0px;
     border: 2px solid #C5C2C2;
     
     margin-left: auto;
     margin-right: auto; 
-}
+}*/
 #git {
-    width: 33px;
-    height: 31px;
+    width: 39px;
+    height: 39px;
   
-    margin-top: 1%;
+    margin-top: 2%;
     margin-left: 50%
 }
