@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
+import ExitToAppTwoToneIcon from '@mui/icons-material/ExitToAppTwoTone';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
@@ -92,7 +93,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                             <Button id="dashboard">Dashboard</Button>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>
+                          <Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>
                         </MenuItem>
                     </Menu>
                 </React.Fragment>
