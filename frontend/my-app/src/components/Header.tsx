@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -25,7 +26,6 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
   const logout = async () => {
     fetch('http://localhost:8000/api/logout', {
       method: 'POST',
@@ -44,25 +44,18 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
     )
   } else {
     menu = (
-      <div className="cred">
+    <div className="cred">
           {/*<Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>*/}
           <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
+          <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+            <IconButton onClick={handleClick}
             size="small"
             sx={{ ml: 2 }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
+            aria-expanded={open ? 'true' : undefined}><Avatar sx={{ width: 32, height: 32 }}>{props.username.substring(0,1).toUpperCase()}</Avatar></IconButton>
+          </Box>
+          <Menu anchorEl={anchorEl}
         id="account-menu"
         open={open}
         onClose={handleClose}
@@ -94,36 +87,16 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
           },
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <MenuItem onClick={handleClose}>
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}> 
+            <MenuItem onClick={handleClose}>
           <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
-    </React.Fragment>
-      </div>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+              <Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>
+              </MenuItem>
+          </Menu>
+          </React.Fragment>
+    </div>
     )
   }
   return (
