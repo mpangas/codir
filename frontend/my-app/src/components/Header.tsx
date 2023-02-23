@@ -89,6 +89,9 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                             <Avatar /> Profile
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
+                            <Button id="dashboard">Dashboard</Button>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
                             <Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>
                         </MenuItem>
                     </Menu>

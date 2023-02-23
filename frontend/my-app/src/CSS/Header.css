@@ -81,3 +81,6 @@
     box-shadow: 0 px #666;
     transform: translateY(0.5px);
   }
+  #dashboard {
+    color: black;
+  }
