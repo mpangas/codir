@@ -1,14 +1,15 @@
 import React from 'react';
 import github from '../image/github.png';
+import { GitHub } from '@mui/icons-material';
 function Footer() {
     return (
         <div className="footer">
             <div className="horz"></div>
             <a href="https://github.com/mpangas/codir" target="_blank">
-                <img src={github} id="git"></img>
+                <GitHub />
             </a>
         </div>
-      );
+    );
 }
 
 export default Footer;
