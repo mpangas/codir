@@ -2,14 +2,14 @@
 * {
   margin: 0;
 }
+ /*box-shadow: 5px 5px 200px rgba(0, 0, 0, 0.5)  ; 
+	-webkit-box-shadow: 5px 5px 200x rgba(0, 0, 0, 0.5)  ; 
+	-moz-box-shadow: 5px 5px 200px rgba(0, 0, 0, 0.5)  ; */
 .main {
     display: flex;
     padding-top: 35px;
     background-color: #ffcba4;
     height: 500px;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
-	-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
-	-moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
 }
 .rectangle {
     width: 626px;
