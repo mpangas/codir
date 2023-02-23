@@ -1,10 +1,8 @@
-import React from 'react';
 import { useState } from 'react';
 import { TextField } from '@mui/material';
-import { spacing } from '@mui/system';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
-import { SyntheticEvent, useEffect } from 'react'
+import { SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function Signup() {
