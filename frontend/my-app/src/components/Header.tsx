@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import ExitToAppTwoToneIcon from '@mui/icons-material/ExitToAppTwoTone';
 import { deepOrange, deepPurple } from '@mui/material/colors';
+import { fontStyle, fontWeight } from '@mui/system';
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -37,7 +38,13 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
     } else {
         menu = (
             <div className="cred">
-                <Button sx={{ textTransform: "none" }}>Dashboard</Button>
+                <Button 
+                sx={{ textTransform: "none", 
+                color: "black", 
+                fontWeight: "bold"
+                }}
+                id="dashboardB"
+                >Dashboard</Button>
                 <React.Fragment>
                     <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                       <Tooltip title="Account Settings">
@@ -86,12 +93,16 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                         }}
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+                        <Box display="flex" alignItems="center" justifyContent="center">
                         <MenuItem onClick={handleClose}>
                             <Avatar sx={{ fontSize: "15px" }}/> Profile
                         </MenuItem>
-                        <MenuItem id="logout" href="/login" onClick={logout}>
-                          Logout
-                        </MenuItem>
+                        </Box>
+                        <Box display="flex" alignItems="center" justifyContent="center">
+                            <MenuItem id="logout" href="/login" onClick={logout}>
+                                Logout
+                            </MenuItem>
+                        </Box>
                     </Menu>
                 </React.Fragment>
             </div>

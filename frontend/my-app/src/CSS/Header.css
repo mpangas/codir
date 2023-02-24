@@ -81,6 +81,15 @@
     box-shadow: 0 px #666;
     transform: translateY(0.5px);
   }
-  #dashboard {
-    color: black;
+  #dashboardB {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    margin-right: auto;
+  }
+  #dashboardB:focus {
+    outline: none;
+  }
+  #dashboardB:hover {
+    color: #006769;
+    background-color: #F6EEE0;
   }
