@@ -9,6 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ExitToAppTwoToneIcon from '@mui/icons-material/ExitToAppTwoTone';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import { fontStyle, fontWeight } from '@mui/system';
+import LogoPic from '../image/CodirLogo.png'
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -110,7 +111,8 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
     }
     return (
         <div className="header">
-            <a id="headerLink" href="/"><h1 id="logo">CODIR</h1></a>
+            {/*<a id="headerLink" href="/"><h1 id="logo">CODIR</h1></a>*/}
+            <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
             {menu}
         </div>
     );

@@ -11,6 +11,7 @@
     background-color: #ffcba4;
     height: 500px;
     justify-content: center;
+    width: 100%;
 }
 .rectangle {
     width: 626px;
