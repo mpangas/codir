@@ -37,7 +37,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
     } else {
         menu = (
             <div className="cred">
-                {/*<Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>*/}
+                <Button sx={{ textTransform: "none" }}>Dashboard</Button>
                 <React.Fragment>
                     <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                       <Tooltip title="Account Settings">
@@ -87,13 +87,10 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                         <MenuItem onClick={handleClose}>
-                            <Avatar /> Profile
+                            <Avatar sx={{ fontSize: "15px" }}/> Profile
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                            <Button id="dashboard">Dashboard</Button>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <Button id="logout" href="/login" onClick={logout}>LOGOUT</Button>
+                        <MenuItem id="logout" href="/login" onClick={logout}>
+                          Logout
                         </MenuItem>
                     </Menu>
                 </React.Fragment>
