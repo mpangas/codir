@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ExitToAppTwoToneIcon from '@mui/icons-material/ExitToAppTwoTone';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import { fontStyle, fontWeight } from '@mui/system';
-import LogoPic from '../image/CodirLogo.png'
+import LogoPic from '../image/CODIRLOGOUPDATEDUPDATED.png'
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -32,8 +32,8 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
     if (props.username === "" || props.username === undefined) {
         menu = (
             <div className="cred">
-                <Button sx={{ textTransform: "none" }} id="login" href="/login">Login</Button>
-                <Button sx={{ textTransform: "none" }} id="signup" href="/signup">Sign Up</Button>
+                <Button sx={{ textTransform: "none" }} id="login" href="/login">LOGIN</Button>
+                <Button sx={{ textTransform: "none" }} id="signup" href="/signup">SIGN UP</Button>
             </div>
         )
     } else {

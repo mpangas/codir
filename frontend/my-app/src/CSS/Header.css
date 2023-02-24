@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Neucha&family=Oswald:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700&family=Open+Sans:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 /*Header*/
 #headerLink {
   text-decoration: none;
@@ -9,12 +11,12 @@
     display: flex;
     padding-left: 5px;
     padding-right: 25px;
-    background-color: #F6EEE0;
+    background-color: #F4FAF8;
     width: 100%;
   }
   #logo {
-    width: 225px;
-    height: 75px;
+    width: 230px;
+    height: 80px;
     margin-right: auto;
   
     cursor: pointer;
@@ -28,14 +30,14 @@
     box-sizing: border-box;
     width: 150px;
     height: 47px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
     font-weight: 15px;
-    font-size: 20px;
+    font-size: 25px;
     color: #FFFFFF;
     background: #000000;
     border: 1px solid #000000;
   
-    margin-right: 20%;
+    margin-right: 12%;
     margin-top: 5%;
 
     cursor: pointer;
@@ -43,7 +45,7 @@
   #login:hover {
     color:black; 
     border: 3px solid #000000;
-    background-color: #006769;
+    background-color: #50bbbd;
     transform: translateY(-2px);
     box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
   }
@@ -56,9 +58,9 @@
     height: 47px;
     background: #FFFFFF;
     border: 3px solid #000000;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 24px;
     color: #000000;
     
     margin-top: 5%;
@@ -66,8 +68,9 @@
     cursor: pointer;
   }
   #signup:hover {
-    background-color: black;
-    color: #006769;
+    color:black; 
+    border: 3px solid #000000;
+    background-color: #50bbbd;
     transform: translateY(-2px);
     box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
   }
