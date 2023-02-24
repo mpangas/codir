@@ -3,12 +3,11 @@
     /*margin-top: 12%;*/
     height: 165px;
     background-color: #00a5a7;
+    display: flex;
   }
 /*.horz {
-    width: 80%;
-    height: 0px;
-    border: 2px solid #C5C2C2;
     
     margin-left: auto;
     margin-right: auto; 
 }*/
+
