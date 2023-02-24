@@ -14,9 +14,41 @@
 
 Login Information has the following structure:
 
-wip
+`email`: The email address of the user, which is unique.
+
+`username`: The username of the user, which is unique.
+
+`password`: The password of the user. This is passed in as plaintext, but stored in the database in a hashed form.
 
 ### Routes {#login-routes}
+
+#### POST /api/signup {#signup}
+
+Used to create new user info to be stored in the database.
+
+Returns: An object creating the new user info if storeage was successful, or a corresponding error message if the input was incorrectly formatted or the email or username already exists in the database.
+
+#### POST /api/signin {#signin}
+
+Used to sign in to an account whose information exists in the database. It creates a JWT so that logins can be kept persistent across sessions.
+
+Returns: A "success" message if the login was successful. If not, a corresponding error for one of these scenarios:
+
+- If the input was incorrectly formatted.
+- If no login exists with that username.
+- If the password does not match.
+- If creating the JWT failed.
+- (WIP)
+
+#### GET /api/get {#login-get}
+
+Used to get all login information in the current database.
+
+Returns: An objecg containing all existing login information (with hashed passwords).
+
+### GET /api/user {#login-user}
+
+WIP
 
 ## Tutorials
 
