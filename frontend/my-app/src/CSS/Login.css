@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 .main {
     display: flex;
     padding-top: 35px;
@@ -42,13 +44,13 @@
     width: 367px;
     height: 64px;
         
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
     font-weight: 400;
     font-size: 20px;
     line-height: 26px;
         
     color: #000000;
-    margin-left: 23%;
+    margin-left: 15%;
     margin-top: 3%;  
 }
 #loginusernamebox{
@@ -68,7 +70,7 @@
     box-sizing: border-box;
     width: 146px;
     height: 45px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
     font-weight: 15px;
     font-size: 24px;
     line-height: 32px;
