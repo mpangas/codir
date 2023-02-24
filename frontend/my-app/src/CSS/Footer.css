@@ -5,9 +5,16 @@
     background-color: #FAF0DC;
     display: flex;
   }
-/*.horz {
-    
-    margin-left: auto;
-    margin-right: auto; 
-}*/
+.horz {
+  border: 1px solid black;
+  height: 1px;
+  width: 800%; 
+  margin-top: 5.5%;
+}
+#firstLine {
+  margin-left: 3%;
+}
+#secondLine {
+  margin-right: 3%;
+}
 

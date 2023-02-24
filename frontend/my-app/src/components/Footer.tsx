@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 function Footer() {
     return (
         <div className="footer">
-            <div className="horz"></div>
+            <div className="horz" id="firstLine"></div>
             <Grid container 
             direction="column" 
             alignItems="center" 
@@ -17,6 +17,7 @@ function Footer() {
                 <GitHub  sx={{ width: "47px", height: "47px", color:"black"}}/>
             </a>
             </Grid>
+            <div className="horz" id="secondLine"></div>
         </div>
     );
 }
