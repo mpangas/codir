@@ -45,6 +45,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                 fontWeight: "bold"
                 }}
                 id="dashboardB"
+                href="/dashboard"
                 >Dashboard</Button>
                 <React.Fragment>
                     <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

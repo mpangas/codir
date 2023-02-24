@@ -7,12 +7,14 @@ import './CSS/Footer.css';
 import './CSS/Main.css';
 import './CSS/Login.css';
 import './CSS/Signup.css';
+import './CSS/Dashboard.css';
 import Header from './components/Header'
 import Main from './components/Main'
 import Footer from './components/Footer'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import HomePage from './Pages/HomePage'
+import Dashboard from './Pages/Dashboard'
 
 function App() {
   const [username, setUsername] = React.useState('');
@@ -39,6 +41,7 @@ function App() {
           <Route path="/home" element={<HomePage username={username} />} />
           <Route path="/login" element={<Login setUsername={setUsername}/>} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard username={username} />} />
         </Routes>
       <Footer />
     </div>
