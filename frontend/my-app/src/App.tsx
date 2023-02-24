@@ -13,7 +13,6 @@ import Main from './components/Main'
 import Footer from './components/Footer'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
-import HomePage from './Pages/HomePage'
 import Dashboard from './Pages/Dashboard'
 
 function App() {
@@ -38,7 +37,6 @@ function App() {
       <Header username={username} setUsername={setUsername}/>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/home" element={<HomePage username={username} />} />
           <Route path="/login" element={<Login setUsername={setUsername}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard username={username} />} />

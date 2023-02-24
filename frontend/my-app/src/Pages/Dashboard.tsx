@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = (props: {username: string}) => {
+    const navigate = useNavigate();
+    if (props.username === "" || props.username === undefined) {
+        navigate("/login");
+    }
     return (
         <div className="dashboard">
             <h1 id="dashboardTitle" className="uniform">DASHBOARD</h1>
