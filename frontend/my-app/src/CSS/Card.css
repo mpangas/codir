@@ -1,8 +1,8 @@
-/*.Card {
-    flex: 0 0 auto; 
-    display: flex;
-    flex-direction: column;
-}*/
+.Card {
+    width: 475px;
+    height: 150px;
+}
 .cardsList{
     display: flex;
+    flex-wrap: wrap;
 }
