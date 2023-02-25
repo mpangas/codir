@@ -46,7 +46,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                 }}
                 id="dashboardB"
                 href="/dashboard"
-                >Dashboard</Button>
+                >DASHBOARD</Button>
                 <React.Fragment>
                     <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                       <Tooltip title="Account Settings">
@@ -84,7 +84,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
                                     display: 'block',
                                     position: 'absolute',
                                     top: 0,
-                                    right: 14,
+                                    right: 25,
                                     width: 10,
                                     height: 10,
                                     bgcolor: 'background.paper',

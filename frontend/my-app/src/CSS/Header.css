@@ -79,7 +79,7 @@
     transform: translateY(0.5px);
   }
   #dashboardB {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
     font-size: 15px;
     margin-right: auto;
   }
@@ -87,6 +87,6 @@
     outline: none;
   }
   #dashboardB:hover {
-    color: #006769;
-    background-color: #F6EEE0;
+    color: #71d5d6;
+    background-color: #F4FAF8;
   }
