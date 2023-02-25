@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { useEffect } from 'react';
+import './CSS/Card.css';
 import './CSS/App.css';
 import './CSS/Header.css';
 import './CSS/Footer.css';
