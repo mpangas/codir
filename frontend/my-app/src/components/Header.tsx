@@ -29,46 +29,54 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   let menu;
   if (props.username === "" || props.username === undefined) {
     menu = (
-      <div className="buttons">
-        <Button
-          sx={{
-            textTransform: "none",
-            alignItems: "center",
-            height: "40px",
-            width: "95px",
-            backgroundColor: "#E4E4E4",
-            color: "black",
-            '&:hover': {
-              backgroundColor: "#D3D3D3",
-            },
-          }}
-          variant="contained"
-          className="auth-btn"
-          href="/login">
-          Log In
-        </Button>
-        <Button
-          sx={{
-            textTransform: "none",
-            marginLeft: "30px",
-            alignItems: "center",
-            height: "40px",
-            width: "95px",
-            backgroundColor: "#00a5a7",
-            '&:hover': {
-              backgroundColor: "#018d8f",
-            },
-          }}
-          variant="contained"
-          className="auth-btn"
-          href="/signup">
-          Sign Up
-        </Button>
+      <div className="header-menu">
+        <div className="header-container">
+          <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
+        </div>
+        <div className="buttons">
+          <Button
+            sx={{
+              textTransform: "none",
+              alignItems: "center",
+              height: "40px",
+              width: "95px",
+              backgroundColor: "#E4E4E4",
+              color: "black",
+              '&:hover': {
+                backgroundColor: "#D3D3D3",
+              },
+            }}
+            variant="contained"
+            className="auth-btn"
+            href="/login">
+            Log In
+          </Button>
+          <Button
+            sx={{
+              textTransform: "none",
+              marginLeft: "30px",
+              alignItems: "center",
+              height: "40px",
+              width: "95px",
+              backgroundColor: "#0097b2",
+              '&:hover': {
+                backgroundColor: "#028299",
+              },
+            }}
+            variant="contained"
+            className="auth-btn"
+            href="/signup">
+            Sign Up
+          </Button>
+        </div>
       </div>
     )
   } else {
     menu = (
-      <div className="cred">
+      <div className="header-menu">
+        <div className="header-container">
+          <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
+        </div>
         <Button
           sx={{
             textTransform: "none",
@@ -143,10 +151,6 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   }
   return (
     <div className="header">
-      {/*<a id="headerLink" href="/"><h1 id="logo">CODIR</h1></a>*/}
-      <div className="header-container">
-        <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
-      </div>
       {menu}
     </div>
   );
