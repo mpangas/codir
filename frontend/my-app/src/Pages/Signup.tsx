@@ -32,7 +32,7 @@ function Signup() {
       }
     }
     return (
-        <div className="main">
+        <div className="signup">
           <div id="largebox">
           <form onSubmit={submit}>
             <p id="promptedtext">Sign up for your Codir account</p>

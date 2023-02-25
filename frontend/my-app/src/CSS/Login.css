@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
-.main {
+.login {
     display: flex;
     padding-top: 35px;
-
+    background-color: #F4FAF8;
+    height: 500px;
+    width: 100%;
 }
 
 .boxMargin {
@@ -52,7 +54,7 @@
     line-height: 26px;
 
     color: #000000;
-    margin-left: 15%;
+    margin-left: 20%;
     margin-top: 3%;
 }
 

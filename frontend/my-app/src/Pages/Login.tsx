@@ -48,7 +48,7 @@ const Login = (props: { setUsername: (username: string) => void }) => {
         }
     }
     return (
-        <div className="main">
+        <div className="login">
             <div id="mainloginbox">
                 <form onSubmit={submit}>
                     <p id="promptedlogintext">Login to your Codir account</p>
