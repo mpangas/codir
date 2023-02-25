@@ -14,6 +14,7 @@
   display: flex;
   padding: 10px 20px;
   background-color: #F4FAF8;
+  flex-direction: row;
   width: 100%;
   position: fixed;
   top: 0;
@@ -24,11 +25,12 @@
 
 .header-menu {
   display: flex;
-  flex-direction: row;
-  width: 100%;
 }
 
 .header-container {
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
   margin-right: auto;
 }
 
@@ -45,19 +47,4 @@
 
 .auth-btn {
   font-family: 'Rubik', sans-serif;
-}
-
-#dashboardB {
-  font-family: 'Roboto Mono', sans-serif;
-  font-size: 15px;
-  margin-right: auto;
-}
-
-#dashboardB:focus {
-  outline: none;
-}
-
-#dashboardB:hover {
-  color: #71d5d6;
-  background-color: #F4FAF8;
 }

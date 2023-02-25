@@ -6,8 +6,10 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
-import { deepOrange } from '@mui/material/colors';
 import LogoPic from '../image/CodirLogo.png';
+import { ListItemIcon, ListItemText, MenuList } from '@mui/material';
+import Person2Icon from '@mui/icons-material/Person2';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -30,9 +32,6 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   if (props.username === "" || props.username === undefined) {
     menu = (
       <div className="header-menu">
-        <div className="header-container">
-          <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
-        </div>
         <div className="buttons">
           <Button
             sx={{
@@ -74,28 +73,133 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   } else {
     menu = (
       <div className="header-menu">
-        <div className="header-container">
-          <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
-        </div>
         <Button
           sx={{
             textTransform: "none",
             color: "black",
-            fontWeight: "bold"
+            fontWeight: "500",
+            backgroundColor: "transparent",
+            fontSize: "16px",
+            height: "40px",
+            "&:hover": {
+              color: "#0097b2",
+              backgroundColor: "transparent",
+            },
+            "&:focus": {
+              outline: "none",
+              textDecoration: "none",
+            },
+            "&:after": {
+              position: 'absolute',
+              content: '""',
+              width: '100%',
+              transform: 'scaleX(0)',
+              height: '2px',
+              bottom: 0,
+              left: 0,
+              backgroundColor: '#0097b2',
+              transformOrigin: 'bottom right',
+              transition: 'transform 0.30s ease-out',
+            },
+            "&:hover:after": {
+              transform: 'scaleX(1)',
+              transformOrigin: 'bottom left',
+            },
+            marginRight: "20px",
+            marginTop: "auto",
+            marginBottom: "auto",
           }}
-          id="dashboardB"
+          className="nav-btn"
           href="/dashboard"
         >DASHBOARD</Button>
+        <Button
+          sx={{
+            textTransform: "none",
+            color: "black",
+            fontWeight: "500",
+            backgroundColor: "transparent",
+            fontSize: "16px",
+            height: "40px",
+            "&:hover": {
+              color: "#0097b2",
+              backgroundColor: "transparent",
+            },
+            "&:focus": {
+              outline: "none",
+              textDecoration: "none",
+            },
+            "&:after": {
+              position: 'absolute',
+              content: '""',
+              width: '100%',
+              transform: 'scaleX(0)',
+              height: '2px',
+              bottom: 0,
+              left: 0,
+              backgroundColor: '#0097b2',
+              transformOrigin: 'bottom right',
+              transition: 'transform 0.30s ease-out',
+            },
+            "&:hover:after": {
+              transform: 'scaleX(1)',
+              transformOrigin: 'bottom left',
+            },
+            marginRight: "20px",
+            marginTop: "auto",
+            marginBottom: "auto",
+          }}
+          className="nav-btn"
+          href="/browse"
+        >BROWSE</Button>
+        <Button
+          sx={{
+            textTransform: "none",
+            color: "black",
+            fontWeight: "500",
+            backgroundColor: "transparent",
+            fontSize: "16px",
+            height: "40px",
+            "&:hover": {
+              color: "#0097b2",
+              backgroundColor: "transparent",
+            },
+            "&:focus": {
+              outline: "none",
+              textDecoration: "none",
+            },
+            "&:after": {
+              position: 'absolute',
+              content: '""',
+              width: '100%',
+              transform: 'scaleX(0)',
+              height: '2px',
+              bottom: 0,
+              left: 0,
+              backgroundColor: '#0097b2',
+              transformOrigin: 'bottom right',
+              transition: 'transform 0.30s ease-out',
+            },
+            "&:hover:after": {
+              transform: 'scaleX(1)',
+              transformOrigin: 'bottom left',
+            },
+            marginRight: "20px",
+            marginTop: "auto",
+            marginBottom: "auto",
+          }}
+          className="nav-btn"
+          href="/about"
+        >ABOUT US</Button>
         <React.Fragment>
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-            <Tooltip title="Account Settings">
+            <Tooltip title="">
               <IconButton onClick={handleClick}
                 size="small"
                 sx={{ ml: 2 }}
                 aria-controls={open ? 'account-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}>
-                <Avatar sx={{ width: 47, height: 47, bgcolor: deepOrange[500] }}>
+                <Avatar sx={{ width: 47, height: 47, bgcolor: '#0097b2' }}>
                   {props.username.substring(0, 1).toUpperCase()}
                 </Avatar>
               </IconButton>
@@ -106,9 +210,11 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             open={open}
             onClose={handleClose}
             onClick={handleClose}
+            disableScrollLock={true}
             PaperProps={{
               elevation: 0,
               sx: {
+                width: 175,
                 overflow: 'visible',
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 mt: 1.5,
@@ -134,16 +240,20 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <MenuItem onClick={handleClose}>
-                <Avatar sx={{ fontSize: "15px" }} /> Profile
+            <MenuList>
+              <MenuItem>
+                <ListItemIcon>
+                  <Person2Icon fontSize="medium" />
+                </ListItemIcon>
+                <ListItemText>Profile</ListItemText>
               </MenuItem>
-            </Box>
-            <Box display="flex" alignItems="center" justifyContent="center">
               <MenuItem id="logout" href="/login" onClick={logout}>
-                Logout
+                <ListItemIcon>
+                  <LogoutIcon fontSize="medium" />
+                </ListItemIcon>
+                <ListItemText>Log Out</ListItemText>
               </MenuItem>
-            </Box>
+            </MenuList>
           </Menu>
         </React.Fragment>
       </div>
@@ -151,6 +261,9 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   }
   return (
     <div className="header">
+      <div className="header-container">
+        <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
+      </div>
       {menu}
     </div>
   );
