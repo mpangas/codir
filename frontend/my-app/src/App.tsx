@@ -9,12 +9,14 @@ import './CSS/Main.css';
 import './CSS/Login.css';
 import './CSS/Signup.css';
 import './CSS/Dashboard.css';
+import './CSS/AboutUs.css';
 import Header from './components/Header'
 import Main from './components/Main'
 import Footer from './components/Footer'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import Dashboard from './Pages/Dashboard'
+import AboutUs from './Pages/AboutUs'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -53,6 +55,7 @@ function App() {
             <Route path="/login" element={<Login setUsername={setUsername} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard username={username} />} />
+            <Route path="/about" element={<AboutUs />} />
           </Routes>
           <Footer />
         </div>
