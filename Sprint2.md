@@ -4,11 +4,22 @@
 
 [Login](#login)
 
-- [Routes](#login-routes)
+- [Routes](#routes)
+  - [POST /api/signup](#post-apisignup)
+  - [POST /api/signin](#post-apisignin)
+  - [GET /api/get](#get-apiget)
+  - [GET /api/user](#get-apiuser)
+  - [DELETE /api/delete](#delete-apidelete)
+  - [POST /api/logout](#post-apilogout)
   
 [Tutorials](#tutorials)
 
-- [Routes](#tutorials-routes)
+- [Routes](#routes-1)
+  - [POST /api/tutorials](#post-apitutorials)
+  - [GET /api/tutorials](#get-apitutorials)
+  - [GET /api/tutorials/:id](#get-apitutorialsid)
+  - [PUT /api/tutorials/:id](#put-apitutorialsid)
+  - [DELETE /api/tutorials/:id](#delete-apitutorialsid)
 
 ## Login
 
@@ -20,17 +31,21 @@ Login Information has the following structure:
 
 `password`: The password of the user. This is passed in as plaintext, but stored in the database in a hashed form.
 
-### Routes {#login-routes}
+### Routes
 
-#### POST /api/signup {#signup}
+#### POST /api/signup
 
 Used to create new user info to be stored in the database.
 
+Accepts: An object containing the new user's `email`, `username`, and `password`.
+
 Returns: An object creating the new user info if storeage was successful, or a corresponding error message if the input was incorrectly formatted or the email or username already exists in the database.
 
-#### POST /api/signin {#signin}
+#### POST /api/signin
 
 Used to sign in to an account whose information exists in the database. It creates a JWT so that logins can be kept persistent across sessions.
+
+Accepts: An object with the user's `username` and `password` (unhashed).
 
 Returns: A "success" message if the login was successful. If not, a corresponding error for one of these scenarios:
 
@@ -40,15 +55,31 @@ Returns: A "success" message if the login was successful. If not, a correspondin
 - If creating the JWT failed.
 - (WIP)
 
-#### GET /api/get {#login-get}
+#### GET /api/get
 
 Used to get all login information in the current database.
 
-Returns: An objecg containing all existing login information (with hashed passwords).
+Returns: An object containing all existing login information (with hashed passwords).
 
-### GET /api/user {#login-user}
+### GET /api/user
 
-WIP
+Used to get the currently authenticated user's information.
+
+Returns: An object containing the user info, or an error if the user is not authenticated.
+
+### DELETE /api/delete
+
+Used to delete the currently logged-in user's information.
+
+Accepts: An object with the user's `username` and `password` (unhashed).
+
+Returns: A "success" message if deletion was successful, or an error if the username does not exist, the assword does not match for the given username, or the input was incorrectly formatted.
+
+#### POST /api/logout
+
+Used to logout; removes the token from the current session.
+
+Returns: A "success" message.
 
 ## Tutorials
 
@@ -68,36 +99,40 @@ A tutorial has the following structure:
 
 `score`: The score this post has based on the number of votes up and down it has received. At post creation time, this should be 0, and should not change if a post is edited.
 
-### Routes {#tutorials-routes}
+### Routes
 
-#### POST /api/tutorials {#post-tutorials}
+#### POST /api/tutorials
 
 Used to create a new tutorial post in the database.
 
+Accepts: A tutorial object containing the `title`, `location`, and `user` of the tutorial.
+
 Returns: The new post object if the creation was successful, or an error if the object was incorrectly formatted or the `location` was not unique.
 
-#### GET /api/tutorials {#get-tutorials-all}
+#### GET /api/tutorials
 
 Used to get all tutorials currently in the database.
 
 Returns: An object containing all tutorials.
 
-#### GET /api/tutorials/:id {#get-tutorials}
+#### GET /api/tutorials/:id
 
 Used to get a single tutorial post with that ID.
 
 Returns: The object matching the ID in the call, or an error if no post exists with that ID.
 
-#### PUT /api/tutorials/:id {#put-tutorials}
+#### PUT /api/tutorials/:id
 
 Used to change the information of the post with that ID. Only the following should be edited with this call:
 
 `title`
 `location`
 
+Accepts: An object containing those two pieces of information.
+
 Returns: The object matching the ID with the new information, or an error if no post exists with that ID, a post already exists with the new `location`, or the object was incorrectly formatted.
 
-#### DELETE /api/tutorials/:id {#delete-tutorials}
+#### DELETE /api/tutorials/:id
 
 Used to delete the post with that ID.
 
