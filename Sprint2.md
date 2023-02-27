@@ -50,16 +50,15 @@ Accepts: An object with the user's `username` and `password` (unhashed).
 Returns: A "success" message if the login was successful. If not, a corresponding error for one of these scenarios:
 
 - If the input was incorrectly formatted.
-- If no login exists with that username.
-- If the password does not match.
-- If creating the JWT failed.
-- (WIP)
+- If no corresponding username exists in the database.
+- If the password does not match the stored password for the given username.
+- If JWT creation failed.
 
 #### GET /api/get
 
-Used to get all login information in the current database.
+Used to get all login information in the current database. This is primarily used for testing.
 
-Returns: An object containing all existing login information (with hashed passwords).
+Returns: An array of User objects containing all existing users and their information (with hashed passwords).
 
 ### GET /api/user
 
@@ -69,7 +68,7 @@ Returns: An object containing the user info, or an error if the user is not auth
 
 ### DELETE /api/delete
 
-Used to delete the currently logged-in user's information.
+Used to completely delete a user from the database when provided the correct username and password. This is primarily used for testing.
 
 Accepts: An object with the user's `username` and `password` (unhashed).
 
