@@ -52,6 +52,8 @@
   },
   "devDependencies": {
     "@types/jest": "^29.4.0",
-    "cypress": "^12.6.0"
+    "@types/mocha": "^10.0.1",
+    "cypress": "^12.7.0",
+    "jest": "^27.5.1"
   }
 }
