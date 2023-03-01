@@ -1,0 +1,89 @@
+
+  .aboutus {
+    height: 500px;
+    background-color: #F4FAF8;
+    height: 200%;
+  }
+
+  #largeText {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 36px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+  }
+  #tinyText {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+   
+    
+}
+#madebyText {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%; 
+}
+#madebyText2 {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -1%; 
+}
+#madebyText3 {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2%; 
+}
+#madebyText4 {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2%; 
+}
+#madebyText5 {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2%; 
+}
+  
+
+    

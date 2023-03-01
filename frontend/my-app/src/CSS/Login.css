@@ -1,12 +1,19 @@
-.main {
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+.login {
     display: flex;
     padding-top: 35px;
-  }
+    background-color: #F4FAF8;
+    height: 520px;
+    width: 100%;
+}
+
 .boxMargin {
     margin-left: 20%;
     margin-bottom: 2%;
 }
-#websitelogo{
+
+#websitelogo {
 
     width: 271px;
     height: 88px;
@@ -23,57 +30,58 @@
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-#mainloginbox{
+#mainloginbox {
     box-sizing: border-box;
     width: 487px;
     height: 300px;
     background: #FAF9F6;
     border: 2px solid #000000;
+    margin-top: 3%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-#promptedlogintext{
-    
+#promptedlogintext {
+
     width: 367px;
     height: 64px;
-        
-    font-family: 'JetBrains Mono';
-    font-style: normal;
+
+    font-family: 'Roboto Mono', sans-serif;
     font-weight: 400;
     font-size: 20px;
     line-height: 26px;
-        
+
     color: #000000;
-    margin-left: 25%;
-    margin-top: 2%;  
+    margin-left: 20%;
+    margin-top: 3%;
 }
-#loginusernamebox{
+
+.input-box {
     box-sizing: border-box;
     width: 320px;
     height: 53px;
     background: #FAF9F6;
 }
 
-#loginpasswordbox{
-    box-sizing: border-box;
-    width: 320px;
-    height: 53px;
-    background: #FAF9F6;
-}
-#loginbox{
+#loginbox {
     box-sizing: border-box;
     width: 146px;
     height: 45px;
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
     font-size: 24px;
     line-height: 32px;
-    
+
     margin-left: 34%;
-    margin-top: 3%;
+    margin-top: 1%;
     margin-bottom: 1.5%;
+}
+
+.error-msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 15%;
 }

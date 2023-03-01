@@ -1,63 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Neucha&family=Oswald:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700&family=Open+Sans:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
+
 /*Header*/
 #headerLink {
   text-decoration: none;
 }
+
 .header {
-    display: flex;
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  #logo {
-    width: 271px;
-    height: 88px;
-    font-family: 'Oswald', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 48px;
-    color: #000000;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    
-    margin-right: auto;
-  
-    cursor: pointer;
-  }
-  .cred {
-    margin-left: auto;
-    cursor: pointer;
-    display: flex;
-  }
-  #login {
-    box-sizing: border-box;
-    width: 150px;
-    height: 47px;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    color: #FFFFFF;
-    background: #000000;
-    border: 1px solid #000000;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  
-    margin-right: 20%;
-    margin-top: 5%;
+  display: flex;
+  padding: 10px 20px;
+  background-color: #F4FAF8;
+  flex-direction: row;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  /* border-bottom: 1px solid #ddd; */
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
+}
 
-    cursor: pointer;
-    
-  }
-  #signup{
-    width: 150px;
-    height: 47px;
-    background: #FFFFFF;
-    border: 3px solid #000000;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    color: #000000;
-    
-    margin-top: 5%;
+.header-menu {
+  display: flex;
+}
 
-    cursor: pointer;
-  }
+.header-container {
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: auto;
+}
+
+#logo {
+  max-height: 50px;
+  cursor: pointer;
+}
+
+.buttons {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-family: 'Rubik', sans-serif;
+}
+
+.auth-btn {
+  font-family: 'Rubik', sans-serif;
+}
