@@ -18,6 +18,7 @@ import Signup from './Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import AboutUs from './Pages/AboutUs'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import HomePage from './Pages/HomePage'
 
 const theme = createTheme({
   typography: {
@@ -28,6 +29,7 @@ const theme = createTheme({
     },
   },
 });
+=======
 
 function App() {
   const [username, setUsername] = React.useState('');
