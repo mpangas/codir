@@ -132,6 +132,7 @@ func DeleteUser(c *fiber.Ctx) error {
 			"message": "Invalid data",
 		})
 	}
+
 	var checkInfo models.UserInfo
 	resultUsername := database.DB.First(&checkInfo, "username = ?", user.Username)
 
