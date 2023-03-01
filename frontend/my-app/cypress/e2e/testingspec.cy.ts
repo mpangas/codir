@@ -7,7 +7,7 @@ describe('Login', () => {
   });
 });
 
-describe('Sign Up', () => {
+describe('Sign up', () => {
   it('shows a sign up button', () => {
     cy.visit('http://localhost:3000/signup');
     cy.get('button[id="signupbox"]').click();
