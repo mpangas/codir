@@ -15,10 +15,11 @@ describe('Sign up', () => {
 });
 
 describe('Sign up testing submit', () => {
-  it('should allow signing up for the wesbite to be possible with correct inputs', () => {
+  it('should allow signing up for the wesbite to be possible with correct inputs and redirect to the login page to continue', () => {
     cy.visit('http://localhost:3000/signup');
-    cy.get('input[id="emailbox"]').type('test@test.com');
-    cy.get('input[id="usernamebox"]').type('test');
-    cy.get('input[id="passwordbox"]').type('testpassword');
+    cy.get('input[id="emailbox"]').type('newtest2@newtest2.com');
+    cy.get('input[id="usernamebox"]').type('newtest2');
+    cy.get('input[id="passwordbox"]').type('newtest2');
+    cy.get('button[id="signupbox"]').click()
   });
 });
