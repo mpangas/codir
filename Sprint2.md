@@ -3,18 +3,28 @@
 ## Frontend - Work Completed
 - Designed the landing page of the website.
 - Created the login button and login page allowing the user to login to our website.
-- Created the sign up button and sing up page allowing the user to sign up for our website.
-- Designed the dashboard page of the our website which allows the user to view favorited tutorials. The functionality has     not been implemented yet. 
-- Designed the about us page which includes a brief summary of what Codir is about as well as the names of the               contributors. 
+- Created the sign up button and sign up page allowing the user to sign up for our website.
+- Designed the dashboard page of the our website which allows the user to view favorited tutorials. The functionality has not been implemented yet. 
+- Designed the about us page which includes a brief summary of what Codir is about as well as the names of the contributors. 
+- Integrated the signin and signup to work with the backend.
 
 ## Frontend - Cypress Unit Tests
-- Test 1 - 'Login' - This unit test checks that the login button is functional and redirects the user to the login page     for them to log in to the website.
-- Test 2 - 'Sign up' - This unit test checks that the sign up button is functional and redirects the user to the sign up     page for them to sign up for the website.
-- Test 3 - 'Sign up testing submit' - This unit test inputs a sample email, username, and password on the sign up page to     ensure that signing up for the website is functional and succeeds which is shown by the website redirecting to the login   page immediately after sign up. 
+- Test 1 - 'Login' - This unit test checks that the login button is functional and redirects the user to the login page for them to log in to the website.
+- Test 2 - 'Sign up' - This unit test checks that the sign up button is functional and redirects the user to the sign up page for them to sign up for the website.
+- Test 3 - 'Sign up testing submit' - This unit test inputs a sample email, username, and password on the sign up page to ensure that signing up for the website is functional and succeeds which is shown by the website redirecting to the login page immediately after sign up. 
 
 ## Backend - Work Completed
+- Migrated backend to use the Go Fiber framework due to fetch issues.
+- Setup environmental variables in a locally stored .env file to allow for database password securiy and ease of use
+- Restructured files to include seperate controller folders for login and posts, as well as seperate files for the database connection and models.
+- Created tutorial post infrastructure, including routes and controller functions
+- Created several unit tests using Go's stdlib testing package that test the functionality of different API routes, as shown below
 
 ## Backend - Go Unit Tests
+- Test 1: [api/get](#get-apiget) - This unit test simulates a GET request to the api/get path which executes a function to return the information for all users in the database. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 2: [api/signup](#post-apisignup) - This unit test simulates a POST request to the api/signup path which executes a function to create a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 3: [api/signin](#post-apisignin) - This unit test simulates a POST request to the api/signin path which executes a function to verify if a user is in the database given mock parameters and create a cookie if the user exists. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 4: [api/delete](#delete-apidelete) - This unit test simulates a DELETE request to the api/delete path which executes a function to delete a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
 
 ## API Documentation
 
