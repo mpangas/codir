@@ -1,8 +1,16 @@
 # Sprint 2 Documentation
 
 ## Frontend - Work Completed
+- Designed the landing page of the website.
+- Created the login button and login page allowing the user to login to our website.
+- Created the sign up button and sing up page allowing the user to sign up for our website.
+- Designed the dashboard page of the our website which allows the user to view favorited tutorials. The functionality has     not been implemented yet. 
+- Designed the about us page which includes a brief summary of what Codir is about as well as the names of the               contributors. 
 
 ## Frontend - Cypress Unit Tests
+- Test 1 - 'Login' - This unit test checks that the login button is functional and redirects the user to the login page     for them to log in to the website.
+- Test 2 - 'Sign up' - This unit test checks that the sign up button is functional and redirects the user to the sign up     page for them to sign up for the website.
+- Test 3 - 'Sign up testing submit' - This unit test inputs a sample email, username, and password on the sign up page to     ensure that signing up for the website is functional and succeeds which is shown by the website redirecting to the login   page immediately after sign up. 
 
 ## Backend - Work Completed
 
