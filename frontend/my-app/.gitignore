@@ -25,6 +25,8 @@ yarn-error.log*
 node_modules
 
 # Ignore Cypress files
+cypress/integration/examples/
+cypress/fixtures/
 cypress/videos/
 cypress/screenshots/
 cypress/results/
