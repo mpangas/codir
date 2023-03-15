@@ -16,3 +16,8 @@
 
 .env
 node_modules
+
+# Ignore Cypress files
+cypress/videos/
+cypress/screenshots/
+cypress/results/
