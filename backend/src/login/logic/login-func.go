@@ -29,6 +29,8 @@ func Signup(c *fiber.Ctx) error {
 
 	// Initialize empty favorites array
 	newUser.Favorites = []models.Favorite{}
+	// Add temp favorite item to array
+	newUser.Favorites = append(newUser.Favorites, models.Favorite{TutorialID: 0})
 
 	// Hash password
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
