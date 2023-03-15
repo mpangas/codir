@@ -27,6 +27,9 @@ func Signup(c *fiber.Ctx) error {
 		})
 	}
 
+	// Initialize empty favorites array
+	newUser.Favorites = []models.Favorite{}
+
 	// Hash password
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
 	newUser.Password = string(hashPwd)
@@ -202,3 +205,53 @@ func Logout(c *fiber.Ctx) error {
 		"message": "success",
 	})
 }
+
+// Favorites Functions
+/*
+func AddFavorite(c *fiber.Ctx) error {
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+
+	// Create temporary object that holds integer for ID
+	type TutorialID struct {
+		ID int `json:"id"`
+	}
+
+	// Get favorite integer ID from request
+	favoriteID := new(TutorialID)
+	if err := c.BodyParser(favoriteID); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
+	}
+
+	// Add favorite to user favorites
+	user.Favorites = append(user.Favorites, favoriteID.ID)
+
+	// Update user in db
+	database.DB.Save(&user)
+
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
+}*/
