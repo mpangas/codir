@@ -30,7 +30,7 @@ func Signup(c *fiber.Ctx) error {
 	// Initialize empty favorites array
 	newUser.Favorites = []models.Favorite{}
 	// Add temp favorite item to array
-	newUser.Favorites = append(newUser.Favorites, models.Favorite{TutorialID: 0})
+	newUser.Favorites = append(newUser.Favorites, models.Favorite{TutorialID: 5})
 
 	// Hash password
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
@@ -126,6 +126,22 @@ func GetUsers(c *fiber.Ctx) error {
 	var users []models.UserInfo
 	database.DB.Find(&users)
 	return c.JSON(users)
+}
+
+func GetFavorites(c *fiber.Ctx) error {
+	var user models.UserInfo
+	// Parse input for user
+	if err := c.BodyParser(&user); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
+	}
+	var favorites []models.Favorite
+	username := c.Params("username")
+	database.DB.First(&user, "username = ?", username)
+	database.DB.Model(&user).Association("Favorites").Find(&favorites)
+	return c.JSON(favorites)
 }
 
 func DeleteUser(c *fiber.Ctx) error {
