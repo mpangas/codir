@@ -13,4 +13,6 @@ func LoginRoutes(app *fiber.App) {
 	app.Post("/api/signin", logic.Signin)
 	app.Delete("/api/delete", logic.DeleteUser)
 	app.Post("/api/logout", logic.Logout)
+	app.Post("/api/favorites/add", logic.AddFavorite)
+	//app.Delete("/api/favorites/remove", logic.RemoveFavorite)
 }

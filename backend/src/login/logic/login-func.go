@@ -225,7 +225,7 @@ func Logout(c *fiber.Ctx) error {
 }
 
 // Favorites Functions
-/*
+
 func AddFavorite(c *fiber.Ctx) error {
 	// Get cookie with name jwt
 	cookie := c.Cookies("jwt")
@@ -249,14 +249,11 @@ func AddFavorite(c *fiber.Ctx) error {
 	var user models.UserInfo
 	database.DB.First(&user, "username = ?", claims.Issuer)
 
-	// Create temporary object that holds integer for ID
-	type TutorialID struct {
-		ID int `json:"id"`
-	}
+	// Create Favorite object that holds new Favorite addition
+	favorite := new(models.Favorite)
 
 	// Get favorite integer ID from request
-	favoriteID := new(TutorialID)
-	if err := c.BodyParser(favoriteID); err != nil {
+	if err := c.BodyParser(favorite); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
 			"message": "Invalid data",
@@ -264,12 +261,12 @@ func AddFavorite(c *fiber.Ctx) error {
 	}
 
 	// Add favorite to user favorites
-	user.Favorites = append(user.Favorites, favoriteID.ID)
+	user.Favorites = append(user.Favorites, *favorite)
 
 	// Update user in db
-	database.DB.Save(&user)
+	database.DB.Where("username = ?", claims.Issuer).Save(&user)
 
 	return c.JSON(fiber.Map{
 		"message": "success",
 	})
-}*/
+}
