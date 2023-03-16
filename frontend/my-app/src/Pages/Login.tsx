@@ -6,7 +6,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button'
 
-const Login = (props: { setUsername: (username: string) => void }) => {
+
+const Login = (props: { setUsername: (username: string) => void}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
