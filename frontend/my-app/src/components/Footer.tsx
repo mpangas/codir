@@ -1,5 +1,4 @@
 import React from 'react';
-import github from '../image/github.png';
 import { GitHub } from '@mui/icons-material';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';

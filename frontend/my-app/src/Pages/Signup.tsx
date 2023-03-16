@@ -59,6 +59,7 @@ function Signup() {
               onChange={e => setPassword(e.target.value)}
             />
             <Button 
+              data-testid="my-button"
               variant="contained" 
               color="primary" 
               className="boxMargin" 
