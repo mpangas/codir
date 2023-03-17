@@ -4,15 +4,20 @@ import App from './App';
 import Login from './Pages/Login'
 import Signup from './Pages/Signup';
 import { jest } from '@jest/globals';
+import { MemoryRouter } from 'react-router';
 
 
 test('test', () => {
-    expect(true).toBe(true);
+  expect(true).toBe(true);
 })
 
 test('displays error message when username is not entered', async () => {
   const setUsername = jest.fn();
-  const { getByLabelText, getByText } = render(<Login setUsername={(username: string) => console.log(username)} />);
+  const { getByLabelText, getByText } = render(
+    <MemoryRouter>
+      <Login setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
   const usernameInput = getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const loginButton = getByText('LOGIN');
