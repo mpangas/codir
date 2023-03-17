@@ -13,6 +13,7 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "babel-loader": "^9.1.2",
     "concurrently": "^7.6.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
