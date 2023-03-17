@@ -3,7 +3,7 @@ import React from 'react';
 import App from './App';
 import Login from './Pages/Login'
 import Signup from './Pages/Signup';
-import jest from 'jest'
+import { jest } from '@jest/globals';
 
 
 test('test', () => {
@@ -17,6 +17,7 @@ test('displays error message when username is not entered', async () => {
   const passwordInput = getByLabelText('Password');
   const loginButton = getByText('LOGIN');
 
+  fireEvent.change(usernameInput, { target: { value: 'testusername' } });
   fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
   fireEvent.click(loginButton);
 
