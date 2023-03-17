@@ -128,22 +128,6 @@ func GetUsers(c *fiber.Ctx) error {
 	return c.JSON(users)
 }
 
-func GetFavorites(c *fiber.Ctx) error {
-	var user models.UserInfo
-	// Parse input for user
-	if err := c.BodyParser(&user); err != nil {
-		c.Status(fiber.StatusBadRequest)
-		return c.JSON(fiber.Map{
-			"message": "Invalid data",
-		})
-	}
-	var favorites []models.Favorite
-	username := c.Params("username")
-	database.DB.First(&user, "username = ?", username)
-	database.DB.Model(&user).Association("Favorites").Find(&favorites)
-	return c.JSON(favorites)
-}
-
 func DeleteUser(c *fiber.Ctx) error {
 	user := new(models.UserInfo)
 
@@ -226,6 +210,63 @@ func Logout(c *fiber.Ctx) error {
 
 // Favorites Functions
 
+/*
+* GET USER FAVORITES
+*
+* @param No Request Body
+*
+* @return Returns an array of Favorite objects that associate with current user
+*
+  - Each Favorite Object is formatted as follows:
+  - {
+    "username": [String]
+    "tutorialID": [Integer]
+  - }
+
+*
+* You should only need the tutorialID to then fetch the associated Tutorial object
+*
+*/
+func GetFavorites(c *fiber.Ctx) error {
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+
+	// Get Favorites
+	var favorites []models.Favorite
+	// username := c.Params("username")
+	// database.DB.First(&user, "username = ?", username)
+	database.DB.Model(&user).Association("Favorites").Find(&favorites)
+	return c.JSON(favorites)
+}
+
+/*
+ * ADD FAVORITE
+ *
+ * @param Must be provided a singular field called "tutorialID" in the request body
+ * NOTE: The ID must be an integer
+ *
+ * @return Returns a message indiciating if the request was successful or not
+ *
+ */
 func AddFavorite(c *fiber.Ctx) error {
 	// Get cookie with name jwt
 	cookie := c.Cookies("jwt")
@@ -261,10 +302,58 @@ func AddFavorite(c *fiber.Ctx) error {
 	}
 
 	// Add favorite to user favorites
-	user.Favorites = append(user.Favorites, *favorite)
+	database.DB.Model(&user).Association("Favorites").Append(favorite)
 
-	// Update user in db
-	database.DB.Where("username = ?", claims.Issuer).Save(&user)
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
+}
+
+/*
+ * REMOVE FAVORITE
+ *
+ * @param Must be provided a singular field called "tutorialID" in the request body
+ * NOTE: The ID must be an integer
+ *
+ * @return Returns a message indiciating if the request was successful or not
+ *
+ */
+func RemoveFavorite(c *fiber.Ctx) error {
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+
+	// Create Favorite object that holds Favorite to remove
+	favoriteToRemove := new(models.Favorite)
+
+	// Get favorite integer ID from request
+	if err := c.BodyParser(favoriteToRemove); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
+	}
+
+	// Find and remove favorite from user favorites
+	database.DB.Model(&user).Association("Favorites").Delete(favoriteToRemove)
 
 	return c.JSON(fiber.Map{
 		"message": "success",
