@@ -17,8 +17,7 @@ test('displays error message when username is not entered', async () => {
   const passwordInput = getByLabelText('Password');
   const loginButton = getByText('LOGIN');
 
-  fireEvent.change(usernameInput, { target: { value: 'testusername' } });
-  fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+  fireEvent.change(passwordInput, { target: { value: 'testpass' } });
   fireEvent.click(loginButton);
 
   const errorMsg = await getByText('You must enter a username.');
