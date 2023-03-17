@@ -7,18 +7,18 @@ import { jest } from '@jest/globals';
 import { MemoryRouter } from 'react-router';
 
 
-test('test', () => {
+test('sample test', () => {
   expect(true).toBe(true);
 })
 
-test('displays error message when username is not entered', async () => {
+test('prints error message if there is no username entered', async () => {
   const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Login setUsername={(username: string) => console.log(username)} />
     </MemoryRouter>
   );
-  const usernameInput = getByLabelText('Username');
+
   const passwordInput = getByLabelText('Password');
   const loginButton = getByText('LOGIN');
 
@@ -26,5 +26,23 @@ test('displays error message when username is not entered', async () => {
   fireEvent.click(loginButton);
 
   const errorMsg = await getByText('You must enter a username.');
+  expect(errorMsg).toBeInTheDocument();
+});
+
+test('prints error message if there is no password entered', async () => {
+  const setUsername = jest.fn();
+  const { getByLabelText, getByText } = render(
+    <MemoryRouter>
+      <Login setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+
+  const usernameInput = getByLabelText('Username');
+  const loginButton = getByText('LOGIN');
+
+  fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+  fireEvent.click(loginButton);
+
+  const errorMsg = await getByText('You must enter a password.');
   expect(errorMsg).toBeInTheDocument();
 });
