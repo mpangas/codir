@@ -55,7 +55,6 @@ test('prints error message if there is no email entered (signup screen)', async 
     </MemoryRouter>
   );
 
-  const emailInput =  getByLabelText('Email');
   const usernameInput =  getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
@@ -77,7 +76,6 @@ test('prints error message if there is no username entered (signup screen)', asy
   );
 
   const emailInput =  getByLabelText('Email');
-  const usernameInput =  getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
@@ -99,7 +97,6 @@ test('prints error message if there is no password entered (signup screen)', asy
 
   const emailInput =  getByLabelText('Email');
   const usernameInput =  getByLabelText('Username');
-  const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
   fireEvent.change(emailInput, { target: { value: 'testemail' } });
