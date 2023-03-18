@@ -9,11 +9,23 @@ function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const submit = async (e: SyntheticEvent) => {
       e.preventDefault();
-      
+      if (email === "" || email === undefined) {
+        setError("You must enter a email.");
+        return;
+      }
+      else if (username === "" || username === undefined) {
+        setError("You must enter a username.");
+        return;
+      }
+      else if (password === "" || password === undefined) {
+        setError("You must enter a password.");
+        return;
+      }
       const response = await fetch('http://localhost:8000/api/signup', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
