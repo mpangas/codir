@@ -70,6 +70,9 @@ function Signup() {
               autoComplete="current-password"
               onChange={e => setPassword(e.target.value)}
             />
+            <div className="error-msg">
+              {error}
+            </div>
             <Button 
               data-testid="my-button"
               variant="contained" 
