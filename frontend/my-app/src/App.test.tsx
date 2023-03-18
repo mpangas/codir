@@ -67,3 +67,24 @@ test('prints error message if there is no email entered (signup screen)', async 
   const errorMsg = await getByText('You must enter a email.');
   expect(errorMsg).toBeInTheDocument();
 });
+
+test('prints error message if there is no username entered (signup screen)', async () => {
+  const setUsername = jest.fn();
+  const { getByLabelText, getByText } = render(
+    <MemoryRouter>
+      <Signup />
+    </MemoryRouter>
+  );
+
+  const emailInput =  getByLabelText('Email');
+  const usernameInput =  getByLabelText('Username');
+  const passwordInput = getByLabelText('Password');
+  const signupButton = getByText('SIGN UP');
+
+  fireEvent.change(emailInput, { target: { value: 'testemail' } });
+  fireEvent.change(passwordInput, { target: { value: 'testpass' } });
+  fireEvent.click(signupButton);
+
+  const errorMsg = await getByText('You must enter a username.');
+  expect(errorMsg).toBeInTheDocument();
+});
