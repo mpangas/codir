@@ -39,6 +39,6 @@ func TutorialsRoutes(app *fiber.App) {
 	// I'm not yet 100% sure whether score increments should be their own routes, but this function would be common enough
 	// and simple enough that we shouldn't need to call EditTutorial every time.
 
-	app.Put("/api/tutorials/:id", logic.VoteUp)
-	app.Put("/api/tutorials/:id", logic.VoteDown)
+	app.Put("/api/tutorials/:id/up", logic.VoteUp)
+	app.Put("/api/tutorials/:id/down", logic.VoteDown)
 }
