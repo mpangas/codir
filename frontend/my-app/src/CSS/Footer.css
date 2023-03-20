@@ -1,0 +1,22 @@
+/*Footer*/
+.footer {
+    /*margin-top: 12%;*/
+    height: 174px;
+    background-color: #F4FAF8;
+    display: flex;
+    width: 100%;
+    bottom: 0;
+  }
+.horz {
+  border: 1px solid black;
+  height: 1px;
+  width: 575%; 
+  margin-top: 5.5%;
+}
+#firstLine {
+  margin-left: 5%;
+}
+#secondLine {
+  margin-right: 5%;
+}
+
