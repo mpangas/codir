@@ -106,3 +106,69 @@ test('prints error message if there is no password entered (signup screen)', asy
   const errorMsg = await getByText('You must enter a password.');
   expect(errorMsg).toBeInTheDocument();
 });
+
+test('prints error message if the email format is incorrect (signup screen)', async () => {
+  const setUsername = jest.fn();
+  const { getByLabelText, getByText } = render(
+    <MemoryRouter>
+      <Signup />
+    </MemoryRouter>
+  );
+
+  const emailInput =  getByLabelText('Email');
+  const usernameInput =  getByLabelText('Username');
+  const passwordInput = getByLabelText('Password');
+  const signupButton = getByText('SIGN UP');
+
+  fireEvent.change(emailInput, { target: { value: 'testemail' } });
+  fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+  fireEvent.change(passwordInput, { target: { value: 'testpass' } });
+  fireEvent.click(signupButton);
+
+  const errorMsg = await getByText('Email address should adhere to this format: example@example.com');
+  expect(errorMsg).toBeInTheDocument();
+});
+
+test('prints error message if the username format is incorrect (signup screen)', async () => {
+  const setUsername = jest.fn();
+  const { getByLabelText, getByText } = render(
+    <MemoryRouter>
+      <Signup />
+    </MemoryRouter>
+  );
+
+  const emailInput =  getByLabelText('Email');
+  const usernameInput =  getByLabelText('Username');
+  const passwordInput = getByLabelText('Password');
+  const signupButton = getByText('SIGN UP');
+
+  fireEvent.change(emailInput, { target: { value: 'testemail@email.com' } });
+  fireEvent.change(usernameInput, { target: { value: 'testu' } });
+  fireEvent.change(passwordInput, { target: { value: 'testpass' } });
+  fireEvent.click(signupButton);
+
+  const errorMsg = await getByText('The username must contain only alphanumeric and 6-20 characters.');
+  expect(errorMsg).toBeInTheDocument();
+});
+
+test('prints error message if the password format is incorrect (signup screen)', async () => {
+  const setUsername = jest.fn();
+  const { getByLabelText, getByText } = render(
+    <MemoryRouter>
+      <Signup />
+    </MemoryRouter>
+  );
+
+  const emailInput =  getByLabelText('Email');
+  const usernameInput =  getByLabelText('Username');
+  const passwordInput = getByLabelText('Password');
+  const signupButton = getByText('SIGN UP');
+
+  fireEvent.change(emailInput, { target: { value: 'testemail@email.com' } });
+  fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+  fireEvent.change(passwordInput, { target: { value: 'testp' } });
+  fireEvent.click(signupButton);
+
+  const errorMsg = await getByText('The password should contain 6-20 characters.');
+  expect(errorMsg).toBeInTheDocument();
+});
