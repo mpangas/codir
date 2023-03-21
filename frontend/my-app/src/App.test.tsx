@@ -3,6 +3,7 @@ import React from 'react';
 import App from './App';
 import Login from './Pages/Login'
 import Signup from './Pages/Signup';
+import Header from './components/Header'
 import { jest } from '@jest/globals';
 import { MemoryRouter } from 'react-router';
 
@@ -12,7 +13,6 @@ test('sample test', () => {
 })
 
 test('prints error message if there is no username entered (login screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Login setUsername={(username: string) => console.log(username)} />
@@ -30,7 +30,6 @@ test('prints error message if there is no username entered (login screen)', asyn
 });
 
 test('prints error message if there is no password entered (login screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Login setUsername={(username: string) => console.log(username)} />
@@ -48,7 +47,6 @@ test('prints error message if there is no password entered (login screen)', asyn
 });
 
 test('prints error message if there is no email entered (signup screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Signup />
@@ -68,7 +66,6 @@ test('prints error message if there is no email entered (signup screen)', async 
 });
 
 test('prints error message if there is no username entered (signup screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Signup />
@@ -88,7 +85,6 @@ test('prints error message if there is no username entered (signup screen)', asy
 });
 
 test('prints error message if there is no password entered (signup screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Signup />
@@ -108,7 +104,6 @@ test('prints error message if there is no password entered (signup screen)', asy
 });
 
 test('prints error message if the email format is incorrect (signup screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Signup />
@@ -130,7 +125,6 @@ test('prints error message if the email format is incorrect (signup screen)', as
 });
 
 test('prints error message if the username format is incorrect (signup screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Signup />
@@ -152,7 +146,6 @@ test('prints error message if the username format is incorrect (signup screen)',
 });
 
 test('prints error message if the password format is incorrect (signup screen)', async () => {
-  const setUsername = jest.fn();
   const { getByLabelText, getByText } = render(
     <MemoryRouter>
       <Signup />
