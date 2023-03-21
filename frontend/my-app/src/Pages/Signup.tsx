@@ -12,6 +12,7 @@ function Signup() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const usernameReg = /^[a-zA-Z0-9]{6,20}$/;
   const passwordReg = /^.{6,20}$/;
 
@@ -30,7 +31,11 @@ function Signup() {
         return;
       }
 
-      if (!usernameReg.test(username)) {
+      if(!emailReg.test(email)) {
+        setError("Email address should adhere to this format: example@example.com");
+        return;
+      }
+      else if (!usernameReg.test(username)) {
         setError("The username must contain only alphanumeric and 6-20 characters.");
         return;
       }
