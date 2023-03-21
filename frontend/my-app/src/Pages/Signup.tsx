@@ -10,7 +10,11 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [errorReg, setErrorReg] = useState("");
   const navigate = useNavigate();
+
+  const usernameReg = /^[a-zA-Z0-9]+$/;
+  const passwordReg = /^.{6,}$/;
 
   const submit = async (e: SyntheticEvent) => {
       e.preventDefault();
@@ -26,6 +30,16 @@ function Signup() {
         setError("You must enter a password.");
         return;
       }
+
+      if (!usernameReg.test(username)) {
+        setErrorReg("The username must contain only alphanumeric characters.");
+        return;
+      }
+      else if(!passwordReg.test(password)) {
+        setErrorReg("The password should contain at least 6 characters.");
+        return;
+      }
+      
       const response = await fetch('http://localhost:8000/api/signup', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
