@@ -12,8 +12,8 @@ function Signup() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const usernameReg = /^[a-zA-Z0-9]+$/;
-  const passwordReg = /^.{6,}$/;
+  const usernameReg = /^[a-zA-Z0-9]{6,20}$/;
+  const passwordReg = /^.{6,20}$/;
 
   const submit = async (e: SyntheticEvent) => {
       e.preventDefault();
@@ -31,11 +31,11 @@ function Signup() {
       }
 
       if (!usernameReg.test(username)) {
-        setError("The username must contain only alphanumeric characters.");
+        setError("The username must contain only alphanumeric and 6-20 characters.");
         return;
       }
       else if(!passwordReg.test(password)) {
-        setError("The password should contain at least 6 characters.");
+        setError("The password should contain 6-20 characters.");
         return;
       }
       
