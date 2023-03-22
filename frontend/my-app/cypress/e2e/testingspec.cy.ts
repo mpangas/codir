@@ -23,3 +23,12 @@ describe('Sign up testing submit', () => {
     cy.get('button[id="signupbox"]').click()
   });
 });
+
+describe('Login tests', () => {
+  it('should login to the account', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[label="Username"]').type('apples');
+    cy.get('input[label="Password"]').type('apples123');
+    cy.get('button[id="loginbox"]').click()
+  });
+});
