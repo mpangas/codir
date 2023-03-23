@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, getByTestId } from '@testing-library/react';
 import React from 'react';
 import App from './App';
 import Login from './Pages/Login'
@@ -12,6 +12,16 @@ import { shallow } from 'enzyme';
 test('sample test', () => {
   expect(true).toBe(true);
 })
+
+test('logo header exists', async () => {
+  const { getByTestId } = render(
+    <MemoryRouter>
+      <Header username={''} setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+  const logoPic = getByTestId('logoPicture');
+  expect(logoPic).toBeInTheDocument();
+});
 
 test('login button header exists', async () => {
   const { getByText } = render(
@@ -32,14 +42,6 @@ test('signup button header exists', async () => {
   const signupHeader = getByText('Sign Up');
   expect(signupHeader).toBeInTheDocument();
 });
-
-/*test('clicked the login header button', async () => {
-  const handleClick = jest.fn();
-  const wrapper = shallow(<Header username={''} setUsername={(username: string) => console.log(username)} />);
-  const button = wrapper.find('Log In');
-  button.simulate('click');
-  expect(handleClick).toHaveBeenCalled();
-});*/
 
 test('prints error message if there is no username entered (login screen)', async () => {
   const { getByLabelText, getByText } = render(

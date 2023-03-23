@@ -268,7 +268,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   return (
     <div className="header">
       <div className="header-container">
-        <a data-testid="headerLogo" id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
+        <a data-testid="headerLogo" id="headerLink" href="/"><img id="logo" data-testid="logoPicture" src={LogoPic}></img></a>
       </div>
       {menu}
     </div>
