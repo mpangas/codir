@@ -6,11 +6,30 @@ import Signup from './Pages/Signup';
 import Header from './components/Header'
 import { jest } from '@jest/globals';
 import { MemoryRouter } from 'react-router';
+import { shallow } from 'enzyme';
 
 
 test('sample test', () => {
   expect(true).toBe(true);
 })
+
+test('login header exists', async () => {
+  const { getByText } = render(
+    <MemoryRouter>
+      <Header username={''} setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+  const loginHeader = getByText('Log In');
+  expect(loginHeader).toBeInTheDocument();
+});
+
+/*test('clicked the login header button', async () => {
+  const handleClick = jest.fn();
+  const wrapper = shallow(<Header username={''} setUsername={(username: string) => console.log(username)} />);
+  const button = wrapper.find('Log In');
+  button.simulate('click');
+  expect(handleClick).toHaveBeenCalled();
+});*/
 
 test('prints error message if there is no username entered (login screen)', async () => {
   const { getByLabelText, getByText } = render(

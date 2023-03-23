@@ -17,6 +17,10 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  let textLogin = "Login";
+  const handleClick1 = () => {
+    textLogin = "Login is clicked";
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -47,7 +51,9 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             }}
             variant="contained"
             className="auth-btn"
-            href="/login">
+            href="/login"
+            onClick={handleClick1}
+            >
             Log In
           </Button>
           <Button
