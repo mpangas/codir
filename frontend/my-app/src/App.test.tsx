@@ -13,7 +13,7 @@ test('sample test', () => {
   expect(true).toBe(true);
 })
 
-test('login header exists', async () => {
+test('login button header exists', async () => {
   const { getByText } = render(
     <MemoryRouter>
       <Header username={''} setUsername={(username: string) => console.log(username)} />
@@ -21,6 +21,16 @@ test('login header exists', async () => {
   );
   const loginHeader = getByText('Log In');
   expect(loginHeader).toBeInTheDocument();
+});
+
+test('signup button header exists', async () => {
+  const { getByText } = render(
+    <MemoryRouter>
+      <Header username={''} setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+  const signupHeader = getByText('Sign Up');
+  expect(signupHeader).toBeInTheDocument();
 });
 
 /*test('clicked the login header button', async () => {
