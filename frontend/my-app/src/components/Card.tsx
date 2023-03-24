@@ -9,7 +9,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 function Card(props: any) {
     return(
     <div className="Card">
-                <Cards sx={{ maxWidth: 345, marginTop: 1, marginLeft: 9 }}>
+                <Cards sx={{ width: 315, height: 260 , marginTop: 3, marginLeft: 15 }}>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center" }}>
                             {props.title}
