@@ -141,6 +141,7 @@ func VoteUp(c *fiber.Ctx) error {
 	}
 
 	getTutorial.Score += 1
+	database.DB.Save(&getTutorial)
 	return c.JSON(getTutorial)
 }
 
@@ -156,6 +157,7 @@ func VoteDown(c *fiber.Ctx) error {
 	}
 
 	getTutorial.Score -= 1
+	database.DB.Save(&getTutorial)
 	return c.JSON(getTutorial)
 }
 
