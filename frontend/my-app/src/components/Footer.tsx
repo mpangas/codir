@@ -13,7 +13,7 @@ function Footer() {
             justifyContent="center"
             >
             <a href="https://github.com/mpangas/codir" target="_blank">
-                <GitHub  sx={{ width: "47px", height: "47px", color:"black"}}/>
+                <GitHub  sx={{ width: "49px", height: "49px", color:"black", marginTop:1}}/>
             </a>
             </Grid>
             <div className="horz" id="secondLine"></div>

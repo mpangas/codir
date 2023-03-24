@@ -21,6 +21,10 @@ const Dashboard = (props: {username: string}) => {
         {title: "TITLE9", author: "Author9", likes: "108"},
         {title: "TITLE10", author: "Author10", likes: "109"},
         {title: "TITLE11", author: "Author11", likes: "110"},
+        {title: "TITLE12", author: "Author12", likes: "111"},
+        {title: "TITLE13", author: "Author13", likes: "112"},
+        {title: "TITLE14", author: "Author14", likes: "113"},
+        {title: "TITLE15", author: "Author15", likes: "114"},
     ];
     const cardList = cardData.map(cardData => {
         return <Card title={cardData.title} author={cardData.author} likes={cardData.likes}/>
