@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-function Browse() {
+
+const Browse = (props: {username: string}) => {
+    const navigate = useNavigate();
+    if (props.username === "" || props.username === undefined) {
+        navigate("/login");
+    }
     return (
         <div className="browse">
             <br></br>

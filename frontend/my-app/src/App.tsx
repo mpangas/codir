@@ -58,7 +58,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard username={username} />} />
             <Route path="/about" element={<AboutUs username={username}/>} />
-            <Route path="/browse" element={<Browse />} />
+            <Route path="/browse" element={<Browse username={username}/>} />
           </Routes>
           <Footer />
         </div>
