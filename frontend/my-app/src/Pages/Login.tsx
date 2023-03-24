@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormControl, TextField, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 
 
 const Login = (props: { setUsername: (username: string) => void}) => {
