@@ -1,6 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Main() {
+const Main = (props: {username: string}) => {
+    /*const navigate = useNavigate();
+    if (props.username === "" || props.username === undefined) {
+        navigate("/login");
+    }*/
     return (
         <div className="main">
           <div className="rectangle">

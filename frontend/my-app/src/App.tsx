@@ -53,7 +53,7 @@ function App() {
         <div className="App">
           <Header username={username} setUsername={setUsername} />
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<Main username={username}/>} />
             <Route path="/login" element={<Login setUsername={setUsername} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard username={username} />} />
