@@ -1,0 +1,17 @@
+.browse {
+    height: 500px;
+    background-color: #F4FAF8;
+    height: 200%;
+  }
+
+  #largelargeText {
+    text-align: center;
+    width: 350px;
+    height: 45px;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 15px;
+    font-size: 36px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+  }
