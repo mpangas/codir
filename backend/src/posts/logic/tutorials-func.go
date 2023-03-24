@@ -157,3 +157,17 @@ func VoteDown(c *fiber.Ctx) error {
 	getTutorial.Score -= 1
 	return c.JSON(getTutorial)
 }
+
+func Search(c *fiber.Ctx) error {
+	getQuery := "%" + c.Params("query") + "%"
+
+	var searchResults []models.Tutorial
+	if errors.Is(database.DB.Where("name LIKE ?", getQuery).Find(&searchResults).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "No results",
+		})
+	}
+
+	return c.JSON(searchResults)
+}

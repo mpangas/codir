@@ -41,4 +41,6 @@ func TutorialsRoutes(app *fiber.App) {
 
 	app.Put("/api/tutorials/:id/up", logic.VoteUp)
 	app.Put("/api/tutorials/:id/down", logic.VoteDown)
+
+	app.Get("/api/tutorials/\\?search=:query", logic.Search)
 }
