@@ -3,6 +3,7 @@ package logic
 import (
 	"errors"
 	"math/rand"
+	"sort"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -162,12 +163,13 @@ func Search(c *fiber.Ctx) error {
 	getQuery := "%" + c.Params("query") + "%"
 
 	var searchResults []models.Tutorial
-	if errors.Is(database.DB.Where("name LIKE ?", getQuery).Find(&searchResults).Error, gorm.ErrRecordNotFound) {
+	if errors.Is(database.DB.Where("title LIKE ?", getQuery).Find(&searchResults).Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(fiber.Map{
 			"message": "No results",
 		})
 	}
+	sort.Slice(searchResults, func(i, j int) bool { return searchResults[i].Score > searchResults[j].Score })
 
 	return c.JSON(searchResults)
 }

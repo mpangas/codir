@@ -45,9 +45,9 @@
 - [Routes](#routes-1)
   - [POST /api/tutorials](#post-apitutorials)
   - [GET /api/tutorials](#get-apitutorials)
-  - [GET /api/tutorials/:id](#get-apitutorialsid)
-  - [PUT /api/tutorials/:id](#put-apitutorialsid)
-  - [DELETE /api/tutorials/:id](#delete-apitutorialsid)
+  - [GET /api/tutorials/id:{id}](#get-apitutorialsid)
+  - [PUT /api/tutorials/id:{id}](#put-apitutorialsid)
+  - [DELETE /api/tutorials/id:{id}](#delete-apitutorialsid)
 
 ## Login
 
