@@ -5,19 +5,32 @@ import Card from '../components/Card';
 
 
 const Dashboard = (props: {username: string}) => {
-    const [data, setData] = useState([""]);
+    const [data, setData] = useState([]);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
-    if (props.username === "" || props.username === undefined) {
+    /*if (props.username === "" || props.username === undefined) {
         navigate("/login");
+    }*/
+    async function fetchData() {
+            try {
+                const response = await fetch('http://localhost:8000/api/tutorials');
+                const json = await response.json();
+                setData(json);
+                console.log(data);
+            }
+            catch (error) {
+                setError("Error fetching");
+            }
     }
+
     useEffect(() => {
-        async function fetchData() {
-            const response = await fetch('http://localhost:8000/api/tutorials');
-            const json = await response.json();
-            setData(json);
-        } fetchData();
-    }, [])
-    console.log(data);
+        console.log("This is me " + props.username);
+        if (props.username === "" || props.username === undefined) {
+            navigate("/login");
+        } else {
+            fetchData();
+        }
+    }, []); 
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
