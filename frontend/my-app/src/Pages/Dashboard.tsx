@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Card from '../components/Card';
 
 
-const Dashboard = (props: {username: string}) => {
+const Dashboard = (props: { username: string }) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
     const navigate = useNavigate();
     /*if (props.username === "" || props.username === undefined) {
         navigate("/login");
     }*/
-    async function fetchData() {
-            try {
-                const response = await fetch('http://localhost:8000/api/tutorials');
-                const json = await response.json();
-                setData(json);
-                console.log(data);
-            }
-            catch (error) {
-                setError("Error fetching");
-            }
+    const auth = async () => {
+        const response = await fetch('http://localhost:8000/api/favorites', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        const json = await response.json();
+        console.log(JSON.stringify(json));
     }
-
-    useEffect(() => {
-        console.log("This is me " + props.username);
-        if (props.username === "" || props.username === undefined) {
-            navigate("/login");
-        } else {
-            fetchData();
-        }
-    }, []); 
+    auth();
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
@@ -55,7 +44,7 @@ const Dashboard = (props: {username: string}) => {
         <div className="dashboard">
             <br></br>
             <h1 id="dashboardTitle" className="uniform">DASHBOARD</h1>
-            <h1 id="welcome">Welcome, {props.username} !</h1> 
+            <h1 id="welcome">Welcome, {props.username} !</h1>
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
             <div className="cardsList">
