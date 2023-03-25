@@ -45,3 +45,9 @@
 .uniform {
     margin-left: 5%;
 }
+
+.cardsList{
+    display: flex;
+    flex-wrap: wrap;
+    
+}

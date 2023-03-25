@@ -1,22 +1,23 @@
 /*Footer*/
 .footer {
     /*margin-top: 12%;*/
-    height: 174px;
+    height: 250px;
     background-color: #F4FAF8;
     display: flex;
     width: 100%;
-    bottom: 0;
-  }
+    box-shadow: 0 1px relative3px 0 rgba(0,0,0,.2);
+    
+}
 .horz {
   border: 1px solid black;
   height: 1px;
   width: 575%; 
-  margin-top: 5.5%;
+  margin-top: 8.5%;
 }
 #firstLine {
-  margin-left: 5%;
+  margin-left: 4%;
 }
 #secondLine {
-  margin-right: 5%;
+  margin-right: 4%;
 }
 

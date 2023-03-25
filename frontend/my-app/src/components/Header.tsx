@@ -17,6 +17,10 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  let textLogin = "Login";
+  const handleClick1 = () => {
+    textLogin = "Login is clicked";
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -47,7 +51,9 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             }}
             variant="contained"
             className="auth-btn"
-            href="/login">
+            href="/login"
+            onClick={handleClick1}
+            >
             Log In
           </Button>
           <Button
@@ -262,7 +268,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
   return (
     <div className="header">
       <div className="header-container">
-        <a id="headerLink" href="/"><img id="logo" src={LogoPic}></img></a>
+        <a data-testid="headerLogo" id="headerLink" href="/"><img id="logo" data-testid="logoPicture" src={LogoPic}></img></a>
       </div>
       {menu}
     </div>

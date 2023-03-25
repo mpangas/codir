@@ -9,10 +9,40 @@ function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const usernameReg = /^[a-zA-Z0-9]{6,20}$/;
+  const passwordReg = /^.{6,20}$/;
 
   const submit = async (e: SyntheticEvent) => {
       e.preventDefault();
+      if (email === "" || email === undefined) {
+        setError("You must enter a email.");
+        return;
+      }
+      else if (username === "" || username === undefined) {
+        setError("You must enter a username.");
+        return;
+      }
+      else if (password === "" || password === undefined) {
+        setError("You must enter a password.");
+        return;
+      }
+
+      if(!emailReg.test(email)) {
+        setError("Email address should adhere to this format: example@example.com");
+        return;
+      }
+      else if (!usernameReg.test(username)) {
+        setError("The username must contain only alphanumeric and 6-20 characters.");
+        return;
+      }
+      else if(!passwordReg.test(password)) {
+        setError("The password should contain 6-20 characters.");
+        return;
+      }
       
       const response = await fetch('http://localhost:8000/api/signup', {
           method: 'POST',
@@ -58,7 +88,11 @@ function Signup() {
               autoComplete="current-password"
               onChange={e => setPassword(e.target.value)}
             />
+            <div className="error-msg">
+              {error}
+            </div>
             <Button 
+              data-testid="my-button"
               variant="contained" 
               color="primary" 
               className="boxMargin" 
