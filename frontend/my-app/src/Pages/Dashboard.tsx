@@ -1,25 +1,29 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import Card from '../components/Card';
 
 
 const Dashboard = (props: { username: string }) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState("");
+    const [tutorialArray, setTutorialArray] = useState([]);
     const navigate = useNavigate();
-    /*if (props.username === "" || props.username === undefined) {
+    if (props.username === "" || props.username === undefined) {
         navigate("/login");
-    }*/
-    const auth = async () => {
-        const response = await fetch('http://localhost:8000/api/favorites', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        })
-        const json = await response.json();
-        console.log(JSON.stringify(json));
     }
-    auth();
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/favorites', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response.json();
+                // Extract tutorialIDs from data
+                const tutorialIds = data.map((item: { tutorialID: string; }) => parseInt(item.tutorialID));
+                setTutorialArray(tutorialIds);
+            }
+        )();
+    }, [props.username]);
+    console.log(tutorialArray);
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
