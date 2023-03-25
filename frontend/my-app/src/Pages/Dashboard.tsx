@@ -1,8 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+/*let response: any = null;
+                for (var i = 0; i < tutorialIDArray.length; i++) {
+                        console.log("List of ids: " + tutorialIDArray[i]);
+                        response = await fetch(`http://localhost:8000/api/tutorials/${tutorialIDArray[i]}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    })
+                }
+                const data = await response.json();
+                setTutorialArray(data);*/
 
 const Dashboard = (props: { username: string }) => {
+    const [tutorialIDArray, setTutorialIDArray] = useState([]);
     const [tutorialArray, setTutorialArray] = useState([]);
     const navigate = useNavigate();
     if (props.username === "" || props.username === undefined) {
@@ -18,12 +30,42 @@ const Dashboard = (props: { username: string }) => {
                 })
                 const data = await response.json();
                 // Extract tutorialIDs from data
-                const tutorialIds = data.map((item: { tutorialID: string; }) => parseInt(item.tutorialID));
-                setTutorialArray(tutorialIds);
+                const tutorialIds = data.map((item: { tutorialID: string; }) =>
+                    parseInt(item.tutorialID));
+                setTutorialIDArray(tutorialIds);
             }
         )();
     }, [props.username]);
-    console.log(tutorialArray);
+
+    useEffect(() => {
+        (
+            async () => {
+
+                const responses = await Promise.all(tutorialIDArray.map(async (id) => {
+                    console.log("List of ids: " + id);
+                    const response = await fetch(`http://localhost:8000/api/tutorials/${id}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    });
+                    const data = await response.json();
+                    console.log(JSON.stringify(data));
+                    return data;
+                }));
+
+                const tutorialData = responses.reduce((acc, cur) => {
+                    return [...acc, cur];
+                }, []);
+
+                setTutorialArray(tutorialData);
+            
+            }
+        )();
+    }, [props.username, tutorialIDArray]);
+ 
+    console.log("IDS: " + tutorialIDArray);
+    console.log("TutorialProperties: " + JSON.stringify(tutorialArray[2]));
+    console.log("Length: " + tutorialArray.length);
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
