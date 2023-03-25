@@ -1,15 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Card from '../components/Card';
 
 
 const Dashboard = (props: {username: string}) => {
+    const [data, setData] = useState([""]);
     const navigate = useNavigate();
     if (props.username === "" || props.username === undefined) {
         navigate("/login");
     }
-    const cardData = [
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('http://localhost:8000/api/tutorials');
+            const json = await response.json();
+            setData(json);
+        } fetchData();
+    }, [])
+    console.log(data);
+    /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
         {title: "TITLE3", author: "Author3", likes: "102"},
@@ -28,7 +37,7 @@ const Dashboard = (props: {username: string}) => {
     ];
     const cardList = cardData.map(cardData => {
         return <Card title={cardData.title} author={cardData.author} likes={cardData.likes}/>
-    })
+    })*/
     return (
         <div className="dashboard">
             <br></br>
@@ -37,7 +46,7 @@ const Dashboard = (props: {username: string}) => {
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
             <div className="cardsList">
-                {cardList}
+                {/*{cardList}*/}
             </div>
         </div>
     )
