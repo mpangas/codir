@@ -16,11 +16,6 @@ const AboutUs = (props: {username: string}) => {
             <h1 id="madebyText3" >Mike Pangas</h1>
             <h1 id="madebyText4" >Tyler Berndt </h1>
             <h1 id="madebyText5" >Ansh Kalariya</h1>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
           </div>
       );
 }
