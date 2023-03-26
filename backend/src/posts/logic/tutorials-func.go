@@ -3,6 +3,9 @@ package logic
 import (
 	"errors"
 	"math/rand"
+	"net/url"
+	"sort"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -34,11 +37,12 @@ func PostTutorial(c *fiber.Ctx) error {
 
 	// I haven't yet decided about post ids. In theory getting by id would be the best way for front end to access a post
 	// but I don't know what the best way of doing it is.
-	newId := rand.Int()
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	newId := r.Int()
 	for !errors.Is(database.DB.Where("id = ?", newId).First(&checkPost).Error, gorm.ErrRecordNotFound) {
 		newId = rand.Int()
 	} // gets a unique id
-	newPost.Id = newId
+	newPost.Id = strconv.Itoa(newId)
 	newPost.PostTime = time.Now().Unix()
 	newPost.EditTime = time.Now().Unix()
 	newPost.Score = 0
@@ -60,7 +64,7 @@ func GetAllTutorials(c *fiber.Ctx) error {
 }
 
 func GetTutorial(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusNotFound)
@@ -74,7 +78,7 @@ func GetTutorial(c *fiber.Ctx) error {
 }
 
 func DeleteTutorial(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusNotFound)
@@ -88,7 +92,7 @@ func DeleteTutorial(c *fiber.Ctx) error {
 }
 
 func EditTutorial(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 
 	// find the tutorial to edit
@@ -129,7 +133,7 @@ func EditTutorial(c *fiber.Ctx) error {
 }
 
 func VoteUp(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
@@ -140,11 +144,12 @@ func VoteUp(c *fiber.Ctx) error {
 	}
 
 	getTutorial.Score += 1
+	database.DB.Save(&getTutorial)
 	return c.JSON(getTutorial)
 }
 
 func VoteDown(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
@@ -155,5 +160,22 @@ func VoteDown(c *fiber.Ctx) error {
 	}
 
 	getTutorial.Score -= 1
+	database.DB.Save(&getTutorial)
 	return c.JSON(getTutorial)
+}
+
+func Search(c *fiber.Ctx) error {
+	getQuery, _ := url.QueryUnescape(c.Params("query"))
+	getQuery = "%" + getQuery + "%"
+
+	var searchResults []models.Tutorial
+	if errors.Is(database.DB.Where("title LIKE ?", getQuery).Find(&searchResults).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "No results",
+		})
+	}
+	sort.Slice(searchResults, func(i, j int) bool { return searchResults[i].Score > searchResults[j].Score })
+
+	return c.JSON(searchResults)
 }
