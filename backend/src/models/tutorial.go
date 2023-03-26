@@ -1,7 +1,7 @@
 package models
 
 type Tutorial struct {
-	Id       int    `json:"id"` // don't pass this in
+	Id       string `json:"id"` // don't pass this in
 	Title    string `json:"title"`
 	Location string `json:"location"`
 	User     string `json:"user"`

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"math/rand"
 	"sort"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -40,7 +41,7 @@ func PostTutorial(c *fiber.Ctx) error {
 	for !errors.Is(database.DB.Where("id = ?", newId).First(&checkPost).Error, gorm.ErrRecordNotFound) {
 		newId = rand.Int()
 	} // gets a unique id
-	newPost.Id = newId
+	newPost.Id = strconv.Itoa(newId)
 	newPost.PostTime = time.Now().Unix()
 	newPost.EditTime = time.Now().Unix()
 	newPost.Score = 0
@@ -62,7 +63,7 @@ func GetAllTutorials(c *fiber.Ctx) error {
 }
 
 func GetTutorial(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusNotFound)
@@ -76,7 +77,7 @@ func GetTutorial(c *fiber.Ctx) error {
 }
 
 func DeleteTutorial(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusNotFound)
@@ -90,7 +91,7 @@ func DeleteTutorial(c *fiber.Ctx) error {
 }
 
 func EditTutorial(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 
 	// find the tutorial to edit
@@ -131,7 +132,7 @@ func EditTutorial(c *fiber.Ctx) error {
 }
 
 func VoteUp(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
@@ -147,7 +148,7 @@ func VoteUp(c *fiber.Ctx) error {
 }
 
 func VoteDown(c *fiber.Ctx) error {
-	getId, _ := c.ParamsInt("id")
+	getId := c.Params("id")
 	var getTutorial models.Tutorial
 
 	if errors.Is(database.DB.Where("id = ?", getId).First(&getTutorial).Error, gorm.ErrRecordNotFound) {
