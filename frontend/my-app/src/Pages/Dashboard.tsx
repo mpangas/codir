@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Card from '../components/Card';
 
 /*let response: any = null;
                 for (var i = 0; i < tutorialIDArray.length; i++) {
@@ -31,7 +32,7 @@ const Dashboard = (props: { username: string }) => {
                 const data = await response.json();
                 // Extract tutorialIDs from data
                 const tutorialIds = data.map((item: { tutorialID: string; }) =>
-                    parseInt(item.tutorialID));
+                    item.tutorialID);
                 setTutorialIDArray(tutorialIds);
             }
         )();
@@ -64,7 +65,7 @@ const Dashboard = (props: { username: string }) => {
     }, [props.username, tutorialIDArray]);
  
     console.log("IDS: " + tutorialIDArray);
-    console.log("TutorialProperties: " + JSON.stringify(tutorialArray[2]));
+    console.log("TutorialProperties: " + JSON.stringify(tutorialArray));
     console.log("Length: " + tutorialArray.length);
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
@@ -82,10 +83,10 @@ const Dashboard = (props: { username: string }) => {
         {title: "TITLE13", author: "Author13", likes: "112"},
         {title: "TITLE14", author: "Author14", likes: "113"},
         {title: "TITLE15", author: "Author15", likes: "114"},
-    ];
-    const cardList = cardData.map(cardData => {
-        return <Card title={cardData.title} author={cardData.author} likes={cardData.likes}/>
-    })*/
+    ];*/
+    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number  }) => {
+        return <Card title={item.title} author={item.user} likes={item.score}/>
+    })
     return (
         <div className="dashboard">
             <br></br>
@@ -94,7 +95,7 @@ const Dashboard = (props: { username: string }) => {
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
             <div className="cardsList">
-                {/*{cardList}*/}
+                {cardList}
             </div>
         </div>
     )
