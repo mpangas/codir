@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import StarIcon from '@mui/icons-material/Star';
 import { margin } from '@mui/system';
 
 function Card(props: any) {
@@ -20,7 +21,7 @@ function Card(props: any) {
                         </Typography>
                      </CardContent>
                      <CardMedia sx={{display: 'flex', float: "right", marginTop: 15, marginRight: 1.5}}>
-                        <ThumbUpOffAltIcon sx={{}}></ThumbUpOffAltIcon>
+                        <StarIcon sx={{}}></StarIcon>
                         <p id="numLikes">{props.likes}</p>
                      </CardMedia>
                 </Cards>
