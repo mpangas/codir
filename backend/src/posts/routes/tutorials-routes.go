@@ -31,16 +31,16 @@ func TutorialsRoutes(app *fiber.App) {
 	router.HandleFunc("/tutorials/{id}", logic.DeleteTutorial).Methods("DELETE")*/
 
 	app.Get("/api/tutorials", logic.GetAllTutorials)
-	app.Get("/api/tutorials/:id", logic.GetTutorial)
+	app.Get("/api/tutorials/id::id", logic.GetTutorial)
 	app.Post("/api/tutorials", logic.PostTutorial)
-	app.Put("/api/tutorials/:id", logic.EditTutorial)
-	app.Delete("/api/tutorials/:id", logic.DeleteTutorial)
+	app.Put("/api/tutorials/id::id", logic.EditTutorial)
+	app.Delete("/api/tutorials/id::id", logic.DeleteTutorial)
 
 	// I'm not yet 100% sure whether score increments should be their own routes, but this function would be common enough
 	// and simple enough that we shouldn't need to call EditTutorial every time.
 
-	app.Put("/api/tutorials/:id/up", logic.VoteUp)
-	app.Put("/api/tutorials/:id/down", logic.VoteDown)
+	app.Put("/api/tutorials/id::id/up", logic.VoteUp)
+	app.Put("/api/tutorials/id::id/down", logic.VoteDown)
 
-	app.Get("/api/tutorials/search/query", logic.Search)
+	app.Get("/api/tutorials/search::query", logic.Search)
 }

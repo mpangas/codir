@@ -3,6 +3,7 @@ package logic
 import (
 	"errors"
 	"math/rand"
+	"net/url"
 	"sort"
 	"strconv"
 	"time"
@@ -164,7 +165,8 @@ func VoteDown(c *fiber.Ctx) error {
 }
 
 func Search(c *fiber.Ctx) error {
-	getQuery := "%" + c.Params("query") + "%"
+	getQuery, _ := url.QueryUnescape(c.Params("query"))
+	getQuery = "%" + getQuery + "%"
 
 	var searchResults []models.Tutorial
 	if errors.Is(database.DB.Where("title LIKE ?", getQuery).Find(&searchResults).Error, gorm.ErrRecordNotFound) {
