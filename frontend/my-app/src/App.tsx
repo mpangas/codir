@@ -11,6 +11,7 @@ import './CSS/Signup.css';
 import './CSS/Dashboard.css';
 import './CSS/AboutUs.css';
 import './CSS/Browse.css';
+import './CSS/Testing.css';
 import Header from './components/Header'
 import Main from './components/Main'
 import Footer from './components/Footer'
@@ -21,6 +22,8 @@ import AboutUs from './Pages/AboutUs'
 import Browse from './Pages/Browse'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
+import Testing from './Pages/Testing';
+
 
 const theme = createTheme({
   typography: {
@@ -68,6 +71,7 @@ function App() {
             <Route path="/" element={<Main username={username} />} />
             <Route path="/login" element={<Login setUsername={setUsername} />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/test" element={<Testing username={username} />} />
             <Route path="/dashboard" element={<Dashboard username={username} />} />
             <Route path="/about" element={<AboutUs username={username} />} />
             <Route path="/browse" element={<Browse username={username} />} />
