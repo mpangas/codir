@@ -2,13 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { FormControl, TextField, InputLabel, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 
 const Testing = (props: { username: string }) => {
-    const [ID, setID] = useState<number | undefined>(undefined);
     const [Title, setTitle] = useState("");
     const [Location, setLocation] = useState("");
     const [User, setUser] = useState("");
-    const [PostTime, setPostTime] = useState<number | undefined>(undefined);
-    const [EditTime, setEditTime] = useState<number | undefined>(undefined);
-    const [Score, setScore] = useState<number | undefined>(undefined);
     
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -17,13 +13,9 @@ const Testing = (props: { username: string }) => {
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify({
-                ID,
                 Title,
                 Location,
                 User,
-                PostTime,
-                EditTime,
-                Score
             })
         })
 
@@ -35,13 +27,7 @@ const Testing = (props: { username: string }) => {
             <br></br>
             <form onSubmit={submit}>
                 <TextField
-                    sx={{ ml: 50, mb: 2, mt: -1 }}
-                    className="input-box"
-                    label="Id"
-                    onChange={e => setID(parseInt(e.target.value))}
-                />
-                <TextField
-                    sx={{ ml: 50, mb: 2, mt: -1 }}
+                    sx={{ ml: 50, mb: 2, mt: 2 }}
                     className="input-box"
                     label="Title"
                     onChange={e => setTitle(e.target.value)}
@@ -57,24 +43,6 @@ const Testing = (props: { username: string }) => {
                     className="input-box"
                     label="User"
                     onChange={e => setUser(e.target.value)}
-                />
-                <TextField
-                    sx={{ ml: 50, mb: 2, mt: -1 }}
-                    className="input-box"
-                    label="PostTime"
-                    onChange={e => setPostTime(parseInt(e.target.value))}
-                />
-                <TextField
-                    sx={{ ml: 50, mb: 2, mt: -1 }}
-                    className="input-box"
-                    label="EditTime"
-                    onChange={e => setEditTime(parseInt(e.target.value))}
-                />
-                <TextField
-                    sx={{ ml: 50, mb: 2, mt: -1 }}
-                    className="input-box"
-                    label="Score"
-                    onChange={e => setScore(parseInt(e.target.value))}
                 />
                 <Button sx={{ ml: 50, mb: 2, mt: -1 }} variant="contained" color="primary" className="boxMargin" id="loginbox" type="submit">Submit</Button>
             </form>
