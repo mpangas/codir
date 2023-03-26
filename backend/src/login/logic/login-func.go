@@ -29,8 +29,6 @@ func Signup(c *fiber.Ctx) error {
 
 	// Initialize empty favorites array
 	newUser.Favorites = []models.Favorite{}
-	// Add temp favorite item to array
-	newUser.Favorites = append(newUser.Favorites, models.Favorite{TutorialID: 5})
 
 	// Hash password
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
@@ -220,7 +218,7 @@ func Logout(c *fiber.Ctx) error {
   - Each Favorite Object is formatted as follows:
   - {
     "username": [String]
-    "tutorialID": [Integer]
+    "tutorialID": [String]
   - }
 
 *
@@ -262,7 +260,7 @@ func GetFavorites(c *fiber.Ctx) error {
  * ADD FAVORITE
  *
  * @param Must be provided a singular field called "tutorialID" in the request body
- * NOTE: The ID must be an integer
+ * NOTE: The ID must be a string
  *
  * @return Returns a message indiciating if the request was successful or not
  *
@@ -293,7 +291,7 @@ func AddFavorite(c *fiber.Ctx) error {
 	// Create Favorite object that holds new Favorite addition
 	favorite := new(models.Favorite)
 
-	// Get favorite integer ID from request
+	// Get favorite ID from request
 	if err := c.BodyParser(favorite); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
@@ -313,7 +311,7 @@ func AddFavorite(c *fiber.Ctx) error {
  * REMOVE FAVORITE
  *
  * @param Must be provided a singular field called "tutorialID" in the request body
- * NOTE: The ID must be an integer
+ * NOTE: The ID must be a string
  *
  * @return Returns a message indiciating if the request was successful or not
  *
@@ -344,7 +342,7 @@ func RemoveFavorite(c *fiber.Ctx) error {
 	// Create Favorite object that holds Favorite to remove
 	favoriteToRemove := new(models.Favorite)
 
-	// Get favorite integer ID from request
+	// Get favorite ID from request
 	if err := c.BodyParser(favoriteToRemove); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
