@@ -1,36 +1,72 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import Card from '../components/Card';
 
+/*let response: any = null;
+                for (var i = 0; i < tutorialIDArray.length; i++) {
+                        console.log("List of ids: " + tutorialIDArray[i]);
+                        response = await fetch(`http://localhost:8000/api/tutorials/${tutorialIDArray[i]}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    })
+                }
+                const data = await response.json();
+                setTutorialArray(data);*/
 
-const Dashboard = (props: {username: string}) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState("");
+const Dashboard = (props: { username: string }) => {
+    const [tutorialIDArray, setTutorialIDArray] = useState([]);
+    const [tutorialArray, setTutorialArray] = useState([]);
     const navigate = useNavigate();
-    /*if (props.username === "" || props.username === undefined) {
+    if (props.username === "" || props.username === undefined) {
         navigate("/login");
-    }*/
-    async function fetchData() {
-            try {
-                const response = await fetch('http://localhost:8000/api/tutorials');
-                const json = await response.json();
-                setData(json);
-                console.log(data);
-            }
-            catch (error) {
-                setError("Error fetching");
-            }
     }
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/favorites', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response.json();
+                // Extract tutorialIDs from data
+                const tutorialIds = data.map((item: { tutorialID: string; }) =>
+                    item.tutorialID);
+                setTutorialIDArray(tutorialIds);
+            }
+        )();
+    }, [props.username]);
 
     useEffect(() => {
-        console.log("This is me " + props.username);
-        if (props.username === "" || props.username === undefined) {
-            navigate("/login");
-        } else {
-            fetchData();
-        }
-    }, []); 
+        (
+            async () => {
+
+                const responses = await Promise.all(tutorialIDArray.map(async (id) => {
+                    console.log("List of ids: " + id);
+                    const response = await fetch(`http://localhost:8000/api/tutorials/${id}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    });
+                    const data = await response.json();
+                    console.log(JSON.stringify(data));
+                    return data;
+                }));
+
+                const tutorialData = responses.reduce((acc, cur) => {
+                    return [...acc, cur];
+                }, []);
+
+                setTutorialArray(tutorialData);
+            
+            }
+        )();
+    }, [props.username, tutorialIDArray]);
+ 
+    console.log("IDS: " + tutorialIDArray);
+    console.log("TutorialProperties: " + JSON.stringify(tutorialArray));
+    console.log("Length: " + tutorialArray.length);
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
@@ -47,19 +83,19 @@ const Dashboard = (props: {username: string}) => {
         {title: "TITLE13", author: "Author13", likes: "112"},
         {title: "TITLE14", author: "Author14", likes: "113"},
         {title: "TITLE15", author: "Author15", likes: "114"},
-    ];
-    const cardList = cardData.map(cardData => {
-        return <Card title={cardData.title} author={cardData.author} likes={cardData.likes}/>
-    })*/
+    ];*/
+    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number  }) => {
+        return <Card title={item.title} author={item.user} likes={item.score}/>
+    })
     return (
         <div className="dashboard">
             <br></br>
             <h1 id="dashboardTitle" className="uniform">DASHBOARD</h1>
-            <h1 id="welcome">Welcome, {props.username} !</h1> 
+            <h1 id="welcome">Welcome, {props.username} !</h1>
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
             <div className="cardsList">
-                {/*{cardList}*/}
+                {cardList}
             </div>
         </div>
     )

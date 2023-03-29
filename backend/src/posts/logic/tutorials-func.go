@@ -3,7 +3,6 @@ package logic
 import (
 	"errors"
 	"math/rand"
-	"net/url"
 	"sort"
 	"strconv"
 	"time"
