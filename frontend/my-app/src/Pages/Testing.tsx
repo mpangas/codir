@@ -84,7 +84,7 @@ const Testing = (props: { username: string }) => {
             <Box
                 display="flex"
                 justifyContent="center"
-                minHeight="100vh"
+                minHeight="60vh"
                 alignItems="flex-start"
                 paddingTop={5}
             >
