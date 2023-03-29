@@ -2,14 +2,23 @@
 
 ## Frontend - Work Completed
 
-
-## Frontend - Cypress Unit Tests
-
+## Frontend - Cypress & Unit Tests
 
 ## Backend - Work Completed
+- Added the Favorite object which correlates a user to a tutorial using a foreign key.
+- Added a new property to each user called Favorites which stores a list of Favorite objects that are associated with a user.
+- Added functions that allow Favorites for an authenticated user to be viewed, added, and removed
+- Finished the routes relating to tutorials, including functionality to get tutorials by ID, add new tutorials, remove tutorials and upvote/downvote tutorials
 
+## Backend - Unit Tests
+### User Tests
+- Test 1: [api/get](#get-apiget) - This unit test simulates a GET request to the api/get path which executes a function to return the information for all users in the database. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 2: [api/signup](#post-apisignup) - This unit test simulates a POST request to the api/signup path which executes a function to create a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 3: [api/signin](#post-apisignin) - This unit test simulates a POST request to the api/signin path which executes a function to verify if a user is in the database given mock parameters and create a cookie if the user exists. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 4: [api/delete](#delete-apidelete) - This unit test simulates a DELETE request to the api/delete path which executes a function to delete a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
 
-## Backend - Go Unit Tests
+### Tutorial Tests
+- Test
 
 ## API Documentation
 
