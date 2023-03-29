@@ -1,7 +1,10 @@
 # Sprint 3 Documentation
 
 ## Frontend - Work Completed
-
+- Added the unit test cases for testing the existence of buttons, whether text is entered in the input fields of the login and signup page, and whether each input adheres to a specific format (basically testing for regex).
+- Created a "Test" Page in order to test the functionality of posting a tutorial review in order for the "PostMan" application to receive the information. We would continue to use this page to test other functionalities before we integrate them into the "Browse" Page.
+- Created a template for the "Browse" Page in order to have an idea of functionalities to include in the form of buttons and popups. 
+- Tested whether the "Favorites" section of the "Dashboard" Page is updated as soon as the user adds a tutorial as a favorite. 
 ## Frontend - Cypress & Unit Tests
 
 ## Backend - Work Completed
