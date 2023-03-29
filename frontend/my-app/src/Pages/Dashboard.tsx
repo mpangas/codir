@@ -44,7 +44,7 @@ const Dashboard = (props: { username: string }) => {
 
                 const responses = await Promise.all(tutorialIDArray.map(async (id) => {
                     console.log("List of ids: " + id);
-                    const response = await fetch(`http://localhost:8000/api/tutorials/${id}`, {
+                    const response = await fetch(`http://localhost:8000/api/tutorials/id:${id}`, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
                         credentials: 'include',
