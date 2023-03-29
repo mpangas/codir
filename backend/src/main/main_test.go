@@ -152,7 +152,7 @@ func TestDelete(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialPostTest(t *testing.T) {
+func TestTutorialPost(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -183,7 +183,7 @@ func TutorialPostTest(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialsGetAllTest(t *testing.T) {
+func TestTutorialGetAll(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -205,7 +205,7 @@ func TutorialsGetAllTest(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialsGetTest(t *testing.T) {
+func TestTutorialGet(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -227,7 +227,7 @@ func TutorialsGetTest(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialsDeleteTest(t *testing.T) {
+func TestTutorialDelete(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -249,7 +249,7 @@ func TutorialsDeleteTest(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialsPutTest(t *testing.T) {
+func TestTutorialPut(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -279,7 +279,7 @@ func TutorialsPutTest(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialsVoteUpTest(t *testing.T) {
+func TestTutorialUpvote(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -301,7 +301,7 @@ func TutorialsVoteUpTest(t *testing.T) {
 	assert.Equal(t, 200, resp.StatusCode)
 }
 
-func TutorialsVoteDownTest(t *testing.T) {
+func TestTutorialDownvote(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Error loading .env file")
