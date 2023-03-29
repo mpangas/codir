@@ -1,14 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { FormControl, TextField, InputLabel, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
-import { spacing, Stack } from '@mui/system';
+import { useState } from 'react';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    TextField,
+    Box,
+} from '@mui/material';
+
+const FormFields = ({
+    Title,
+    setTitle,
+    Location,
+    setLocation,
+    User,
+    setUser,
+}: {
+    Title: string,
+    setTitle: (title: string) => void,
+    Location: string,
+    setLocation: (location: string) => void,
+    User: string,
+    setUser: (user: string) => void,
+}) => {
+    return (
+        <FormControl sx={{}}>
+            <TextField
+                sx={{ mt: 4 }}
+                className="input-box"
+                label="Title"
+                value={Title}
+                onChange={e => setTitle(e.target.value)}
+            />
+            <TextField
+                sx={{ mt: 4 }}
+                className="input-box"
+                label="Location"
+                value={Location}
+                onChange={e => setLocation(e.target.value)}
+            />
+            <TextField
+                sx={{ mt: 4 }}
+                className="input-box"
+                label="User"
+                value={User}
+                onChange={e => setUser(e.target.value)}
+            />
+        </FormControl>
+    );
+};
 
 const Testing = (props: { username: string }) => {
-    const [Title, setTitle] = useState("");
-    const [Location, setLocation] = useState("");
-    const [User, setUser] = useState("");
+    const [open, setOpen] = useState(false);
+    const [Title, setTitle] = useState('');
+    const [Location, setLocation] = useState('');
+    const [User, setUser] = useState('');
 
-    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleSubmit = async () => {
         const response = await fetch('http://localhost:8000/api/tutorials', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -17,38 +71,50 @@ const Testing = (props: { username: string }) => {
                 Title,
                 Location,
                 User,
-            })
-        })
+            }),
+        });
 
         const data = await response.json();
         console.log(JSON.stringify(data));
-    }
+        setOpen(false);
+    };
+
     return (
-        <><div className="testing">
-            <form onSubmit={submit}>
-                <FormControl sx={{ ml: 70 }}>
-                    <TextField
-                        sx={{ mt: 4 }}
-                        className="input-box"
-                        label="Title"
-                        onChange={e => setTitle(e.target.value)} />
-                    <TextField
-                        sx={{ mt: 4 }}
-                        className="input-box"
-                        label="Location"
-                        onChange={e => setLocation(e.target.value)} />
-                    <TextField
-                        sx={{ mt: 4 }}
-                        className="input-box"
-                        label="User"
-                        onChange={e => setUser(e.target.value)} />
-                    <Button sx={{ mt: 4 }} variant="contained" color="primary" type="submit">Submit</Button>
-                </FormControl>
-            </form>
-        </div><h1 id="test">TEST</h1></>
+        <div>
+            <Box
+                display="flex"
+                justifyContent="center"
+                minHeight="100vh"
+                alignItems="flex-start"
+                paddingTop={5}
+            >
+                <Button variant="contained" sx={{
+                    mt: 4,
+                }} onClick={() => setOpen(true)}>
+                    Create a Review
+                </Button>
+            </Box>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Submit a Tutorial Review</DialogTitle>
+                <DialogContent>
+                    <FormFields
+                        Title={Title}
+                        setTitle={setTitle}
+                        Location={Location}
+                        setLocation={setLocation}
+                        User={User}
+                        setUser={setUser}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
     );
-}
-
-
+};
 
 export default Testing;
