@@ -162,9 +162,9 @@ func TestTutorialPost(t *testing.T) {
 	app := fiber.New()
 
 	testTutorial := testTutPost{
-		Title:    "D&D 5e Wiki",
-		Location: "http://dnd5e.wikidot.com/",
-		User:     "shockedcurve453",
+		Title:    "D&D 5e Wikin",
+		Location: "http://dnd5e.wikidot.co/",
+		User:     "shockedcurve45",
 	}
 
 	bodyReq, _ := json.Marshal(testTutorial)
@@ -265,7 +265,7 @@ func TestTutorialPut(t *testing.T) {
 
 	bodyReq, _ := json.Marshal(testTutorial)
 
-	app.Post("/api/tutorials/id::id", posts.EditTutorial)
+	app.Put("/api/tutorials/id::id", posts.EditTutorial)
 
 	req, _ := http.NewRequest(http.MethodPut, "/api/tutorials/id:3711332506574543570", bytes.NewBuffer(bodyReq))
 	req.Header.Set("Content-Type", "application/json")
