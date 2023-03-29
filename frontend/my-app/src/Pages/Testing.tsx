@@ -24,31 +24,28 @@ const Testing = (props: { username: string }) => {
         console.log(JSON.stringify(data));
     }
     return (
-        <div className="testing">
+        <><div className="testing">
             <form onSubmit={submit}>
-                <FormControl sx={{ml: 70}} >
+                <FormControl sx={{ ml: 70 }}>
                     <TextField
-                        sx={{mt: 4}}
+                        sx={{ mt: 4 }}
                         className="input-box"
                         label="Title"
-                        onChange={e => setTitle(e.target.value)}
-                    />
+                        onChange={e => setTitle(e.target.value)} />
                     <TextField
-                        sx={{mt: 4}}
+                        sx={{ mt: 4 }}
                         className="input-box"
                         label="Location"
-                        onChange={e => setLocation(e.target.value)}
-                    />
+                        onChange={e => setLocation(e.target.value)} />
                     <TextField
-                        sx={{mt: 4}}
+                        sx={{ mt: 4 }}
                         className="input-box"
                         label="User"
-                        onChange={e => setUser(e.target.value)}
-                    />
-                    <Button sx={{mt: 4}} variant="contained" color="primary" type="submit">Submit</Button>
+                        onChange={e => setUser(e.target.value)} />
+                    <Button sx={{ mt: 4 }} variant="contained" color="primary" type="submit">Submit</Button>
                 </FormControl>
             </form>
-        </div>
+        </div><h1 id="test">TEST</h1></>
     );
 }
 
