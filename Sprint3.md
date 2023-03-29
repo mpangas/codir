@@ -12,13 +12,19 @@
 
 ## Backend - Unit Tests
 ### User Tests
-- Test 1: [api/get](#get-apiget) - This unit test simulates a GET request to the api/get path which executes a function to return the information for all users in the database. It checks if the status code of the response is 200 to determine if the request is successful.
-- Test 2: [api/signup](#post-apisignup) - This unit test simulates a POST request to the api/signup path which executes a function to create a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
-- Test 3: [api/signin](#post-apisignin) - This unit test simulates a POST request to the api/signin path which executes a function to verify if a user is in the database given mock parameters and create a cookie if the user exists. It checks if the status code of the response is 200 to determine if the request is successful.
-- Test 4: [api/delete](#delete-apidelete) - This unit test simulates a DELETE request to the api/delete path which executes a function to delete a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 1: [/api/get](#get-apiget) - This unit test simulates a GET request to the api/get path which executes a function to return the information for all users in the database. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 2: [/api/signup](#post-apisignup) - This unit test simulates a POST request to the api/signup path which executes a function to create a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 3: [/api/signin](#post-apisignin) - This unit test simulates a POST request to the api/signin path which executes a function to verify if a user is in the database given mock parameters and create a cookie if the user exists. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 4: [/api/delete](#delete-apidelete) - This unit test simulates a DELETE request to the api/delete path which executes a function to delete a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
 
 ### Tutorial Tests
-- Test
+- Test 5: [POST /api/tutorials](#post-apitutorials) - This unit test simulates a POST to /api/tutorials with a mock tutorial object to create the tutorial in the database, checking for status code 200 to determine if the request was successful.
+- Test 6: [GET /api/tutorials](#get-apitutorials) - This unit test simulates a GET to /api/tutorials to retrieve all the tutorials currently in the database, checking for status code 200 to determine if the request was successful. 
+- Test 7: [GET /api/tutorials/id:{id}](#get-apitutorialsidid) - This unit test simulates a GET with an ID variable to /api/tutorials/id:{id} in order to retieve the tutorial object corresponding with that ID, checking for status code 200 to determine if the request was successful.
+- Test 8: [PUT /api/tutorials/id:{id}](#put-apitutorialsidid) - This unit test simulates a PUT with an ID variable to /api/tutorials/id:{id} and a mock object in order to edit the tutorial with that ID using the new information, checking for status code 200 to determine if the request was successful.
+- Test 9: [DELETE /api/tutorials/id:{id}](#delete-apitutorialsidid) - This unit test simulates a DELETE with an ID variable corresponding with a tutorial already in the database to /api/tutorials/id:{id} in order to delete that tutorial, checking for status code 200 to determine if the request was successful.
+- Test 10: [PUT /api/tutorials/id:{id}/up](#put-apitutorialsididup) - This unit test simulates a PUT with an ID variable to /api/tutorials/id:{id}/up in order to increment the score of the tutorial with that ID up, checking for status code 200 to determine if the request was successful.
+- Test 11: [PUT /api/tutorials/id:{id}/down](#put-apitutorialsididdown) - This unit test simulates a PUT with an ID variable to /api/tutorials/id:{id}/down in order to increment the score of the tutorial with that ID down, checking for status code 200 to determine if the request was successful.
 
 ## API Documentation
 
