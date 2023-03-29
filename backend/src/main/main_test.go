@@ -13,6 +13,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/mpangas/codir/backend/src/database"
 	"github.com/mpangas/codir/backend/src/login/logic"
+	"github.com/mpangas/codir/backend/src/posts/logic"
 	"github.com/stretchr/testify/assert"
 )
 
