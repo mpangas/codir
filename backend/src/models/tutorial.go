@@ -8,4 +8,5 @@ type Tutorial struct {
 	PostTime int64  `json:"postTime"` // don't pass this in
 	EditTime int64  `json:"editTime"`
 	Score    int    `json:"score"` // don't pass this in
+	//Tags     []string `json:"tags"`  //Ideally it would be like this
 }

@@ -1,30 +1,15 @@
-# Sprint 2 Documentation
+# Sprint 3 Documentation
 
 ## Frontend - Work Completed
-- Designed the landing page of the website.
-- Created the login button and login page allowing the user to login to our website.
-- Created the sign up button and sign up page allowing the user to sign up for our website.
-- Designed the dashboard page of the our website which allows the user to view favorited tutorials. The functionality has not been implemented yet. 
-- Designed the about us page which includes a brief summary of what Codir is about as well as the names of the contributors. 
-- Integrated the signin and signup to work with the backend.
+
 
 ## Frontend - Cypress Unit Tests
-- Test 1 - 'Login' - This unit test checks that the login button is functional and redirects the user to the login page for them to log in to the website.
-- Test 2 - 'Sign up' - This unit test checks that the sign up button is functional and redirects the user to the sign up page for them to sign up for the website.
-- Test 3 - 'Sign up testing submit' - This unit test inputs a sample email, username, and password on the sign up page to ensure that signing up for the website is functional and succeeds which is shown by the website redirecting to the login page immediately after sign up. 
+
 
 ## Backend - Work Completed
-- Migrated backend to use the Go Fiber framework due to fetch issues.
-- Setup environmental variables in a locally stored .env file to allow for database password securiy and ease of use
-- Restructured files to include seperate controller folders for login and posts, as well as seperate files for the database connection and models.
-- Created tutorial post infrastructure, including routes and controller functions
-- Created several unit tests using Go's stdlib testing package that test the functionality of different API routes, as shown below
+
 
 ## Backend - Go Unit Tests
-- Test 1: [api/get](#get-apiget) - This unit test simulates a GET request to the api/get path which executes a function to return the information for all users in the database. It checks if the status code of the response is 200 to determine if the request is successful.
-- Test 2: [api/signup](#post-apisignup) - This unit test simulates a POST request to the api/signup path which executes a function to create a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
-- Test 3: [api/signin](#post-apisignin) - This unit test simulates a POST request to the api/signin path which executes a function to verify if a user is in the database given mock parameters and create a cookie if the user exists. It checks if the status code of the response is 200 to determine if the request is successful.
-- Test 4: [api/delete](#delete-apidelete) - This unit test simulates a DELETE request to the api/delete path which executes a function to delete a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
 
 ## API Documentation
 
@@ -45,9 +30,19 @@
 - [Routes](#routes-1)
   - [POST /api/tutorials](#post-apitutorials)
   - [GET /api/tutorials](#get-apitutorials)
-  - [GET /api/tutorials/id:{id}](#get-apitutorialsid)
-  - [PUT /api/tutorials/id:{id}](#put-apitutorialsid)
-  - [DELETE /api/tutorials/id:{id}](#delete-apitutorialsid)
+  - [GET /api/tutorials/id:{id}](#get-apitutorialsidid)
+  - [PUT /api/tutorials/id:{id}](#put-apitutorialsidid)
+  - [DELETE /api/tutorials/id:{id}](#delete-apitutorialsidid)
+  - [PUT /api/tutorials/id:{id}/up](#put-apitutorialsididup)
+  - [PUT /api/tutorials/id:{id}/down](#put-apitutorialsididdown)
+  - [GET /api/tutorials/search:{search}](#get-apitutorialssearchsearch)
+
+[Favorites](#favorites)
+
+- [Routes](#routes-2)
+  - [GET /api/favorites](#get-apifavorites)
+  - [POST /api/favorites/add](#post-apifavoritesadd)
+  - [DELETE /api/favorites/remove](#delete-apifavoritesremove)
 
 ## Login
 
@@ -142,13 +137,13 @@ Used to get all tutorials currently in the database.
 
 Returns: An object containing all tutorials.
 
-#### GET /api/tutorials/:id
+#### GET /api/tutorials/id:{id}
 
 Used to get a single tutorial post with that ID.
 
 Returns: The object matching the ID in the call, or an error if no post exists with that ID.
 
-#### PUT /api/tutorials/:id
+#### PUT /api/tutorials/id:{id}
 
 Used to change the information of the post with that ID. Only the following should be edited with this call:
 
@@ -159,8 +154,64 @@ Accepts: An object containing those two pieces of information.
 
 Returns: The object matching the ID with the new information, or an error if no post exists with that ID, a post already exists with the new `location`, or the object was incorrectly formatted.
 
-#### DELETE /api/tutorials/:id
+#### DELETE /api/tutorials/id:{id}
 
 Used to delete the post with that ID.
 
-Returns: WIP
+Returns: The object that was deleted.
+
+#### PUT /api/tutorials/id:{id}/up
+
+Used to increment the vote score of a tutorial up by 1.
+
+Returns: The object of the tutorial whose score was incremented.
+
+#### PUT /api/tutorials/id:{id}/down
+
+Used to increment the vote score of a tutorial down by 1.
+
+Returns: The object of the tutorial whose score was incremented.
+
+#### GET /api/tutorials/search:{search}
+
+Used to get an object containing all tutorials whose `title`s contain the string in `search`.
+
+The `search` string in the API call must be a percent-encoded string with spaces represented as '+' and other special characters represented as "%" followed by their ASCII value.
+
+Returns: An object containing all tutorials with `title`s containing the string.
+
+## Favorites
+
+A favorite tutorial has the following structure:
+
+`username`: The user associated with the favorite.
+
+`tutorialid`: The ID of the tutorial associated with the favorite.
+
+### Routes
+
+#### GET /api/favorites
+
+Used to get all of the current user's favorites.
+
+Returns: An object containing all of the current user's favorites, or an error if the user is not currently authenticated.
+
+#### POST /api/favorites/add
+
+Used to add a new favorite tutorial for the current user.
+
+Accepts: The ID of a tutorial that is to be favorited.
+
+Returns: A success message if the post succeeded, or an error if the user is not currently authenticated or if the request body was incorrectly formatted.
+
+#### DELETE /api/favorites/remove
+
+Used to remove a favorite tutorial from the current user
+
+Accepts: The ID of a tutorial that is to be removed from the user's favorites.
+
+Returns: A success message if the removal succeeded, or an error if the user is not currently authenticated or if the request body was incorrectly formatted.
+
+
+
+

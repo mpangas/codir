@@ -3,6 +3,7 @@ package logic
 import (
 	"errors"
 	"math/rand"
+	"sort"
 	"strconv"
 	"time"
 
@@ -160,4 +161,20 @@ func VoteDown(c *fiber.Ctx) error {
 	getTutorial.Score -= 1
 	database.DB.Save(&getTutorial)
 	return c.JSON(getTutorial)
+}
+
+func Search(c *fiber.Ctx) error {
+	getQuery, _ := url.QueryUnescape(c.Params("query"))
+	getQuery = "%" + getQuery + "%"
+
+	var searchResults []models.Tutorial
+	if errors.Is(database.DB.Where("title LIKE ?", getQuery).Find(&searchResults).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "No results",
+		})
+	}
+	sort.Slice(searchResults, func(i, j int) bool { return searchResults[i].Score > searchResults[j].Score })
+
+	return c.JSON(searchResults)
 }
