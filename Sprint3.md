@@ -7,6 +7,42 @@
 - Tested whether the "Favorites" section of the "Dashboard" Page is updated as soon as the user adds a tutorial as a favorite. 
 ## Frontend - Cypress & Unit Tests
 
+**Listed below will include a description of the Unit Tests worked on in Sprint 3: **
+
+- Unit Test #1: This test case is just a sample test to test the functionality of unit testing
+
+- Unit Test # 2: Tests to make sure that the logo exists on the header and is properly visible on the website
+
+- Unit Test # 3: Tests to make sure that the login button exists on the header and is properly visible on the website
+
+- Unit Test # 4: Tests to make sure that the sign up button exists on the header and is properly visible on the website
+
+- Unit Test # 5: Tests to make sure that an error message "You must enter a username" is printed when no username is entered when a user tries to login on the login screen.
+
+- Unit Test # 6: Tests to make sure that an error message "You must enter a password" is printed when no password is entered when a user tries to login on the login screen.
+
+- Unit Test # 7: Tests to make sure that an error message "You must enter an email" is printed when no email is entered when a user tries to sign up on the sign up page.
+
+- Unit Test # 8: Tests to make sure that an error message "You must enter an username" is printed when no username is entered when a user tries to sign up on the sign up page.
+
+- Unit Test # 9: Tests to make sure that an error message "You must enter an password" is printed when no password is entered when a user tries to sign up on the sign up page.
+
+- Unit Test # 10: Tests to make sure that an error message "Email address should adhere to this format: example@example.com" is printed when a user tries to sign up with an email that does that not fit the email format/requirements on the sign up page.
+
+- Unit Test # 11: Tests to make sure that an error message "The username must contain only alphanumeric and 6-20 characters." is printed when a user tries to sign up with a username that does not fit the username format/requirements on the sign up page.
+
+- Unit Test # 12: Tests to make sure that an error message "The password should contain 6-20 characters." is printed when a user tries to sign up with a password that does not fit the password format/requirements on the sign up page.
+
+**Listed below will include a description of the Cypress Tests worked on in Sprint 3: **
+
+- Cypress Test #1: Tests to make sure that the website can be logged into and can be navigated to the 'Dashboard' page of our site.
+
+- Cypress Test #2: Tests to make sure that the website can be logged into and can be navigated to the 'Browse' page of our site.
+
+- Cypress Test #3: Tests to make sure that the website can be logged into and can be navigated to the 'About Us' page of our site.
+
+- Cypress Test #4: Tests to make sure that the website can be logged into and can be navigated to the 'Test' page of our site.
+
 ## Backend - Work Completed
 - Added the Favorite object which correlates a user to a tutorial using a foreign key.
 - Added a new property to each user called Favorites which stores a list of Favorite objects that are associated with a user.
