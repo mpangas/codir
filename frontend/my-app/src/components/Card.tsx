@@ -8,6 +8,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import StarIcon from '@mui/icons-material/Star';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import { IconButton } from '@mui/material';
 import { margin } from '@mui/system';
 
 function Card(props: any) {
@@ -22,10 +23,10 @@ function Card(props: any) {
                             {props.user}
                         </Typography>
                      </CardContent>
-                     <CardMedia sx={{display: 'flex', float: "right", marginTop: 15, marginRight: 1.5}}>
-                        <ThumbUpAltOutlinedIcon sx={{marginRight: 0.5}}></ThumbUpAltOutlinedIcon>
-                        <Typography gutterBottom variant="h5" component="div" sx={{marginRight: 1, marginTop: 0.2}}>{props.score}</Typography>
-                        <ThumbDownAltOutlinedIcon sx={{marginRight: 0.5, marginTop: 0.2}}></ThumbDownAltOutlinedIcon>
+                     <CardMedia sx={{display: 'flex', float: "right", marginTop: 15}}>
+                        <IconButton><ThumbUpAltOutlinedIcon></ThumbUpAltOutlinedIcon></IconButton>
+                        <Typography gutterBottom variant="h5" component="div" sx={{marginTop: 1}}>{props.score}</Typography>
+                        <IconButton><ThumbDownAltOutlinedIcon></ThumbDownAltOutlinedIcon></IconButton>
                      </CardMedia>
                 </Cards>
         </div>
