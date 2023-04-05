@@ -179,3 +179,7 @@ func Search(c *fiber.Ctx) error {
 
 	return c.JSON(searchResults)
 }
+
+func Recommend(c *fiber.Ctx) error {
+
+}
