@@ -33,6 +33,11 @@ const theme = createTheme({
       textTransform: 'none',
     },
   },
+  palette: {
+    background: {
+      default: '#F4FAF8',
+    },
+  },
 });
 
 function App() {
