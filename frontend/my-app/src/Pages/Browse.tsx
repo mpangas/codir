@@ -9,6 +9,8 @@ import {
     TextField,
     Box,
     Container,
+    DialogContentText,
+    Divider,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -88,26 +90,33 @@ const Browse = (props: { username: string }) => {
     };
 
     return (
-        <Container sx={{ paddingTop: "3%" }}>
-            <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35 }}>
-                Browse Tutorials
-            </Typography>
+        <Container maxWidth={false} sx={{
+            minHeight: "60vh",
+        }}>
             <Box
                 display="flex"
                 justifyContent="center"
-                minHeight="60vh"
                 alignItems="flex-start"
-                paddingTop={5}
+                paddingTop="3%"
+                marginX={10}
             >
+                <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35, }}>
+                    Browse Tutorials
+                </Typography>
                 <Button variant="contained" sx={{
-                    mt: 4,
+                    ml: 'auto',
+                    backgroundColor: "#0097b2",
+                    '&:hover': {
+                        backgroundColor: "#028299",
+                    },
                 }} onClick={() => setOpen(true)}>
-                    Create a Review
+                    SUBMIT TUTORIAL
                 </Button>
             </Box>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Submit a Tutorial Review</DialogTitle>
+                <DialogTitle sx={{ fontSize: 20, textAlign: 'center' }}>Submit a Tutorial</DialogTitle>
                 <DialogContent>
+                    <DialogContentText>Find a great tutorial? Enter the details below!</DialogContentText>
                     <FormFields
                         Title={Title}
                         setTitle={setTitle}
@@ -118,8 +127,15 @@ const Browse = (props: { username: string }) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                    <Button onClick={handleClose} sx={{
+                        color: "#0097b2",
+                    }}>Cancel</Button>
+                    <Button onClick={handleSubmit} variant="contained" sx={{
+                        backgroundColor: "#0097b2",
+                        '&:hover': {
+                            backgroundColor: "#028299",
+                        },
+                    }}>
                         Submit
                     </Button>
                 </DialogActions>
