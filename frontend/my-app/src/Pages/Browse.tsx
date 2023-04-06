@@ -96,7 +96,7 @@ const Browse = (props: { username: string }) => {
             <Box
                 display="flex"
                 justifyContent="center"
-                alignItems="flex-start"
+                alignItems="center"
                 paddingTop="3%"
                 marginX={10}
             >
