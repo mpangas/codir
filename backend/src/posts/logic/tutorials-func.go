@@ -11,9 +11,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/mpangas/codir/backend/src/database"
 	"github.com/mpangas/codir/backend/src/models"
+	"github.com/mpangas/codir/vendor/github.com/dgrijalva/jwt-go/v4"
 
 	"gorm.io/gorm"
 )
+
+const SecretKey = "secret"
 
 func PostTutorial(c *fiber.Ctx) error {
 	// get tutorial from request
@@ -181,5 +184,33 @@ func Search(c *fiber.Ctx) error {
 }
 
 func Recommend(c *fiber.Ctx) error {
+	var recommendations []models.Tutorial
 
+	// thinking about making another model like attributes but with structs, because right now everyone can only have one preference.
+
+	// Get the user info:
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+	preferences := user.Preferences
+
+	return c.JSON(recommendations)
 }
