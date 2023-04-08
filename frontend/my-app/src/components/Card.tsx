@@ -36,6 +36,12 @@ function Card(props: any) {
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
             })
+            const response1 = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            })
+            localStorage.setItem(`like_${props.idNum}`, `${true}`);
             localStorage.setItem(`dislike_${props.idNum}`, `${false}`);
             setLike(true);
             setdislike(false);
@@ -72,7 +78,13 @@ function Card(props: any) {
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
             })
-            localStorage.setItem(`dislike_${props.idNum}`, `${false}`);
+            const response1 = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            })
+            localStorage.setItem(`dislike_${props.idNum}`, `${true}`);
+            localStorage.setItem(`like_${props.idNum}`, `${false}`);
             setdislike(true);
             setLike(false);
             setScore(score - 2); 
@@ -102,7 +114,7 @@ function Card(props: any) {
             setdislike(JSON.parse(dislikeValue));
         }
         setScore(props.score);
-    }, [props.idNum, props.score]);
+    }, [props.idNum, props.score, setLike, setdislike]);
 
     return (
         <div className="Card">
