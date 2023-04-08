@@ -5,10 +5,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import StarIcon from '@mui/icons-material/Star';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { IconButton } from '@mui/material';
 import { margin } from '@mui/system';
 
@@ -78,9 +77,9 @@ function Card(props: any) {
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpOffAltIcon sx={{ color: 'black' }} /> : <ThumbUpAltOutlinedIcon />}</IconButton>
+                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpIcon sx={{ color: 'gray'}}/>}</IconButton>
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
-                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbUpOffAltIcon sx={{ color: 'black' }} /> : <ThumbUpAltOutlinedIcon />}</IconButton>
+                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownIcon sx={{ color: 'gray' }}/>}</IconButton>
                 </CardMedia>
             </Cards>
         </div>
