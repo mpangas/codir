@@ -13,33 +13,61 @@ import { IconButton } from '@mui/material';
 import { margin } from '@mui/system';
 
 function Card(props: any) {
-    const [scores, setScores] = useState(props.score);
+    const [scores, setScores] = useState<string[]>([]);
 
-    const handleIncrement = () => {
-        setScores(scores + 1);
+    const handleIncrement = async () => {
+        const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        const data = await response.json();
     }
 
-    const handleDecrement = () => {
+    /*const handleDecrement = () => {
         setScores(scores - 1);
-    }
+    }*/
 
-    return(
-    <div className="Card">
-                <Cards sx={{ width: 315, height: 260 , marginTop: 3, marginLeft: 15 }}>
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 30 }}>
-                            {props.title}
-                        </Typography>
-                         <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
-                            {props.user}
-                        </Typography>
-                     </CardContent>
-                     <CardMedia sx={{display: 'flex', float: "right", marginTop: 15}}>
-                        <IconButton sx={{marginRight: 0.5}} onClick={handleIncrement}><ThumbUpAltOutlinedIcon></ThumbUpAltOutlinedIcon></IconButton>
-                        <Typography gutterBottom variant="h5" component="div" sx={{marginTop: 1, marginRight: 0.5}}>{scores}</Typography>
-                        <IconButton onClick={handleDecrement}><ThumbDownAltOutlinedIcon></ThumbDownAltOutlinedIcon></IconButton>
-                     </CardMedia>
-                </Cards>
+    /*useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/favorites', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response.json();
+
+                console.log("Specific Details " + JSON.stringify(data));
+
+                if (Array.isArray(data)) {
+                    const numOfScore = data.map((item: { tutorialID: string; }) =>
+                        item.tutorialID);
+                    setScores(numOfScore);
+                }
+            }
+        )();
+    }, [props.idNum]);*/
+
+    console.log("Scores: " + scores);
+
+    return (
+        <div className="Card">
+            <Cards sx={{ width: 315, height: 260, marginTop: 3, marginLeft: 15 }}>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 30 }}>
+                        {props.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
+                        {props.user}
+                    </Typography>
+                </CardContent>
+                <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
+                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} ><ThumbUpAltOutlinedIcon></ThumbUpAltOutlinedIcon></IconButton>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{props.score}</Typography>
+                    <IconButton ><ThumbDownAltOutlinedIcon></ThumbDownAltOutlinedIcon></IconButton>
+                </CardMedia>
+            </Cards>
         </div>
     );
 }
