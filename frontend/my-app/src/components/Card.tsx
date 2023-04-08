@@ -13,7 +13,7 @@ import { IconButton } from '@mui/material';
 import { margin } from '@mui/system';
 
 function Card(props: any) {
-    const [scores, setScores] = useState<string[]>([]);
+    const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
 
@@ -26,6 +26,7 @@ function Card(props: any) {
         const data = await response.json();
         setLike(true);
         setdislike(false);
+        setScore(score + 1);
     }
 
     const handleDecrement = async () => {
@@ -37,7 +38,12 @@ function Card(props: any) {
         const data = await response.json();
         setLike(false);
         setdislike(true);
+        setScore(score - 1);
     }
+
+    useEffect(() => {
+        setScore(props.score);
+      }, [props.score]);
 
     /*useEffect(() => {
         (
@@ -60,8 +66,6 @@ function Card(props: any) {
         )();
     }, [props.idNum]);*/
 
-    console.log("Scores: " + scores);
-
     return (
         <div className="Card">
             <Cards sx={{ width: 315, height: 260, marginTop: 3, marginLeft: 15 }}>
@@ -75,7 +79,7 @@ function Card(props: any) {
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpOffAltIcon sx={{ color: 'black' }} /> : <ThumbUpAltOutlinedIcon />}</IconButton>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{props.score}</Typography>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
                     <IconButton onClick={handleDecrement}>{dislike ? <ThumbUpOffAltIcon sx={{ color: 'black' }} /> : <ThumbUpAltOutlinedIcon />}</IconButton>
                 </CardMedia>
             </Cards>
