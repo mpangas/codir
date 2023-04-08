@@ -24,6 +24,15 @@ function Card(props: any) {
         const data = await response.json();
     }
 
+    const handleDecrement = async () => {
+        const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        const data = await response.json();
+    }
+
     /*const handleDecrement = () => {
         setScores(scores - 1);
     }*/
@@ -65,7 +74,7 @@ function Card(props: any) {
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} ><ThumbUpAltOutlinedIcon></ThumbUpAltOutlinedIcon></IconButton>
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{props.score}</Typography>
-                    <IconButton ><ThumbDownAltOutlinedIcon></ThumbDownAltOutlinedIcon></IconButton>
+                    <IconButton onClick={handleDecrement}><ThumbDownAltOutlinedIcon></ThumbDownAltOutlinedIcon></IconButton>
                 </CardMedia>
             </Cards>
         </div>
