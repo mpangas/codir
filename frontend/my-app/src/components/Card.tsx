@@ -19,13 +19,22 @@ function Card(props: any) {
     const [dislike, setdislike] = useState(false);
 
     const handleIncrement = useCallback(async () => {
-        if(like) {
+        if (like) {
+            const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            })
+            const data = await response.json();
+            localStorage.setItem(`like_${props.idNum}`, `${false}`);
+            setLike(false);
+            setScore(score - 1);
             return;
         }
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
         })
         const data = await response.json();
         localStorage.setItem(`like_${props.idNum}`, `${true}`);
@@ -33,16 +42,25 @@ function Card(props: any) {
         setLike(true);
         setdislike(false);
         setScore(score + 1);
-      }, [props.idNum, score, setLike, setdislike]);
+    }, [props.idNum, score, setLike, setdislike]);
 
-      const handleDecrement = useCallback(async () => {
-        if(dislike) {
+    const handleDecrement = useCallback(async () => {
+        if (dislike) {
+            const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            })
+            const data = await response.json();
+            localStorage.setItem(`dislike_${props.idNum}`, `${false}`);
+            setdislike(false);
+            setScore(score + 1);
             return;
         }
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
         })
         const data = await response.json();
         localStorage.setItem(`like_${props.idNum}`, `${false}`);
@@ -50,7 +68,7 @@ function Card(props: any) {
         setdislike(true);
         setLike(false);
         setScore(score - 1);
-      }, [props.idNum, score, setLike, setdislike]);
+    }, [props.idNum, score, setLike, setdislike]);
 
     useEffect(() => {
         const likeValue = localStorage.getItem(`like_${props.idNum}`);
@@ -58,7 +76,7 @@ function Card(props: any) {
         console.log("Like state " + likeValue);
         console.log("Dislike state " + dislikeValue);
         if (likeValue) {
-          setLike(JSON.parse(likeValue));
+            setLike(JSON.parse(likeValue));
         }
         if (dislikeValue) {
             setdislike(JSON.parse(dislikeValue));
@@ -78,9 +96,9 @@ function Card(props: any) {
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon/>}</IconButton>
+                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton>
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
-                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon/>}</IconButton>
+                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon />}</IconButton>
                 </CardMedia>
             </Cards>
         </div>
