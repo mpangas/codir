@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import StarIcon from '@mui/icons-material/Star';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { IconButton } from '@mui/material';
@@ -28,7 +30,7 @@ function Card(props: any) {
         setLike(true);
         setdislike(false);
         setScore(score + 1);
-      }, [props.idNum, score]);
+      }, [props.idNum, score, setLike, setdislike]);
 
       const handleDecrement = useCallback(async () => {
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
@@ -37,21 +39,23 @@ function Card(props: any) {
           credentials: 'include',
         })
         const data = await response.json();
-        localStorage.setItem(`dislike_${props.idNum}`, `${true}`);
         localStorage.setItem(`like_${props.idNum}`, `${false}`);
+        localStorage.setItem(`dislike_${props.idNum}`, `${true}`);
         setdislike(true);
         setLike(false);
         setScore(score - 1);
-      }, [props.idNum, score]);
+      }, [props.idNum, score, setLike, setdislike]);
 
     useEffect(() => {
         const likeValue = localStorage.getItem(`like_${props.idNum}`);
         const dislikeValue = localStorage.getItem(`dislike_${props.idNum}`);
+        console.log("Like state " + likeValue);
+        console.log("Dislike state " + dislikeValue);
         if (likeValue) {
           setLike(JSON.parse(likeValue));
         }
         if (dislikeValue) {
-            setLike(JSON.parse(dislikeValue));
+            setdislike(JSON.parse(dislikeValue));
         }
         setScore(props.score);
     }, [props.idNum, props.score]);
@@ -68,9 +72,9 @@ function Card(props: any) {
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpIcon sx={{ color: 'gray'}}/>}</IconButton>
+                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon/>}</IconButton>
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
-                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownIcon sx={{ color: 'gray' }}/>}</IconButton>
+                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon/>}</IconButton>
                 </CardMedia>
             </Cards>
         </div>
