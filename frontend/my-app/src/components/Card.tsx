@@ -14,6 +14,8 @@ import { margin } from '@mui/system';
 
 function Card(props: any) {
     const [scores, setScores] = useState<string[]>([]);
+    const [like, setLike] = useState(false);
+    const [dislike, setdislike] = useState(false);
 
     const handleIncrement = async () => {
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
@@ -22,6 +24,8 @@ function Card(props: any) {
             credentials: 'include',
         })
         const data = await response.json();
+        setLike(true);
+        setdislike(false);
     }
 
     const handleDecrement = async () => {
@@ -31,11 +35,9 @@ function Card(props: any) {
             credentials: 'include',
         })
         const data = await response.json();
+        setLike(false);
+        setdislike(true);
     }
-
-    /*const handleDecrement = () => {
-        setScores(scores - 1);
-    }*/
 
     /*useEffect(() => {
         (
@@ -72,9 +74,9 @@ function Card(props: any) {
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} ><ThumbUpAltOutlinedIcon></ThumbUpAltOutlinedIcon></IconButton>
+                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpOffAltIcon sx={{ color: 'black' }} /> : <ThumbUpAltOutlinedIcon />}</IconButton>
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{props.score}</Typography>
-                    <IconButton onClick={handleDecrement}><ThumbDownAltOutlinedIcon></ThumbDownAltOutlinedIcon></IconButton>
+                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbUpOffAltIcon sx={{ color: 'black' }} /> : <ThumbUpAltOutlinedIcon />}</IconButton>
                 </CardMedia>
             </Cards>
         </div>
