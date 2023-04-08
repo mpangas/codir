@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Cards from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -16,54 +16,45 @@ function Card(props: any) {
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
 
-    const handleIncrement = async () => {
+    const handleIncrement = useCallback(async () => {
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
         })
         const data = await response.json();
+        localStorage.setItem(`like_${props.idNum}`, `${true}`);
+        localStorage.setItem(`dislike_${props.idNum}`, `${false}`);
         setLike(true);
         setdislike(false);
         setScore(score + 1);
-    }
+      }, [props.idNum, score]);
 
-    const handleDecrement = async () => {
+      const handleDecrement = useCallback(async () => {
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
         })
         const data = await response.json();
-        setLike(false);
+        localStorage.setItem(`dislike_${props.idNum}`, `${true}`);
+        localStorage.setItem(`like_${props.idNum}`, `${false}`);
         setdislike(true);
+        setLike(false);
         setScore(score - 1);
-    }
+      }, [props.idNum, score]);
 
     useEffect(() => {
+        const likeValue = localStorage.getItem(`like_${props.idNum}`);
+        const dislikeValue = localStorage.getItem(`dislike_${props.idNum}`);
+        if (likeValue) {
+          setLike(JSON.parse(likeValue));
+        }
+        if (dislikeValue) {
+            setLike(JSON.parse(dislikeValue));
+        }
         setScore(props.score);
-      }, [props.score]);
-
-    /*useEffect(() => {
-        (
-            async () => {
-                const response = await fetch('http://localhost:8000/api/favorites', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                })
-                const data = await response.json();
-
-                console.log("Specific Details " + JSON.stringify(data));
-
-                if (Array.isArray(data)) {
-                    const numOfScore = data.map((item: { tutorialID: string; }) =>
-                        item.tutorialID);
-                    setScores(numOfScore);
-                }
-            }
-        )();
-    }, [props.idNum]);*/
+    }, [props.idNum, props.score]);
 
     return (
         <div className="Card">
