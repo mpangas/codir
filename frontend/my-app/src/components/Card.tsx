@@ -90,6 +90,7 @@ function Card(props: any) {
             setScore(score - 2); 
             return;
         }
+        console.log("what is the state: " + dislike);
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
