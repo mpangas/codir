@@ -19,6 +19,9 @@ function Card(props: any) {
     const [dislike, setdislike] = useState(false);
 
     const handleIncrement = useCallback(async () => {
+        if(like) {
+            return;
+        }
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -33,6 +36,9 @@ function Card(props: any) {
       }, [props.idNum, score, setLike, setdislike]);
 
       const handleDecrement = useCallback(async () => {
+        if(dislike) {
+            return;
+        }
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
