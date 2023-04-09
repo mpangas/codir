@@ -67,6 +67,12 @@ const Testing = (props: { username: string }) => {
 
     const handleClose = () => {
         setOpen(false);
+        
+        setTitle("");
+        setLocation("");
+        setUser("");
+
+        setError("");
     };
 
     const handleSubmit = async () => {
