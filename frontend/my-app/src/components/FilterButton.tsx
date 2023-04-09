@@ -1,21 +1,20 @@
-import { useState } from 'react';
-import { Button, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 interface FilterButtonProps {
-    label: string;
+    defaultOption: string;
     options: string[];
     value: string | undefined;
     onChange: (value: string) => void;
 }
 
-function FilterButton({ label, options, value, onChange }: FilterButtonProps) {
+function FilterButton({ defaultOption, options, value, onChange }: FilterButtonProps) {
     const handleChange = (event: SelectChangeEvent) => {
         onChange(event.target.value as string);
     };
 
     return (
         <div>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <FormControl sx={{ m: 1, width: 180}} size="small">
                 <Select
                     value={value ?? ''}
                     onChange={handleChange}
@@ -23,7 +22,7 @@ function FilterButton({ label, options, value, onChange }: FilterButtonProps) {
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
                     <MenuItem value="">
-                        <em>None</em>
+                        {defaultOption}
                     </MenuItem>
                     {options.map((option) => (
                         <MenuItem key={option} value={option}>

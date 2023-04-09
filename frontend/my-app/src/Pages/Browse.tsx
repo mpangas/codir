@@ -10,10 +10,11 @@ import {
     Box,
     Container,
     DialogContentText,
-    Divider,
+    Grid,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import FilterButton from '../components/FilterButton';
 
 const FormFields = ({
     Title,
@@ -64,9 +65,11 @@ const Browse = (props: { username: string }) => {
     const [Location, setLocation] = useState('');
     const [User, setUser] = useState('');
 
-    if (props.username === "" || props.username === undefined) {
-        navigate("/login");
-    }
+    useEffect(() => {
+        if (props.username === "" || props.username === undefined) {
+            navigate("/login");
+        }
+    }, [props.username, navigate]);
 
     const handleClose = () => {
         setOpen(false);
@@ -87,6 +90,12 @@ const Browse = (props: { username: string }) => {
         const data = await response.json();
         console.log(JSON.stringify(data));
         setOpen(false);
+    };
+
+    const [selectedOption, setSelectedOption] = useState<string | undefined>(undefined);
+
+    const handleOptionChange = (value: string) => {
+        setSelectedOption(value);
     };
 
     return (
@@ -140,6 +149,33 @@ const Browse = (props: { username: string }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
+                <Box sx={{ flex: 1 }}>
+                    <FilterButton
+                        defaultOption="All Difficulties"
+                        options={['Beginner', 'Intermediate', 'Advanced']}
+                        value={selectedOption}
+                        onChange={handleOptionChange}
+                    />
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                    <FilterButton
+                        defaultOption="All Difficulties"
+                        options={['Beginner', 'Intermediate', 'Advanced']}
+                        value={selectedOption}
+                        onChange={handleOptionChange}
+                    />
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                    <FilterButton
+                        defaultOption="All Difficulties"
+                        options={['Beginner', 'Intermediate', 'Advanced']}
+                        value={selectedOption}
+                        onChange={handleOptionChange}
+                    />
+                </Box>
+            </Box>
+
         </Container>
     );
 }
