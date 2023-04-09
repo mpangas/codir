@@ -54,15 +54,48 @@ const FormFields = ({
 
 const Testing = (props: { username: string }) => {
     const [open, setOpen] = useState(false);
+    
     const [Title, setTitle] = useState('');
     const [Location, setLocation] = useState('');
     const [User, setUser] = useState('');
+    
+    const [error, setError] = useState("");
+
+    const titleRegex = /^.{0,10}$/;
+    const locRegex = /^.{0,10}$/;
+    const userRegex = /^.{0,10}$/;
 
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleSubmit = async () => {
+        if(Title === '' || Title === undefined) {
+            setError("You must enter a title.");
+            return;
+        }
+        else if(Location === '' || Location === undefined) {
+            setError("You must enter a location.");
+            return;
+        }
+        else if(User === '' || User === undefined) {
+            setError("You must enter a user.");
+            return;
+        }
+
+        if(!titleRegex.test(Title)) {
+            setError("Title should have a maximum of 10 characters.");
+            return;
+        }
+        else if(!locRegex.test(Location)) {
+            setError("Location should have a maximum of 10 characters.");
+            return;
+        }
+        else if(!userRegex.test(User)) {
+            setError("User should have a maximum of 10 characters.");
+            return;
+        }
+
         const response = await fetch('http://localhost:8000/api/tutorials', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
