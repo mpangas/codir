@@ -61,7 +61,7 @@ const Testing = (props: { username: string }) => {
     
     const [error, setError] = useState("");
 
-    const titleRegex = /^.{0,10}$/;
+    const titleRegex = /^.{0,15}$/;
     const locRegex = /^.{0,10}$/;
     const userRegex = /^.{0,10}$/;
 
@@ -84,7 +84,7 @@ const Testing = (props: { username: string }) => {
         }
 
         if(!titleRegex.test(Title)) {
-            setError("Title should have a maximum of 10 characters.");
+            setError("Title should have a maximum of 15 characters.");
             return;
         }
         else if(!locRegex.test(Location)) {
@@ -110,6 +110,11 @@ const Testing = (props: { username: string }) => {
         const data = await response.json();
         console.log(JSON.stringify(data));
         setOpen(false);
+        
+        setTitle("");
+        setLocation("");
+        setUser("");
+
         setError("");
     };
 
