@@ -110,6 +110,7 @@ const Testing = (props: { username: string }) => {
         const data = await response.json();
         console.log(JSON.stringify(data));
         setOpen(false);
+        setError("");
     };
 
     return (
@@ -140,6 +141,9 @@ const Testing = (props: { username: string }) => {
                         setUser={setUser}
                     />
                 </DialogContent>
+                <div className="tutorialErrorMsg">
+                    {error}
+                </div>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleSubmit} variant="contained" color="primary">
