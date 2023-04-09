@@ -61,9 +61,9 @@ const Testing = (props: { username: string }) => {
     
     const [error, setError] = useState("");
 
-    const titleRegex = /^.{0,15}$/;
-    const locRegex = /^.{0,10}$/;
-    const userRegex = /^.{0,10}$/;
+    const titleRegex = /^.{0,18}$/;
+    const locRegex = /^.{0,18}$/;
+    const userRegex = /^.{0,18}$/;
 
     const handleClose = () => {
         setOpen(false);
@@ -90,15 +90,15 @@ const Testing = (props: { username: string }) => {
         }
 
         if(!titleRegex.test(Title)) {
-            setError("Title should have a maximum of 15 characters.");
+            setError("Title should have a maximum of 18 characters.");
             return;
         }
         else if(!locRegex.test(Location)) {
-            setError("Location should have a maximum of 10 characters.");
+            setError("Location should have a maximum of 18 characters.");
             return;
         }
         else if(!userRegex.test(User)) {
-            setError("User should have a maximum of 10 characters.");
+            setError("User should have a maximum of 18 characters.");
             return;
         }
 
