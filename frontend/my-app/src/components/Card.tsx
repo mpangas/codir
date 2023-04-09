@@ -12,6 +12,8 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { IconButton } from '@mui/material';
 import { margin } from '@mui/system';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Card(props: any) {
     const [score, setScore] = useState<number>(props.score);
@@ -128,6 +130,9 @@ function Card(props: any) {
                         {props.user}
                     </Typography>
                 </CardContent>
+                <CardMedia sx={{ display: 'flex', float: "left"}}>
+                    <FavoriteBorderIcon sx={{ marginLeft: 2, marginTop: 15}}></FavoriteBorderIcon>
+                </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton>
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
