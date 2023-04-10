@@ -88,14 +88,26 @@ const Browse = (props: { username: string }) => {
         });
 
         const data = await response.json();
-        console.log(JSON.stringify(data));
         setOpen(false);
     };
 
-    const [selectedOption, setSelectedOption] = useState<string | undefined>(undefined);
+    
+    const [language, setLanguage] = useState("All Languages");
+    const [technology, setTechnology] = useState("All Technologies");
+    const [difficulty, setDifficulty] = useState("All Skill Levels");
+    const [learningStyle, setLearningStyle] = useState("All Learning Styles");
 
-    const handleOptionChange = (value: string) => {
-        setSelectedOption(value);
+    const handleDifficultyChange = (value: string) => {
+        setDifficulty(value);
+    };
+    const handleLanguageChange = (value: string) => {
+        setLanguage(value);
+    };
+    const handleTechnologyChange = (value: string) => {
+        setTechnology(value);
+    };
+    const handleLearningStyleChange = (value: string) => {
+        setLearningStyle(value);
     };
 
     return (
@@ -152,26 +164,34 @@ const Browse = (props: { username: string }) => {
             <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
-                        defaultOption="All Difficulties"
-                        options={['Beginner', 'Intermediate', 'Advanced']}
-                        value={selectedOption}
-                        onChange={handleOptionChange}
+                        defaultOption='All Languages'
+                        options={['Assembly', 'Bash/Shell', 'C', 'C#', 'C++', 'COBOL', 'Dart', 'Elixir', 'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML/CSS', 'Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'SQL', 'Swift', 'TypeScript', 'VBA']}
+                        value={language}
+                        onChange={handleLanguageChange}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
-                        defaultOption="All Difficulties"
-                        options={['Beginner', 'Intermediate', 'Advanced']}
-                        value={selectedOption}
-                        onChange={handleOptionChange}
+                        defaultOption="All Technologies"
+                        options={['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn']}
+                        value={technology}
+                        onChange={handleTechnologyChange}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
-                        defaultOption="All Difficulties"
+                        defaultOption="All Skill Levels"
                         options={['Beginner', 'Intermediate', 'Advanced']}
-                        value={selectedOption}
-                        onChange={handleOptionChange}
+                        value={difficulty}
+                        onChange={handleDifficultyChange}
+                    />
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                    <FilterButton
+                        defaultOption="All Learning Styles"
+                        options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
+                        value={learningStyle}
+                        onChange={handleLearningStyleChange}
                     />
                 </Box>
             </Box>

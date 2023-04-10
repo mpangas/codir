@@ -21,7 +21,7 @@ function FilterButton({ defaultOption, options, value, onChange }: FilterButtonP
                     displayEmpty
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
-                    <MenuItem value="">
+                    <MenuItem key={defaultOption} value={defaultOption}>
                         {defaultOption}
                     </MenuItem>
                     {options.map((option) => (
