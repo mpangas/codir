@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Button,
     Dialog,
@@ -67,7 +68,10 @@ const Testing = (props: { username: string }) => {
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
     const userRegex = /^.{0,18}$/;
-
+    const navigate = useNavigate();
+    if (props.username === "" || props.username === undefined) {
+        navigate("/login");
+    }
     const handleClose = () => {
         setOpen(false);
         
@@ -126,16 +130,6 @@ const Testing = (props: { username: string }) => {
 
         setError("");
     };
-
-    const handleFavorite = async () => {
-        const response = await fetch('http://localhost:8000/api/signup', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-         
-          })
-      })
-    }
 
     useEffect(() => {
         (

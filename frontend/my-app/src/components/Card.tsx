@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Cards from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -19,6 +20,10 @@ function Card(props: any) {
     const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
+    const tutorialID = props.idNum;
+    const username = props.user;
+    const [favorite, setFavorite] = useState(false);
+    const navigate = useNavigate();
 
     const handleIncrement = useCallback(async () => {
         if (like) {
@@ -105,6 +110,23 @@ function Card(props: any) {
         setScore(score - 1);
     }, [props.idNum, score, setLike, setdislike]);
 
+    const handleFavorite = async () => {
+        const response = await fetch('http://localhost:8000/api/favorites/add', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            tutorialID 
+          })
+      })
+      const data = await response.json();
+      if(response.status === 200) {
+          navigate("/dashboard");
+      } else {
+          console.log(data.message);
+      }
+      setFavorite(true);
+    }
+
     useEffect(() => {
         const likeValue = localStorage.getItem(`like_${props.idNum}`);
         const dislikeValue = localStorage.getItem(`dislike_${props.idNum}`);
@@ -131,7 +153,7 @@ function Card(props: any) {
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "left"}}>
-                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}}><FavoriteBorderIcon></FavoriteBorderIcon></IconButton>
+                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
                 </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton>
@@ -144,3 +166,4 @@ function Card(props: any) {
 }
 
 export default Card;
+
