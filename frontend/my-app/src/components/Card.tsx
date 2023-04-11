@@ -16,7 +16,7 @@ import { margin } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-function Card(props: any) {
+function Card(props: {title: string, user: string, score: number, idNum: number }) {
     const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
@@ -111,6 +111,7 @@ function Card(props: any) {
     }, [props.idNum, score, setLike, setdislike]);
 
     const handleFavorite = async () => {
+        console.log(props.user);
         const response = await fetch('http://localhost:8000/api/favorites/add', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
