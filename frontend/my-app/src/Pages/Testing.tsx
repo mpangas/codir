@@ -127,6 +127,16 @@ const Testing = (props: { username: string }) => {
         setError("");
     };
 
+    const handleFavorite = async () => {
+        const response = await fetch('http://localhost:8000/api/signup', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+         
+          })
+      })
+    }
+
     useEffect(() => {
         (
             async () => {
