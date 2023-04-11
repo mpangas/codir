@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Button,
     Dialog,
@@ -9,6 +9,7 @@ import {
     TextField,
     Box,
 } from '@mui/material';
+import Card from '../components/Card';
 
 const FormFields = ({
     Title,
@@ -60,6 +61,8 @@ const Testing = (props: { username: string }) => {
     const [User, setUser] = useState('');
     
     const [error, setError] = useState("");
+
+    const [tutorialList, settutorialList] = useState([]);
 
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
@@ -124,6 +127,34 @@ const Testing = (props: { username: string }) => {
         setError("");
     };
 
+    const handleFavorite = async () => {
+        const response = await fetch('http://localhost:8000/api/signup', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+         
+          })
+      })
+    }
+
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/tutorials', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response.json();
+                settutorialList(data);
+            }
+        )();
+    }, [props.username]);
+
+    const cardList = tutorialList.map((item: { title: string,  user: string, score: number, id: number }) => {
+        return <Card title={item.title} user={item.user} score={item.score} idNum={item.id}/>
+    })
+
     return (
         <div>
             <h1 className="test">TEST</h1>
@@ -162,6 +193,9 @@ const Testing = (props: { username: string }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <div className="cardsList">
+                {cardList}
+            </div>
         </div>
     );
 };

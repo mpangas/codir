@@ -131,7 +131,7 @@ function Card(props: any) {
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "left"}}>
-                    <FavoriteBorderIcon sx={{ marginLeft: 2, marginTop: 15}}></FavoriteBorderIcon>
+                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}}><FavoriteBorderIcon></FavoriteBorderIcon></IconButton>
                 </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton>
