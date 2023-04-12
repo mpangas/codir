@@ -210,7 +210,24 @@ func Recommend(c *fiber.Ctx) error {
 	// Get user info from db
 	var user models.UserInfo
 	database.DB.First(&user, "username = ?", claims.Issuer)
-	preferences := user.Preferences
+	//preferences := []string{user.Preferences.Technology, user.Preferences.Language, user.Preferences.SkillLevel, user.Preferences.Style}
 
-	return c.JSON(recommendations)
+	// first, check if any match every preference
+	var thisSearch []models.Tutorial
+	//querySlice := []string{"technology = ?", "AND language = ?", "AND skillLevel = ?", "AND style = ?"}
+	//database.DB.Where("technology = ? AND language = ? AND skillLevel = ? AND style = ?", preferences).Find(&thisSearch)
+	//recommendations = append(recommendations, thisSearch...)
+	query := map[string]interface{}{"technology": user.Preferences.Technology, "language": user.Preferences.Language, "skillLevel": user.Preferences.SkillLevel, "style": user.Preferences.Style}
+
+	//sketchy algorithm
+	attNames := []string{"technology", "language", "skillLevel", "style"}
+	for len(recommendations) < 5 && len(query) > 0 {
+		//query := strings.Join(querySlice, "")
+		//database.DB.Where(query, preferences...)
+		database.DB.Where(query).Find(&thisSearch)
+		recommendations = append(recommendations, thisSearch...)
+		delete(query, attNames[len(query)-1])
+	}
+
+	return c.JSON(recommendations[0:4])
 }
