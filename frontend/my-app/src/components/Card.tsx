@@ -97,7 +97,6 @@ function Card(props: { title: string, user: string, score: number, idNum: string
             setScore(score - 2);
             return;
         }
-        console.log("what is the state: " + dislike);
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/down`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -111,6 +110,11 @@ function Card(props: { title: string, user: string, score: number, idNum: string
     }, [props.idNum, score, setLike, setdislike]);
 
     const handleFavorite = async () => {
+        if(favorite) {
+            setFavorite(false);
+            localStorage.setItem(`favorite_${props.idNum}`, `${false}`);
+            return; 
+        }
         console.log(props.user);
         const response = await fetch('http://localhost:8000/api/favorites/add', {
             method: 'POST',
@@ -119,28 +123,25 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                 tutorialID
             })
         })
-        const data = await response.json();
-        if (response.status === 200) {
-            navigate("/dashboard");
-        } else {
-            console.log(data.message);
-        }
         setFavorite(true);
+        localStorage.setItem(`favorite_${props.idNum}`, `${true}`);
     }
 
     useEffect(() => {
         const likeValue = localStorage.getItem(`like_${props.idNum}`);
         const dislikeValue = localStorage.getItem(`dislike_${props.idNum}`);
-        console.log("Like state " + likeValue);
-        console.log("Dislike state " + dislikeValue);
+        const favVal = localStorage.getItem(`favorite_${props.idNum}`);
         if (likeValue) {
             setLike(JSON.parse(likeValue));
         }
         if (dislikeValue) {
             setdislike(JSON.parse(dislikeValue));
         }
+        if(favVal) {
+            setFavorite(JSON.parse(favVal));
+        }
         setScore(props.score);
-    }, [props.idNum, props.score, setLike, setdislike]);
+    }, [props.idNum, props.score, setLike, setdislike, setFavorite]);
 
     return (
         <div className="Card">
