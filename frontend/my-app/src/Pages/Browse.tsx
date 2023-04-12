@@ -15,6 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import FilterButton from '../components/FilterButton';
+import Card from '../components/Card';
 
 const FormFields = ({
     Title,
@@ -59,6 +60,7 @@ const FormFields = ({
 };
 
 const Browse = (props: { username: string }) => {
+    // Submit Tutorial
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [Title, setTitle] = useState('');
@@ -91,7 +93,7 @@ const Browse = (props: { username: string }) => {
         setOpen(false);
     };
 
-    
+    // Filters
     const [language, setLanguage] = useState("All Languages");
     const [technology, setTechnology] = useState("All Technologies");
     const [difficulty, setDifficulty] = useState("All Skill Levels");
@@ -109,6 +111,30 @@ const Browse = (props: { username: string }) => {
     const handleLearningStyleChange = (value: string) => {
         setLearningStyle(value);
     };
+
+    // Tutorials
+    const [tutorials, setTutorials] = useState([]);
+
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/tutorials', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response.json();
+
+                const tutorialData = data.map((item: { title: string, location: string, score: number, }) =>
+                    item);
+                setTutorials(tutorialData);
+            }
+        )();
+    }, [props.username]);
+
+    const tutorialCards = tutorials.map((item: { title: string, location: string, score: number }) => {
+        return <Card title={item.title} location={item.location} likes={item.score} />
+    })
 
     return (
         <Container maxWidth={false} sx={{
@@ -161,7 +187,7 @@ const Browse = (props: { username: string }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
+            <Box sx={{ display: 'flex', ml: '5%', my: 2, mb: 3, width: 200 }}>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
                         defaultOption='All Languages'
@@ -195,7 +221,9 @@ const Browse = (props: { username: string }) => {
                     />
                 </Box>
             </Box>
-
+            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex', flexWrap: 'wrap' }}>
+                {tutorialCards}
+            </Grid>
         </Container>
     );
 }

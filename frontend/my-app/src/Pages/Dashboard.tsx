@@ -85,7 +85,7 @@ const Dashboard = (props: { username: string }) => {
         {title: "TITLE15", author: "Author15", likes: "114"},
     ];*/
     const cardList = tutorialArray.map((item: { title: string,  user: string, score: number  }) => {
-        return <Card title={item.title} author={item.user} likes={item.score}/>
+        return <Card title={item.title} location={item.user} likes={item.score}/>
     })
     return (
         <div className="dashboard">
