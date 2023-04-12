@@ -115,10 +115,11 @@ function Card(props: { title: string, user: string, score: number, idNum: string
             localStorage.setItem(`favorite_${props.idNum}`, `${false}`);
             return; 
         }
-        console.log(props.user);
+        
         const response = await fetch('http://localhost:8000/api/favorites/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify({
                 tutorialID
             })
