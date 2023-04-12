@@ -216,6 +216,9 @@ const Browse = (props: { username: string }) => {
                         setUser={setUser}
                     />
                 </DialogContent>
+                <div className="tutorialErrorMsg">
+                    {error}
+                </div>
                 <DialogActions>
                     <Button onClick={handleClose} sx={{
                         color: "#0097b2",
