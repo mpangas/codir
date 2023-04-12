@@ -154,7 +154,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "left"}}>
-                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
+                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
                 </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{   marginRight: 0.5,
