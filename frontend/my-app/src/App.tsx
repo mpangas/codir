@@ -33,6 +33,11 @@ const theme = createTheme({
       textTransform: 'none',
     },
   },
+  palette: {
+    background: {
+      default: '#F4FAF8',
+    },
+  },
 });
 
 function App() {
@@ -71,7 +76,7 @@ function App() {
             <Route path="/" element={<Main username={username} />} />
             <Route path="/login" element={<Login setUsername={setUsername} />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/test" element={<Testing username={username} />} />
+            {/* <Route path="/test" element={<Testing />} /> */}
             <Route path="/dashboard" element={<Dashboard username={username} />} />
             <Route path="/about" element={<AboutUs username={username} />} />
             <Route path="/browse" element={<Browse username={username} />} />
