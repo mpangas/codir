@@ -2,6 +2,9 @@ import { Stack, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudyPic from '../image/study.png'
+import { textAlign } from '@mui/system';
+import { green } from '@mui/material/colors';
+import Transparent from '../image/transparent.png'
 
 const Main = (props: { username: string }) => {
   /*const navigate = useNavigate();
@@ -22,6 +25,9 @@ const Main = (props: { username: string }) => {
         </Stack>
         <img src={StudyPic} id="studyImg"></img>
       </Stack>
+      <Typography gutterBottom variant="h6" component="div" sx={{textAlign: 'center', marginTop: 8, fontSize: 22}}>Get introduced and learn modern developer tools, frameworks, programming languages 
+      <br/> through our top-rated tutorials</Typography>
+      <img src={Transparent} ></img>
     </div>
   );
 }
