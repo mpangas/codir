@@ -54,7 +54,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             href="/login"
             onClick={handleClick1}
             >
-            Log In
+            LOG IN
           </Button>
           <Button
             sx={{
@@ -71,7 +71,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             variant="contained"
             className="auth-btn"
             href="/signup">
-            Sign Up
+            SIGN UP
           </Button>
         </div>
       </div>
