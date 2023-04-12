@@ -187,7 +187,7 @@ const Browse = (props: { username: string }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Box sx={{ display: 'flex', ml: '5%', my: 2, mb: 3, width: 200 }}>
+            <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
                         defaultOption='All Languages'

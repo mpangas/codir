@@ -144,7 +144,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
 
     return (
         <div className="Card">
-            <Cards sx={{ width: 315, height: 260, marginTop: 6, marginLeft: 15, color: 'black', borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
+            <Cards sx={{ width: 315, height: 260, marginTop: 6, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 26 }}>
                         {props.title}
@@ -153,20 +153,28 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                         {props.user}
                     </Typography>
                 </CardContent>
-                <CardMedia sx={{ display: 'flex', float: "left"}}>
-                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
+                <CardMedia sx={{ display: 'flex', float: "left" }}>
+                    <IconButton sx={{ marginLeft: 0.5, marginTop: 14.5 }} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
                 </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{   marginRight: 0.5,
-                    transition: 'transform 0.1s linear',
-                    '&:hover': {
-                    transform: 'scale(1.4)'
-                    } }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
+                    <IconButton sx={{
+                        marginRight: 0.3,
+                        transition: 'transform 0.1s linear',
+                        '&:hover': {
+                            transform: 'scale(1.1)'
+                        }
+                    }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
-                    <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon />}</IconButton>
+                    <IconButton sx={{
+                        marginRight: 0.5,
+                        transition: 'transform 0.1s linear',
+                        '&:hover': {
+                            transform: 'scale(1.1)'
+                        }
+                    }} onClick={handleDecrement} > {dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon />}</IconButton>
                 </CardMedia>
             </Cards>
-        </div>
+        </div >
     );
 }
 
