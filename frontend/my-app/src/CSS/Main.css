@@ -54,6 +54,31 @@
 }
   
 #transparentImg {
+    margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#preferences {
+    width: 150px;
+    height: 150px;
+    margin-left: 20%;
+}
+
+#browsing {
+    width: 150px;
+    height: 150px;
+    margin-left: 23%;
+}
+
+#recommendations {
+    width: 150px;
+    height: 150px;
+    margin-left: 22%;
+}
+
+#filtering {
+    width: 150px;
+    height: 150px;
+    margin-left: 26%;
 }
