@@ -144,9 +144,9 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
 
     return (
         <div className="Card">
-            <Cards sx={{ width: 315, height: 260, marginTop: 3, marginLeft: 15 }}>
+            <Cards sx={{ width: 315, height: 260, marginTop: 6, marginLeft: 15, color: 'black', borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 30 }}>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 26 }}>
                         {props.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
@@ -154,10 +154,14 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "left"}}>
-                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
+                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }} ></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
                 </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton>
+                    <IconButton sx={{   marginRight: 0.5,
+                    transition: 'transform 0.1s linear',
+                    '&:hover': {
+                    transform: 'scale(1.4)'
+                    } }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
                     <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
                     <IconButton onClick={handleDecrement}>{dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon />}</IconButton>
                 </CardMedia>
