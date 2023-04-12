@@ -21,3 +21,11 @@
     margin-right: auto;
     margin-top: 2%;
   }
+
+.tutorialErrorMsg {
+    color: red;
+    font-size: 13px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5%;
+}
