@@ -16,7 +16,7 @@ import { margin } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-function Card(props: {title: string, user: string, score: number, idNum: number }) {
+function Card(props: { title: string, user: string, score: number, idNum: string }) {
     const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
@@ -52,7 +52,7 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
             localStorage.setItem(`dislike_${props.idNum}`, `${false}`);
             setLike(true);
             setdislike(false);
-            setScore(score + 2); 
+            setScore(score + 2);
             return;
         }
         const response = await fetch(`http://localhost:8000/api/tutorials/id:${props.idNum}/up`, {
@@ -94,7 +94,7 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
             localStorage.setItem(`like_${props.idNum}`, `${false}`);
             setdislike(true);
             setLike(false);
-            setScore(score - 2); 
+            setScore(score - 2);
             return;
         }
         console.log("what is the state: " + dislike);
@@ -113,19 +113,19 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
     const handleFavorite = async () => {
         console.log(props.user);
         const response = await fetch('http://localhost:8000/api/favorites/add', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            tutorialID 
-          })
-      })
-      const data = await response.json();
-      if(response.status === 200) {
-          navigate("/dashboard");
-      } else {
-          console.log(data.message);
-      }
-      setFavorite(true);
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                tutorialID
+            })
+        })
+        const data = await response.json();
+        if (response.status === 200) {
+            navigate("/dashboard");
+        } else {
+            console.log(data.message);
+        }
+        setFavorite(true);
     }
 
     useEffect(() => {
@@ -144,7 +144,7 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
 
     return (
         <div className="Card">
-            <Cards sx={{ width: 315, height: 260, marginTop: 3, marginLeft: 15 }}>
+            <Cards sx={{ width: 315, height: 260, marginTop: 3, marginX: 5 }}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 30 }}>
                         {props.title}
@@ -153,8 +153,8 @@ function Card(props: {title: string, user: string, score: number, idNum: number 
                         {props.user}
                     </Typography>
                 </CardContent>
-                <CardMedia sx={{ display: 'flex', float: "left"}}>
-                    <IconButton sx={{marginLeft: 0.5, marginTop: 14.5}} onClick={handleFavorite}>{favorite ? <FavoriteIcon></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
+                <CardMedia sx={{ display: 'flex', float: "left" }}>
+                    <IconButton sx={{ marginLeft: 0.5, marginTop: 14.5 }} onClick={handleFavorite}>{favorite ? <FavoriteIcon></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
                 </CardMedia>
                 <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
                     <IconButton sx={{ marginRight: 0.5 }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton>

@@ -145,7 +145,7 @@ const Testing = (props: { username: string }) => {
         )();
     }, [props.username]);
 
-    const cardList = tutorialList.map((item: { title: string,  user: string, score: number, id: number }) => {
+    const cardList = tutorialList.map((item: { title: string,  user: string, score: number, id: string }) => {
         return <Card title={item.title} user={item.user} score={item.score} idNum={item.id}/>
     })
 

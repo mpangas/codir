@@ -125,15 +125,15 @@ const Browse = (props: { username: string }) => {
                 })
                 const data = await response.json();
 
-                const tutorialData = data.map((item: { title: string, location: string, score: number, }) =>
+                const tutorialData = data.map((item: { title: string, user: string, score: number, }) =>
                     item);
                 setTutorials(tutorialData);
             }
         )();
     }, [props.username]);
 
-    const tutorialCards = tutorials.map((item: { title: string, location: string, score: number }) => {
-        return <Card title={item.title} location={item.location} likes={item.score} />
+    const tutorialCards = tutorials.map((item: { id: string, title: string, user: string, score: number }) => {
+        return <Card title={item.title} user={item.user} score={item.score} idNum={item.id} />
     })
 
     return (

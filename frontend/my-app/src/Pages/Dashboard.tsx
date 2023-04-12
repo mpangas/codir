@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
+import { Grid } from '@mui/material';
 
 /*let response: any = null;
                 for (var i = 0; i < tutorialIDArray.length; i++) {
@@ -84,7 +85,7 @@ const Dashboard = (props: { username: string }) => {
         {title: "TITLE14", author: "Author14", likes: "113"},
         {title: "TITLE15", author: "Author15", likes: "114"},
     ];*/
-    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number, id: number }) => {
+    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number, id: string }) => {
         return <Card title={item.title} user={item.user} score={item.score} idNum={item.id}/>
     })
     return (
@@ -94,9 +95,9 @@ const Dashboard = (props: { username: string }) => {
             <h1 id="welcome">Welcome, {props.username} !</h1>
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
-            <div className="cardsList">
+            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex'}}>
                 {cardList}
-            </div>
+            </Grid>
         </div>
     )
 }
