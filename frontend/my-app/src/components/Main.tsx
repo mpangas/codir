@@ -16,8 +16,8 @@ const Main = (props: { username: string }) => {
     </div>*/}
       <Stack direction="row" justifyContent="center">
         <Stack direction="column" marginRight={6} marginTop={7}>
-          <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: 58, fontFamily: 'Open Sans'}}>TAKE YOUR SKILLS IN <br /> THE RIGHT DIRECTION</Typography>
-          <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: 'Open Sans', marginLeft: 1, fontSize: 19 }}>Explore and expand your technical skills browsing video
+          <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: 58, fontFamily: 'Open Sans', color: "#028299"}}>TAKE YOUR SKILLS IN <br /> THE RIGHT DIRECTION</Typography>
+          <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: 'Open Sans', marginLeft: 1, fontSize: 19, color: "black" }}>Explore and expand your technical skills browsing video
             tutorials <br /> created by professors and renowned industry members.</Typography>
         </Stack>
         <img src={StudyPic} id="studyImg"></img>
