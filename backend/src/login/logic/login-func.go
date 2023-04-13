@@ -357,3 +357,54 @@ func RemoveFavorite(c *fiber.Ctx) error {
 		"message": "success",
 	})
 }
+
+/*
+ * CHECK FAVORITE
+ *
+ * @param ID Passed in as a parameter in the URL
+ *
+ * @return Returns a boolean value indicating if the tutorial is a favorite of the user or not
+ *
+ */
+
+func CheckFavorite(c *fiber.Ctx) error {
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+
+	// Get ID from URL
+	id := c.Params("id")
+
+	// Check if favorite exists
+	var favorite models.Favorite
+	database.DB.Model(&user).Association("Favorites").Find(&favorite, "tutorial_id = ?", id)
+
+	// Return boolean value
+	if favorite.TutorialID == id {
+		return c.JSON(fiber.Map{
+			"isFavorite": true,
+		})
+	} else {
+		return c.JSON(fiber.Map{
+			"isFavorite": false,
+		})
+	}
+}
