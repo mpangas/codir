@@ -196,3 +196,4 @@ test('prints error message if the password format is incorrect (signup screen)',
   const errorMsg = await getByText('The password should contain 6-20 characters.');
   expect(errorMsg).toBeInTheDocument();
 });
+
