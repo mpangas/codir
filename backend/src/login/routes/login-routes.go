@@ -15,6 +15,11 @@ func LoginRoutes(app *fiber.App) {
 
 	// Favorites Routes
 	app.Get("/api/favorites", logic.GetFavorites)
+	app.Get("/api/favorites/id::id", logic.CheckFavorite)
 	app.Post("/api/favorites/add", logic.AddFavorite)
 	app.Delete("/api/favorites/remove", logic.RemoveFavorite)
+
+	// Preferences Routes
+	app.Get("/api/preferences", logic.GetPreferences)
+	app.Put("/api/preferences", logic.UpdatePreferences)
 }

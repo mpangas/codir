@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
+import { Grid } from '@mui/material';
 
 /*let response: any = null;
                 for (var i = 0; i < tutorialIDArray.length; i++) {
@@ -43,14 +44,12 @@ const Dashboard = (props: { username: string }) => {
             async () => {
 
                 const responses = await Promise.all(tutorialIDArray.map(async (id) => {
-                    console.log("List of ids: " + id);
                     const response = await fetch(`http://localhost:8000/api/tutorials/id:${id}`, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
                         credentials: 'include',
                     });
                     const data = await response.json();
-                    console.log(JSON.stringify(data));
                     return data;
                 }));
 
@@ -63,10 +62,8 @@ const Dashboard = (props: { username: string }) => {
             }
         )();
     }, [props.username, tutorialIDArray]);
- 
-    console.log("IDS: " + tutorialIDArray);
-    console.log("TutorialProperties: " + JSON.stringify(tutorialArray));
-    console.log("Length: " + tutorialArray.length);
+
+
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
@@ -84,8 +81,8 @@ const Dashboard = (props: { username: string }) => {
         {title: "TITLE14", author: "Author14", likes: "113"},
         {title: "TITLE15", author: "Author15", likes: "114"},
     ];*/
-    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number  }) => {
-        return <Card title={item.title} author={item.user} likes={item.score}/>
+    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number, id: string }) => {
+        return <Card title={item.title} user={item.user} score={item.score} idNum={item.id} key={item.id}/>
     })
     return (
         <div className="dashboard">
@@ -94,9 +91,9 @@ const Dashboard = (props: { username: string }) => {
             <h1 id="welcome">Welcome, {props.username} !</h1>
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
-            <div className="cardsList">
+            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex'}}>
                 {cardList}
-            </div>
+            </Grid>
         </div>
     )
 }

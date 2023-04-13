@@ -20,9 +20,11 @@ import Signup from './Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import AboutUs from './Pages/AboutUs'
 import Browse from './Pages/Browse'
+import Preferences from './Pages/Preferences';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import Testing from './Pages/Testing';
+
 
 
 const theme = createTheme({
@@ -31,6 +33,11 @@ const theme = createTheme({
       fontFamily: 'Rubik, sans-serif',
       fontSize: 15,
       textTransform: 'none',
+    },
+  },
+  palette: {
+    background: {
+      default: '#F4FAF8',
     },
   },
 });
@@ -71,10 +78,11 @@ function App() {
             <Route path="/" element={<Main username={username} />} />
             <Route path="/login" element={<Login setUsername={setUsername} />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/test" element={<Testing username={username} />} />
+            {/* <Route path="/test" element={<Testing />} /> */}
             <Route path="/dashboard" element={<Dashboard username={username} />} />
             <Route path="/about" element={<AboutUs username={username} />} />
             <Route path="/browse" element={<Browse username={username} />} />
+            <Route path="/preferences" element={<Preferences username={username} />} />
           </Routes>
           <Footer />
         </div>
