@@ -20,10 +20,11 @@ import Signup from './Pages/Signup'
 import Dashboard from './Pages/Dashboard'
 import AboutUs from './Pages/AboutUs'
 import Browse from './Pages/Browse'
+import Preferences from './Pages/Preferences';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import Testing from './Pages/Testing';
-import Preferences from './Pages/Preferences';
+
 
 
 const theme = createTheme({
