@@ -110,12 +110,20 @@ function Card(props: { title: string, user: string, score: number, idNum: string
     }, [props.idNum, score, setLike, setdislike]);
 
     const handleFavorite = async () => {
-        if(favorite) {
+        if (favorite) {
+            const response1 = await fetch('http://localhost:8000/api/favorites/remove', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    tutorialID
+                })
+            })
             setFavorite(false);
             localStorage.setItem(`favorite_${props.idNum}`, `${false}`);
-            return; 
+            return;
         }
-        
+
         const response = await fetch('http://localhost:8000/api/favorites/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -138,7 +146,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
         if (dislikeValue) {
             setdislike(JSON.parse(dislikeValue));
         }
-        if(favVal) {
+        if (favVal) {
             setFavorite(JSON.parse(favVal));
         }
         setScore(props.score);
