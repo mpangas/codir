@@ -30,6 +30,10 @@ func Signup(c *fiber.Ctx) error {
 	// Initialize empty favorites array
 	newUser.Favorites = []models.Favorite{}
 
+	// Initialize empty preferences
+	preferences := models.Preferences{Username: newUser.Username}
+	newUser.Preferences = preferences
+
 	// Hash password
 	hashPwd, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
 	newUser.Password = string(hashPwd)
@@ -155,6 +159,10 @@ func DeleteUser(c *fiber.Ctx) error {
 		})
 	}
 
+	// Delete user preference from DB
+	database.DB.Delete(&user.Preferences, "username = ?", user.Username)
+
+	// Delete user from DB
 	database.DB.Delete(&user, "username = ?", user.Username)
 
 	return c.JSON(fiber.Map{
@@ -206,6 +214,121 @@ func Logout(c *fiber.Ctx) error {
 	})
 }
 
+// Preferences Functions
+
+/*
+* GET USER PREFERENCES
+*
+* @param No Request Body
+*
+* @return Returns an array of Preference objects that associate with current user
+*
+  - Each Preferences Object is formatted as follows:
+  - {
+    "username": [String]
+    "skillLevel": [String]
+    "languages": [CSV String]
+    "technologies": [CSV String]
+    "styles": [CSV String]
+  - }
+
+*
+*/
+func GetPreferences(c *fiber.Ctx) error {
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+
+	// Get user preferences from db
+	var preferences models.Preferences
+	database.DB.Model(&user).Association("Preferences").Find(&preferences)
+
+	// Return user preferences
+	return c.JSON(preferences)
+}
+
+/*
+* UPDATE USER PREFERENCES
+*
+* @param Request Body should be a Preferences object
+*
+* @return Returns a success message
+*
+  - Preferences Object is formatted as follows:
+  - {
+    "username": [String]
+    "skillLevel": [String]
+    "languages": [CSV String]
+    "technologies": [CSV String]
+    "styles": [CSV String]
+  - }
+
+*
+*/
+func UpdatePreferences(c *fiber.Ctx) error {
+	preferences := new(models.Preferences)
+
+	if err := c.BodyParser(preferences); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
+	}
+
+	// Get cookie with name jwt
+	cookie := c.Cookies("jwt")
+
+	// Authenticate user
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "Unauthenticated",
+		})
+	}
+
+	// Get claims from token
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	// Get user info from db
+	var user models.UserInfo
+	database.DB.First(&user, "username = ?", claims.Issuer)
+
+	// Get user preferences from db
+	var oldPreferences models.Preferences
+	database.DB.Model(&user).Association("Preferences").Find(&oldPreferences)
+
+	// Update user preferences
+	database.DB.Model(&oldPreferences).Updates(preferences)
+	user.Preferences = oldPreferences
+
+	// Return success message
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
+}
+
 // Favorites Functions
 
 /*
@@ -250,8 +373,6 @@ func GetFavorites(c *fiber.Ctx) error {
 
 	// Get Favorites
 	var favorites []models.Favorite
-	// username := c.Params("username")
-	// database.DB.First(&user, "username = ?", username)
 	database.DB.Model(&user).Association("Favorites").Find(&favorites)
 	return c.JSON(favorites)
 }
