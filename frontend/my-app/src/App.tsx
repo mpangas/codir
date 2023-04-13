@@ -23,6 +23,7 @@ import Browse from './Pages/Browse'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
 import Testing from './Pages/Testing';
+import Preferences from './Pages/Preferences';
 
 
 const theme = createTheme({
@@ -80,6 +81,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard username={username} />} />
             <Route path="/about" element={<AboutUs username={username} />} />
             <Route path="/browse" element={<Browse username={username} />} />
+            <Route path="/preferences" element={<Preferences username={username} />} />
           </Routes>
           <Footer />
         </div>
