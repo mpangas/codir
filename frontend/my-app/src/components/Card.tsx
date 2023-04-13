@@ -23,6 +23,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
     const tutorialID = props.idNum;
     const username = props.user;
     const [favorite, setFavorite] = useState(false);
+    const [favoriteArray, setFavoriteArray] = useState([]);
     const navigate = useNavigate();
 
     const handleIncrement = useCallback(async () => {
@@ -151,6 +152,27 @@ function Card(props: { title: string, user: string, score: number, idNum: string
         }
         setScore(props.score);
     }, [props.idNum, props.score, setLike, setdislike, setFavorite]);
+
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch(`http://localhost:8000/api/favorites/id:${tutorialID}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response.json();
+                const favorited = data.map((item: { isFavorite: boolean; }) =>
+                    item.isFavorite);
+                if(favorited == true) {
+                    setFavorite(true);
+                }
+                else {
+                    setFavorite(false);
+                }
+            }
+        )();
+    }, [props.idNum, setFavorite]);
 
     return (
         <div className="Card">

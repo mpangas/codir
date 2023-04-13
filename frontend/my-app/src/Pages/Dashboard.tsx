@@ -44,14 +44,12 @@ const Dashboard = (props: { username: string }) => {
             async () => {
 
                 const responses = await Promise.all(tutorialIDArray.map(async (id) => {
-                    console.log("List of ids: " + id);
                     const response = await fetch(`http://localhost:8000/api/tutorials/id:${id}`, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
                         credentials: 'include',
                     });
                     const data = await response.json();
-                    console.log(JSON.stringify(data));
                     return data;
                 }));
 
@@ -64,10 +62,8 @@ const Dashboard = (props: { username: string }) => {
             }
         )();
     }, [props.username, tutorialIDArray]);
- 
-    console.log("IDS: " + tutorialIDArray);
-    console.log("TutorialProperties: " + JSON.stringify(tutorialArray));
-    console.log("Length: " + tutorialArray.length);
+
+
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
         {title: "TITLE2", author: "Author2", likes: "101"},
