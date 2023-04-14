@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gofiber/fiber/v2"
 	"github.com/mpangas/codir/backend/src/database"
 	"github.com/mpangas/codir/backend/src/models"
-	"github.com/mpangas/codir/vendor/github.com/dgrijalva/jwt-go/v4"
 
 	"gorm.io/gorm"
 )
@@ -213,21 +213,22 @@ func Recommend(c *fiber.Ctx) error {
 	//preferences := []string{user.Preferences.Technology, user.Preferences.Language, user.Preferences.SkillLevel, user.Preferences.Style}
 
 	// first, check if any match every preference
-	var thisSearch []models.Tutorial
+	//var thisSearch []models.Tutorial
 	//querySlice := []string{"technology = ?", "AND language = ?", "AND skillLevel = ?", "AND style = ?"}
 	//database.DB.Where("technology = ? AND language = ? AND skillLevel = ? AND style = ?", preferences).Find(&thisSearch)
 	//recommendations = append(recommendations, thisSearch...)
-	query := map[string]interface{}{"technology": user.Preferences.Technology, "language": user.Preferences.Language, "skillLevel": user.Preferences.SkillLevel, "style": user.Preferences.Style}
+
+	//query := map[string]interface{}{"technology": user.Preferences.Technology, "language": user.Preferences.Language, "skillLevel": user.Preferences.SkillLevel, "style": user.Preferences.Style}
 
 	//sketchy algorithm
-	attNames := []string{"technology", "language", "skillLevel", "style"}
-	for len(recommendations) < 5 && len(query) > 0 {
-		//query := strings.Join(querySlice, "")
-		//database.DB.Where(query, preferences...)
-		database.DB.Where(query).Find(&thisSearch)
-		recommendations = append(recommendations, thisSearch...)
-		delete(query, attNames[len(query)-1])
-	}
+	// attNames := []string{"technology", "language", "skillLevel", "style"}
+	// for len(recommendations) < 5 && len(query) > 0 {
+	// 	//query := strings.Join(querySlice, "")
+	// 	//database.DB.Where(query, preferences...)
+	// 	database.DB.Where(query).Find(&thisSearch)
+	// 	recommendations = append(recommendations, thisSearch...)
+	// 	delete(query, attNames[len(query)-1])
+	// }
 
 	return c.JSON(recommendations[0:4])
 }
