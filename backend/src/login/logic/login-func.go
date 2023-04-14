@@ -62,6 +62,32 @@ func Signup(c *fiber.Ctx) error {
 		log.Fatalln(err)
 	}
 
+	// Sign user in
+
+	// Create JWT Token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		Issuer:    newUser.Username,
+		ExpiresAt: jwt.At(jwt.Now().Add(24 * time.Hour)), // 1 day
+	})
+
+	tokenStr, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		c.Status(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"message": "Login error. Please try again.",
+		})
+	}
+
+	// Create cookie
+	cookie := fiber.Cookie{
+		Name:     "jwt",
+		Value:    tokenStr,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HTTPOnly: true,
+	}
+	c.Cookie(&cookie)
+
+	// Return created user
 	return c.JSON(newUser)
 }
 
@@ -274,7 +300,6 @@ func GetPreferences(c *fiber.Ctx) error {
 *
   - Preferences Object is formatted as follows:
   - {
-    "username": [String]
     "skillLevel": [String]
     "languages": [CSV String]
     "technologies": [CSV String]
