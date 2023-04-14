@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gofiber/fiber/v2"
 	"github.com/mpangas/codir/backend/src/database"
 	"github.com/mpangas/codir/backend/src/models"
-	"github.com/mpangas/codir/vendor/github.com/dgrijalva/jwt-go/v4"
 
 	"gorm.io/gorm"
 )
@@ -47,6 +47,7 @@ func PostTutorial(c *fiber.Ctx) error {
 		newId = rand.Int()
 	} // gets a unique id
 	newPost.Id = strconv.Itoa(newId)
+	newPost.Attributes.TutID = newPost.Id
 	newPost.PostTime = time.Now().Unix()
 	newPost.EditTime = time.Now().Unix()
 	newPost.Score = 0
@@ -230,8 +231,8 @@ func Recommend(c *fiber.Ctx) error {
 		querySlice = querySlice[:len(querySlice)-1]
 	}
 
-	recommendations = recommendations[0:4] // just in case
 	sort.Slice(recommendations, func(i, j int) bool { return recommendations[i].Score > recommendations[j].Score })
+	recommendations = recommendations[0:4]
 
 	return c.JSON(recommendations)
 }
