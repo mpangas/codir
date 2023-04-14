@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -210,24 +211,27 @@ func Recommend(c *fiber.Ctx) error {
 	// Get user info from db
 	var user models.UserInfo
 	database.DB.First(&user, "username = ?", claims.Issuer)
-	//preferences := []string{user.Preferences.Technology, user.Preferences.Language, user.Preferences.SkillLevel, user.Preferences.Style}
 
-	// first, check if any match every preference
+	// get the preferences and prepare them to be a query
 	var thisSearch []models.Tutorial
-	//querySlice := []string{"technology = ?", "AND language = ?", "AND skillLevel = ?", "AND style = ?"}
-	//database.DB.Where("technology = ? AND language = ? AND skillLevel = ? AND style = ?", preferences).Find(&thisSearch)
-	//recommendations = append(recommendations, thisSearch...)
-	query := map[string]interface{}{"technology": user.Preferences.Technology, "language": user.Preferences.Language, "skillLevel": user.Preferences.SkillLevel, "style": user.Preferences.Style}
-
-	//sketchy algorithm
+	querySlice := []string{user.Preferences.Technologies, user.Preferences.Languages, user.Preferences.SkillLevel, user.Preferences.Styles}
 	attNames := []string{"technology", "language", "skillLevel", "style"}
-	for len(recommendations) < 5 && len(query) > 0 {
-		//query := strings.Join(querySlice, "")
-		//database.DB.Where(query, preferences...)
-		database.DB.Where(query).Find(&thisSearch)
-		recommendations = append(recommendations, thisSearch...)
-		delete(query, attNames[len(query)-1])
+	for i, str := range querySlice {
+		querySlice[i] = "(" + attNames[i] + " = \"" + strings.ReplaceAll(str, ",", "\" OR "+attNames[i]+" = \"") + "\")"
 	}
 
-	return c.JSON(recommendations[0:4])
+	//sketchy algorithm
+	// SELECT * from ??? WHERE (technology = "a" OR technology = "b") AND (language = "a") etc...
+	for len(recommendations) < 5 && len(querySlice) > 0 {
+		query := "SELECT * FROM tutorials WHERE " + strings.Join(querySlice, " AND ")
+		//database.DB.Where(query).Find(&thisSearch)
+		database.DB.Raw(query).Scan(&thisSearch)
+		recommendations = append(recommendations, thisSearch...)
+		querySlice = querySlice[:len(querySlice)-1]
+	}
+
+	recommendations = recommendations[0:4] // just in case
+	sort.Slice(recommendations, func(i, j int) bool { return recommendations[i].Score > recommendations[j].Score })
+
+	return c.JSON(recommendations)
 }
