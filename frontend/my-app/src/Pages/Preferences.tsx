@@ -20,7 +20,7 @@ import {
     SelectChangeEvent,
     ListItemText,
 } from '@mui/material';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import FilterButton from '../components/FilterButton';
@@ -41,7 +41,7 @@ const FormFields = ({
     User: string,
     setUser: (user: string) => void,
 }) => {
-    
+
 };
 
 const Preferences = (props: { username: string }) => {
@@ -86,26 +86,26 @@ const Preferences = (props: { username: string }) => {
         setDifficulty(value);
     };
     const handleLanguageChange = (event: SelectChangeEvent<string[]>) => {
-    const newstuff = event.target.value as string[];
-    if (newstuff.length < langs.length) {
-        const remove = langs.find((value) => !newstuff.includes(value))!;
-        setoption(langs.filter((value) => value !== remove));
-    } else {
-      const newthing = newstuff.find((value) => !langs.includes(value))!;
-      setoption([...langs, newthing]);
-    }
-        
+        const newstuff = event.target.value as string[];
+        if (newstuff.length < langs.length) {
+            const remove = langs.find((value) => !newstuff.includes(value))!;
+            setoption(langs.filter((value) => value !== remove));
+        } else {
+            const newthing = newstuff.find((value) => !langs.includes(value))!;
+            setoption([...langs, newthing]);
+        }
+
     };
     const handleTechnologyChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff2 = event.target.value as string[];
-    
-    if (newstuff2.length < tools.length) {
-        const remove2 = tools.find((value) => !newstuff2.includes(value))!;
-        setoption2(tools.filter((value) => value !== remove2));
-    } else {
-      const newthing2 = newstuff2.find((value) => !tools.includes(value))!;
-      setoption2([...tools, newthing2]);
-    }
+
+        if (newstuff2.length < tools.length) {
+            const remove2 = tools.find((value) => !newstuff2.includes(value))!;
+            setoption2(tools.filter((value) => value !== remove2));
+        } else {
+            const newthing2 = newstuff2.find((value) => !tools.includes(value))!;
+            setoption2([...tools, newthing2]);
+        }
     };
     const handleLearningStyleChange = (value: string) => {
         setLearningStyle(value);
@@ -131,7 +131,7 @@ const Preferences = (props: { username: string }) => {
         )();
     }, [props.username]);
 
-    
+
 
     return (
         <Container maxWidth={false} sx={{
@@ -153,65 +153,71 @@ const Preferences = (props: { username: string }) => {
                     Welcome to the preferences section! Please select your following preferences/options to best match your learning interests!
                 </Typography>
             </Box>
-            
+
             <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200, justifyContent: 'center' }}>
-            <Box sx={{  flex: 5,
-            transform: 'translateX(-50%)',
-            display: 'flex',
-    position: 'absolute',
-    top: '32%',
-    left: '50%',
-    justifyContent: 'center', zIndex: 1}}>
-  <FormControl sx={{ minHeight: 110, minWidth: 180, }}>
-    <InputLabel id="langs">Programming Languages</InputLabel>
-    <Select
-      labelId="langs"
-      multiple
-      value={langs}
-      onChange={handleLanguageChange}
-      renderValue={(selected) => selected.join(', ')}
-    >
-    
-      {['Assembly','Bash/Shell','C','C#','C++','COBOL','Dart','Elixir','F#','Fortran','Go','Groovy','Haskell','HTML/CSS','Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP','PowerShell','Python','R','Ruby','Rust','Scala','SQL','Swift','TypeScript','VBA',].map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-</Box>
-                 <Box sx={{  flex: 5,
-    position: 'absolute',
-    transform: 'translateX(-50%)',
-    display: 'flex',
-    top: '42%',
-    left: '50%',
-    justifyContent: 'center', zIndex: 1 }}>
-  <FormControl sx={{minHeight: 110, minWidth: 180, }}>
-    <InputLabel id="prog-tech">Technologies</InputLabel>
-    <Select
-      labelId="prog-tech"
-      multiple
-      value={tools}
-      onChange={handleTechnologyChange}
-      renderValue={(selected) => selected.join(', ')}
-    >
-        
-      {['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn'].map((options2) => (
-        <MenuItem key={options2} value={options2}>
-          {options2}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-</Box>
-                <Box sx={{  flex: 5,
-                transform: 'translateX(-50%)',
-                display: 'flex',
-    position: 'absolute',
-    top: '52%',
-    left: '50%',
-    justifyContent: 'center', zIndex: 1 }}>
+                <Box sx={{
+                    flex: 5,
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    position: 'absolute',
+                    top: '32%',
+                    left: '50%',
+                    justifyContent: 'center', zIndex: 1
+                }}>
+                    <FormControl sx={{ minHeight: 110, minWidth: 180, }}>
+                        <InputLabel id="langs">Programming Languages</InputLabel>
+                        <Select
+                            labelId="langs"
+                            multiple
+                            value={langs}
+                            onChange={handleLanguageChange}
+                            renderValue={(selected) => selected.join(', ')}
+                        >
+
+                            {['Assembly', 'Bash/Shell', 'C', 'C#', 'C++', 'COBOL', 'Dart', 'Elixir', 'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML/CSS', 'Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'SQL', 'Swift', 'TypeScript', 'VBA',].map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+                <Box sx={{
+                    flex: 5,
+                    position: 'absolute',
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    top: '42%',
+                    left: '50%',
+                    justifyContent: 'center', zIndex: 1
+                }}>
+                    <FormControl sx={{ minHeight: 110, minWidth: 180, }}>
+                        <InputLabel id="prog-tech">Technologies</InputLabel>
+                        <Select
+                            labelId="prog-tech"
+                            multiple
+                            value={tools}
+                            onChange={handleTechnologyChange}
+                            renderValue={(selected) => selected.join(', ')}
+                        >
+
+                            {['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn'].map((options2) => (
+                                <MenuItem key={options2} value={options2}>
+                                    {options2}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+                <Box sx={{
+                    flex: 5,
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    position: 'absolute',
+                    top: '52%',
+                    left: '50%',
+                    justifyContent: 'center', zIndex: 1
+                }}>
                     <FilterButton
                         defaultOption="All Learning Styles"
                         options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
@@ -221,46 +227,48 @@ const Preferences = (props: { username: string }) => {
                 </Box>
             </Box>
 
-            <Box sx={{  flex: 5,
-            transform: 'translateX(-50%)',
-            display: 'flex',
-    position: 'absolute',
-    top: '60%',
-    left: '50%',
-    justifyContent: 'center', zIndex: 1 }}>
-                    <FilterButton
-                        defaultOption="All Skill Levels"
-                        options={['Beginner', 'Intermediate', 'Advanced']}
-                        value={difficulty}
-                        onChange={handleDifficultyChange}
-                    />
-                </Box>
+            <Box sx={{
+                flex: 5,
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                position: 'absolute',
+                top: '60%',
+                left: '50%',
+                justifyContent: 'center', zIndex: 1
+            }}>
+                <FilterButton
+                    defaultOption="All Skill Levels"
+                    options={['Beginner', 'Intermediate', 'Advanced']}
+                    value={difficulty}
+                    onChange={handleDifficultyChange}
+                />
+            </Box>
 
 
-            
+
             <Box
                 height="90vh"
                 position="relative"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                 >
-             <Link to="/dashboard" style={{ textDecoration: "none" }}> 
-             <Button variant="contained" sx={{
-                    backgroundColor: "#0097b2",
-                    '&:hover': {
-                        backgroundColor: "#028299",
-                    },
-                    width: 150
-                }} onClick={() => setOpen(true)}>
-                    SUBMIT 
-                </Button></Link>
-               
+            >
+                <Link to="/dashboard" style={{ textDecoration: "none" }}>
+                    <Button variant="contained" sx={{
+                        backgroundColor: "#0097b2",
+                        '&:hover': {
+                            backgroundColor: "#028299",
+                        },
+                        width: 150
+                    }} onClick={() => setOpen(true)}>
+                        SUBMIT
+                    </Button></Link>
+
             </Box>
-            
+
         </Container>
 
-        
+
     );
 }
 export default Preferences;
