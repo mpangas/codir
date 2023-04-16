@@ -47,10 +47,14 @@ func PostTutorial(c *fiber.Ctx) error {
 		newId = rand.Int()
 	} // gets a unique id
 	newPost.Id = strconv.Itoa(newId)
-	newPost.Attributes.TutID = newPost.Id
 	newPost.PostTime = time.Now().Unix()
 	newPost.EditTime = time.Now().Unix()
 	newPost.Score = 0
+
+	print(newPost.Attributes.Language)
+
+	//newTags := models.Attributes{TutID: newPost.Id}
+	//newPost.Attributes = newTags
 
 	if err := database.DB.Create(newPost).Error; err != nil {
 		return c.JSON(fiber.Map{
@@ -131,6 +135,7 @@ func EditTutorial(c *fiber.Ctx) error {
 	getTutorial.Title = newTutorial.Title
 	getTutorial.Location = newTutorial.Location
 	getTutorial.EditTime = time.Now().Unix()
+
 	// these are all that a PUT request should be able to change. User, id, score, post time are the same
 	database.DB.Save(&getTutorial)
 
@@ -214,7 +219,8 @@ func Recommend(c *fiber.Ctx) error {
 	database.DB.First(&user, "username = ?", claims.Issuer)
 
 	// get the preferences and prepare them to be a query
-	var thisSearch []models.Tutorial
+	var thisSearch []models.Attributes
+	var fullSearch []models.Attributes
 	querySlice := []string{user.Preferences.Technologies, user.Preferences.Languages, user.Preferences.SkillLevel, user.Preferences.Styles}
 	attNames := []string{"technology", "language", "skillLevel", "style"}
 	for i, str := range querySlice {
@@ -224,15 +230,24 @@ func Recommend(c *fiber.Ctx) error {
 	//sketchy algorithm
 	// SELECT * from ??? WHERE (technology = "a" OR technology = "b") AND (language = "a") etc...
 	for len(recommendations) < 5 && len(querySlice) > 0 {
-		query := "SELECT * FROM tutorials WHERE " + strings.Join(querySlice, " AND ")
+		query := "SELECT * FROM attributes WHERE " + strings.Join(querySlice, " AND ")
 		//database.DB.Where(query).Find(&thisSearch)
 		database.DB.Raw(query).Scan(&thisSearch)
-		recommendations = append(recommendations, thisSearch...)
+		// get the
+		fullSearch = append(fullSearch, thisSearch...)
 		querySlice = querySlice[:len(querySlice)-1]
+	}
+
+	for _, attr := range fullSearch {
+		var getTutorial models.Tutorial
+		database.DB.Where("id = ?", attr.Id).First(&getTutorial)
+		recommendations = append(recommendations, getTutorial)
 	}
 
 	sort.Slice(recommendations, func(i, j int) bool { return recommendations[i].Score > recommendations[j].Score })
 	recommendations = recommendations[0:4]
+
+	// get associated tutorials
 
 	return c.JSON(recommendations)
 }
