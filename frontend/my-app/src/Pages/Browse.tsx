@@ -35,6 +35,7 @@ const FormFields = ({
     return (
         <FormControl sx={{}}>
             <TextField
+                data-testid="titleInput"
                 sx={{ mt: 4 }}
                 className="input-box"
                 label="Title"
@@ -42,6 +43,7 @@ const FormFields = ({
                 onChange={e => setTitle(e.target.value)}
             />
             <TextField
+                data-testid="locationInput"
                 sx={{ mt: 4 }}
                 className="input-box"
                 label="Location"
@@ -49,6 +51,7 @@ const FormFields = ({
                 onChange={e => setLocation(e.target.value)}
             />
             <TextField
+                data-testid="userInput"
                 sx={{ mt: 4 }}
                 className="input-box"
                 label="User"
