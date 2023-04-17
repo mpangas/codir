@@ -218,11 +218,13 @@ func Recommend(c *fiber.Ctx) error {
 	// Get user info from db
 	var user models.UserInfo
 	database.DB.First(&user, "username = ?", claims.Issuer)
+	var preferences models.Preferences
+	database.DB.Model(&user).Association("Preferences").Find(&preferences)
 
 	// get the preferences and prepare them to be a query
 	var thisSearch []models.Attributes
 	var fullSearch []models.Attributes
-	querySlice := []string{user.Preferences.Technologies, user.Preferences.Languages, user.Preferences.SkillLevel, user.Preferences.Styles}
+	querySlice := []string{preferences.Technologies, preferences.Languages, preferences.SkillLevel, preferences.Styles}
 	attNames := []string{"technology", "language", "skill_level", "style"}
 	for i, str := range querySlice {
 		querySlice[i] = "(" + attNames[i] + " = \"" + strings.ReplaceAll(str, ",", "\" OR "+attNames[i]+" = \"") + "\")"
@@ -258,4 +260,25 @@ func Recommend(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(recommendations)
+}
+
+func GetAllAttributes(c *fiber.Ctx) error {
+	var allAttributes []models.Attributes
+	database.DB.Find(&allAttributes)
+
+	return c.JSON(allAttributes)
+}
+
+func GetAttributes(c *fiber.Ctx) error {
+	getId := c.Params("id")
+	var getAttributes models.Attributes
+	if errors.Is(database.DB.Where("tutID = ?", getId).First(&getAttributes).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "This id does not exist",
+		})
+	}
+
+	return c.JSON(getAttributes)
+
 }
