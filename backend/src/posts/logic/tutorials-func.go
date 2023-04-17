@@ -272,12 +272,43 @@ func GetAllAttributes(c *fiber.Ctx) error {
 func GetAttributes(c *fiber.Ctx) error {
 	getId := c.Params("id")
 	var getAttributes models.Attributes
-	if errors.Is(database.DB.Where("tutID = ?", getId).First(&getAttributes).Error, gorm.ErrRecordNotFound) {
+	if errors.Is(database.DB.Where("tut_id = ?", getId).First(&getAttributes).Error, gorm.ErrRecordNotFound) {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(fiber.Map{
 			"message": "This id does not exist",
 		})
 	}
+
+	return c.JSON(getAttributes)
+
+}
+
+func EditAttributes(c *fiber.Ctx) error {
+	getId := c.Params("id")
+	var getAttributes models.Attributes
+
+	// find the attributes to edit
+	if errors.Is(database.DB.Where("tut_id = ?", getId).First(&getAttributes).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "This id does not exist",
+		})
+	}
+
+	// parse the new info
+	newAttributes := new(models.Attributes)
+	if err := c.BodyParser(newAttributes); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
+	}
+
+	getAttributes.Language = newAttributes.Language
+	getAttributes.SkillLevel = newAttributes.SkillLevel
+	getAttributes.Style = newAttributes.Style
+	getAttributes.Technology = newAttributes.Technology
+	database.DB.Save(&getAttributes)
 
 	return c.JSON(getAttributes)
 
