@@ -77,7 +77,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main username={username} />} />
             <Route path="/login" element={<Login setUsername={setUsername} />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup setUsername={setUsername} />} />
             {/* <Route path="/test" element={<Testing />} /> */}
             <Route path="/dashboard" element={<Dashboard username={username} />} />
             <Route path="/about" element={<AboutUs username={username} />} />

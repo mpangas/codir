@@ -195,9 +195,11 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                         '&:hover': {
                             transform: 'scale(1.1)'
                         }
-                    }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
-                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
-                    <IconButton sx={{
+                    }} data-testid="likeButtons" onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
+                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>Score: {score}</Typography>
+                    <IconButton 
+                        data-testid="dislikeButtons"
+                        sx={{
                         marginRight: 0.5,
                         transition: 'transform 0.1s linear',
                         '&:hover': {

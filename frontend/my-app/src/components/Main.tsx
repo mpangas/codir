@@ -38,9 +38,10 @@ const Main = (props: { username: string }) => {
       <Box sx={{ display: "flex", marginLeft: 2 }}>
         <img src={Transparent} id="transparentImg"></img>
       </Box>
-      <Typography gutterBottom variant="h6" component="div" sx={{ textAlign: 'center', marginTop: 6, fontSize: 22 }}>We guarantee the best user experience with effective learning techniques</Typography>
+      <Typography gutterBottom variant="h6" component="div" sx={{ textAlign: 'center', marginTop: 6, fontSize: 22 }}>We guarantee the best user experience with effective learning techniques!</Typography>
       <Stack direction="row">
-        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
+
+        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)',  transition: 'transform .1s ease-in', '&:hover': {transform: 'scale(1.05)', cursor: 'pointer', }, }}>
           <CardContent>
           <Typography gutterBottom variant="body1" component="div" sx={{ textAlign: 'center', fontSize: 22 }}> 
           Choosing your preferences </Typography>
@@ -49,8 +50,7 @@ const Main = (props: { username: string }) => {
             <img src={Preferences} id="preferences"></img>
           </CardMedia>
         </Cards>
-
-        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
+        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)', transition: 'transform .1s ease-in', '&:hover': {transform: 'scale(1.05)', cursor: 'pointer', } }}>
           <CardContent sx={{textAlign: "center"}}>
           <Typography gutterBottom variant="body1" component="div" sx={{ textAlign: 'center', fontSize: 22 }}> 
           Browsing through Tutorials </Typography>
@@ -60,7 +60,7 @@ const Main = (props: { username: string }) => {
           </CardMedia>
         </Cards>
         
-        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
+        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)', transition: 'transform .1s ease-in', '&:hover': {transform: 'scale(1.05)', cursor: 'pointer', } }}>
           <CardContent sx={{textAlign: "center"}}>
           <Typography gutterBottom variant="body1" component="div" sx={{ textAlign: 'center', fontSize: 22, marginBottom: -1 }}> 
           Getting Tutorial Recommendations </Typography>
@@ -70,7 +70,7 @@ const Main = (props: { username: string }) => {
           </CardMedia>
         </Cards>
 
-        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
+        <Cards sx={{ width: 315, height: 260, marginTop: 5, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)', transition: 'transform .1s ease-in', '&:hover': {transform: 'scale(1.05)', cursor: 'pointer', } }}>
           <CardContent sx={{textAlign: "center"}}>
           <Typography gutterBottom variant="body1" component="div" sx={{ textAlign: 'center', fontSize: 22 }}> 
           Filtering tutorials </Typography>
