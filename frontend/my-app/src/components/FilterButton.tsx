@@ -5,23 +5,26 @@ interface FilterButtonProps {
     options: string[];
     value: string | undefined;
     onChange: (value: string) => void;
+    sx?: object;
+    size?: 'small' | 'medium';
+    defaultDisabled ?: boolean;
 }
 
-function FilterButton({ defaultOption, options, value, onChange }: FilterButtonProps) {
+function FilterButton({ defaultOption, options, value, onChange, sx, size = 'small', defaultDisabled = false}: FilterButtonProps) {
     const handleChange = (event: SelectChangeEvent) => {
         onChange(event.target.value as string);
     };
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 180}} size="small">
+            <FormControl sx={{...sx}} size={size}>
                 <Select
-                    value={value ?? ''}
+                    value={value ?? defaultOption}
                     onChange={handleChange}
                     displayEmpty
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
-                    <MenuItem key={defaultOption} value={defaultOption}>
+                    <MenuItem key={defaultOption} value={defaultOption} disabled={defaultDisabled}>
                         {defaultOption}
                     </MenuItem>
                     {options.map((option) => (

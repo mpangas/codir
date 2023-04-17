@@ -25,6 +25,12 @@ const FormFields = ({
     setTitle,
     Location,
     setLocation,
+    Language,
+    setTutLanguage,
+    Technology,
+    setTutTechnology,
+    DeliveryMethod,
+    setTutDeliveryMethod,
     Difficulty,
     setTutDifficulty,
 }: {
@@ -32,6 +38,12 @@ const FormFields = ({
     setTitle: (title: string) => void,
     Location: string,
     setLocation: (location: string) => void,
+    Language: string,
+    setTutLanguage: (language: string) => void,
+    Technology: string,
+    setTutTechnology: (technology: string) => void,
+    DeliveryMethod: string,
+    setTutDeliveryMethod: (deliveryMethod: string) => void,
     Difficulty: string,
     setTutDifficulty: (difficulty: string) => void,
 }) => {
@@ -39,31 +51,58 @@ const FormFields = ({
         <FormControl sx={{}}>
             <TextField
                 data-testid="titleInput"
-                sx={{ mt: 4 }}
+                sx={{ mt: 3 }}
                 className="input-box"
                 label="Title"
                 value={Title}
                 onChange={e => setTitle(e.target.value)}
+                inputProps={{ style: { backgroundColor: 'white' } }}
             />
             <TextField
                 data-testid="locationInput"
-                sx={{ mt: 4 }}
+                sx={{ mt: 3 }}
                 className="input-box"
-                label="Location"
+                label="URL"
                 value={Location}
                 onChange={e => setLocation(e.target.value)}
+                inputProps={{ style: { backgroundColor: 'white' } }}
             />
-            <Select
-                id="level"
-                sx={{ mt: 4 }}
+            <FilterButton
+                defaultOption='Select the programming language'
+                options={['Assembly', 'Bash/Shell', 'C', 'C#', 'C++', 'COBOL', 'Dart', 'Elixir', 'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML/CSS', 'Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'SQL', 'Swift', 'TypeScript', 'VBA']}
+                value={Language}
+                onChange={setTutLanguage}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
+            <FilterButton
+                defaultOption='Select the technology'
+                options={['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn']}
+                value={Technology}
+                onChange={setTutTechnology}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
+            <FilterButton
+                defaultOption='Select the delivery method'
+                options={['Text', 'Video', 'Interactive']}
+                value={DeliveryMethod}
+                onChange={setTutDeliveryMethod}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
+            <FilterButton
+                defaultOption='Select the difficulty'
+                options={['Beginner', 'Intermediate', 'Experienced']}
                 value={Difficulty}
-                onChange={(e) => setTutDifficulty(e.target.value)}
-            >
-                <MenuItem disabled value="Select a difficulty">Select a difficulty</MenuItem>
-                <MenuItem value={'Beginner'}>Beginner</MenuItem>
-                <MenuItem value={'Intermediate'}>Intermediate</MenuItem>
-                <MenuItem value={'Experienced'}>Experienced</MenuItem>
-            </Select>
+                onChange={setTutDifficulty}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
         </FormControl>
     );
 };
@@ -75,7 +114,10 @@ const Browse = (props: { username: string }) => {
     const [Title, setTitle] = useState('');
     const [Location, setLocation] = useState('');
     const [error, setError] = useState('');
-    const [tutDifficulty, setTutDifficulty] = useState('Select a difficulty');
+    const [tutLanguage, setTutLanguage] = useState('Select the programming language');
+    const [tutTechnology, setTutTechnology] = useState('Select the technology');
+    const [tutDeliveryMethod, setTutDeliveryMethod] = useState('Select the delivery method');
+    const [tutDifficulty, setTutDifficulty] = useState('Select the difficulty');
 
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
@@ -91,7 +133,10 @@ const Browse = (props: { username: string }) => {
 
         setTitle("");
         setLocation("");
-        setTutDifficulty("Select a difficulty");
+        setTutLanguage("Select the programming language");
+        setTutTechnology("Select the technology");
+        setTutDeliveryMethod("Select the delivery method");
+        setTutDifficulty("Select the difficulty");
 
         setError("");
     };
@@ -127,10 +172,12 @@ const Browse = (props: { username: string }) => {
 
         const data = await response.json();
         setOpen(false);
-
         setTitle("");
         setLocation("");
-
+        setTutLanguage("Select the programming language");
+        setTutTechnology("Select the technology");
+        setTutDeliveryMethod("Select the delivery method");
+        setTutDifficulty("Select the difficulty");
         setError("");
     };
 
@@ -171,7 +218,7 @@ const Browse = (props: { username: string }) => {
                 setTutorials(tutorialData);
             }
         )();
-    }, [props.username]);
+    }, [language, technology, difficulty, learningStyle]);
 
     const tutorialCards = tutorials.map((item: { id: string, title: string, user: string, score: number }) => {
         return <Card title={item.title} user={item.user} score={item.score} idNum={item.id} />
@@ -190,9 +237,6 @@ const Browse = (props: { username: string }) => {
             >
                 <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35, }}>
                     Browse Tutorials
-                </Typography>
-                <Typography variant="h5" component="div" sx={{ display: 'flex',  fontSize: 16, marginTop: 5, marginBottom: -5 }}>
-                    Browse tutorials below based on the selections!
                 </Typography>
                 <Button data-testid="submitTut" variant="contained" sx={{
                     ml: 'auto',
@@ -213,6 +257,12 @@ const Browse = (props: { username: string }) => {
                         setTitle={setTitle}
                         Location={Location}
                         setLocation={setLocation}
+                        Language={tutLanguage}
+                        setTutLanguage={setTutLanguage}
+                        Technology={tutTechnology}
+                        setTutTechnology={setTutTechnology}
+                        DeliveryMethod={tutDeliveryMethod}
+                        setTutDeliveryMethod={setTutDeliveryMethod}
                         Difficulty={tutDifficulty}
                         setTutDifficulty={setTutDifficulty}
                     />
@@ -232,13 +282,19 @@ const Browse = (props: { username: string }) => {
                     }}>Submit</Button>
                 </DialogActions>
             </Dialog>
-            <Box sx={{ display: 'flex', ml: '5%', my: 5, width: 200 }}>
+            <Box sx={{ display: 'flex', ml: 10.25, my: 1, width: 200 }}>
+                <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="h5" component="div" sx={{ display: 'flex', fontSize: 18, whiteSpace: 'nowrap', mr: 2 }}>
+                        Filter By:
+                    </Typography>
+                </Box>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
                         defaultOption='All Languages'
                         options={['Assembly', 'Bash/Shell', 'C', 'C#', 'C++', 'COBOL', 'Dart', 'Elixir', 'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML/CSS', 'Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'SQL', 'Swift', 'TypeScript', 'VBA']}
                         value={language}
                         onChange={handleLanguageChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
@@ -247,6 +303,7 @@ const Browse = (props: { username: string }) => {
                         options={['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn']}
                         value={technology}
                         onChange={handleTechnologyChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
@@ -255,6 +312,7 @@ const Browse = (props: { username: string }) => {
                         options={['Beginner', 'Intermediate', 'Advanced']}
                         value={difficulty}
                         onChange={handleDifficultyChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
@@ -263,6 +321,7 @@ const Browse = (props: { username: string }) => {
                         options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
                         value={learningStyle}
                         onChange={handleLearningStyleChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
             </Box>
