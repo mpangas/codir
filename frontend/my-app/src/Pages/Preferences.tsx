@@ -150,7 +150,7 @@ const Preferences = (props: { username: string }) => {
                 </Typography>
 
                 <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 16, marginTop: 5 }}>
-                    Welcome to the preferences section! Please select your following preferences/options to best match your learning interests!
+                    Welcome to the preferences section! Please select your following preferences/options to best match your learning interests! Click submit to proceed to the Dashboard.
                 </Typography>
             </Box>
 

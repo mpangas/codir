@@ -93,6 +93,7 @@ function Signup(props: { setUsername: (username: string) => void}) {
                     <div className="error-msg">
                         {error}
                     </div>
+                    
                     <Button
                         data-testid="my-button"
                         variant="contained"

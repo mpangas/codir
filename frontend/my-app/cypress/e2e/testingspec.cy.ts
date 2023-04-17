@@ -53,7 +53,7 @@ describe('Login and browse navigation', () => {
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.url().should('include', 'http://localhost:3000/browse')
-    cy.get('h1').should('contain', 'Browse')
+    cy.get('h1').should('contain', 'Browse Tutorials')
   });
 });
 
@@ -69,14 +69,26 @@ describe('Login and about page navigation', () => {
   });
 });
 
-describe('Login and about test navigation', () => {
-  it('should login to the account then navigate to test  page', () => {
+// describe('Login and test navigation', () => {
+//   it('should login to the account then navigate to test page', () => {
+//     cy.visit('http://localhost:3000/login');
+//     cy.get('input[type="username"]').type('sample');
+//     cy.get('input[type="password"]').type('sample');
+//     cy.get('button[id="loginbox"]').click()
+//     cy.get('.MuiButton-root').contains("TEST").click() 
+//     cy.url().should('include', 'http://localhost:3000/test')
+//     cy.get('h1').should('contain', 'TEST')
+//   });
+// });
+
+describe('Login and preferences navigation', () => {
+  it('should login to the account then navigate to preferences page', () => {
     cy.visit('http://localhost:3000/login');
     cy.get('input[type="username"]').type('sample');
     cy.get('input[type="password"]').type('sample');
     cy.get('button[id="loginbox"]').click()
-    cy.get('.MuiButton-root').contains("TEST").click() 
-    cy.url().should('include', 'http://localhost:3000/test')
-    cy.get('h1').should('contain', 'TEST')
+    cy.get('.MuiButton-root').contains("PREFERENCES").click() 
+    cy.url().should('include', 'http://localhost:3000/preferences')
+    cy.get('h1').should('contain', 'Search Preferences')
   });
 });

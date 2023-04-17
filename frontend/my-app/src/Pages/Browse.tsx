@@ -191,6 +191,9 @@ const Browse = (props: { username: string }) => {
                 <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35, }}>
                     Browse Tutorials
                 </Typography>
+                <Typography variant="h5" component="div" sx={{ display: 'flex',  fontSize: 16, marginTop: 5, marginBottom: -5 }}>
+                    Browse tutorials below based on the selections!
+                </Typography>
                 <Button data-testid="submitTut" variant="contained" sx={{
                     ml: 'auto',
                     backgroundColor: "#0097b2",
@@ -229,7 +232,7 @@ const Browse = (props: { username: string }) => {
                     }}>Submit</Button>
                 </DialogActions>
             </Dialog>
-            <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
+            <Box sx={{ display: 'flex', ml: '5%', my: 5, width: 200 }}>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
                         defaultOption='All Languages'
