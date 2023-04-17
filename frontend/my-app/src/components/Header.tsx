@@ -119,6 +119,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
           href="/test"
         >TEST</Button>
         <Button
+          data-testid="dashboardBut"
           sx={{
             textTransform: "none",
             color: "black",

@@ -207,3 +207,23 @@ test('submit tutorial button exists', async () => {
   const subTut = getByTestId('submitTut');
   expect(subTut).toBeInTheDocument();
 });
+
+test('submit tutorial button exists', async () => {
+  const { getByTestId } = render(
+    <MemoryRouter>
+      <Browse username={'testing'} />
+    </MemoryRouter>
+  );
+  const subTut = getByTestId('submitTut');
+  expect(subTut).toBeInTheDocument();
+});
+
+test('dashboard header button exists', async () => {
+  const { getByTestId } = render(
+    <MemoryRouter>
+       <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+  const dashTut = getByTestId('dashboardBut');
+  expect(dashTut).toBeInTheDocument();
+});
