@@ -11,6 +11,9 @@ import {
     Container,
     DialogContentText,
     Grid,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -22,15 +25,15 @@ const FormFields = ({
     setTitle,
     Location,
     setLocation,
-    User,
-    setUser,
+    Difficulty,
+    setTutDifficulty,
 }: {
     Title: string,
     setTitle: (title: string) => void,
     Location: string,
     setLocation: (location: string) => void,
-    User: string,
-    setUser: (user: string) => void,
+    Difficulty: string,
+    setTutDifficulty: (difficulty: string) => void,
 }) => {
     return (
         <FormControl sx={{}}>
@@ -50,14 +53,17 @@ const FormFields = ({
                 value={Location}
                 onChange={e => setLocation(e.target.value)}
             />
-            <TextField
-                data-testid="userInput"
+            <Select
+                id="level"
                 sx={{ mt: 4 }}
-                className="input-box"
-                label="User"
-                value={User}
-                onChange={e => setUser(e.target.value)}
-            />
+                value={Difficulty}
+                onChange={(e) => setTutDifficulty(e.target.value)}
+            >
+                <MenuItem disabled value="Select a difficulty">Select a difficulty</MenuItem>
+                <MenuItem value={'Beginner'}>Beginner</MenuItem>
+                <MenuItem value={'Intermediate'}>Intermediate</MenuItem>
+                <MenuItem value={'Experienced'}>Experienced</MenuItem>
+            </Select>
         </FormControl>
     );
 };
@@ -68,12 +74,11 @@ const Browse = (props: { username: string }) => {
     const [open, setOpen] = useState(false);
     const [Title, setTitle] = useState('');
     const [Location, setLocation] = useState('');
-    const [User, setUser] = useState('');
-    const [error, setError] = useState("");
+    const [error, setError] = useState('');
+    const [tutDifficulty, setTutDifficulty] = useState('Select a difficulty');
 
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
-    const userRegex = /^.{0,18}$/;
 
     useEffect(() => {
         if (props.username === "" || props.username === undefined) {
@@ -86,35 +91,27 @@ const Browse = (props: { username: string }) => {
 
         setTitle("");
         setLocation("");
-        setUser("");
+        setTutDifficulty("Select a difficulty");
 
         setError("");
     };
 
     const handleSubmit = async () => {
-        if(Title === '' || Title === undefined) {
+        if (Title === '' || Title === undefined) {
             setError("You must enter a title.");
             return;
         }
-        else if(Location === '' || Location === undefined) {
+        else if (Location === '' || Location === undefined) {
             setError("You must enter a location.");
             return;
         }
-        else if(User === '' || User === undefined) {
-            setError("You must enter a user.");
-            return;
-        }
 
-        if(!titleRegex.test(Title)) {
+        if (!titleRegex.test(Title)) {
             setError("Title should have a maximum of 18 characters.");
             return;
         }
-        else if(!locRegex.test(Location)) {
+        else if (!locRegex.test(Location)) {
             setError("Location should have a maximum of 18 characters.");
-            return;
-        }
-        else if(!userRegex.test(User)) {
-            setError("User should have a maximum of 18 characters.");
             return;
         }
 
@@ -125,7 +122,6 @@ const Browse = (props: { username: string }) => {
             body: JSON.stringify({
                 Title,
                 Location,
-                User,
             }),
         });
 
@@ -134,7 +130,6 @@ const Browse = (props: { username: string }) => {
 
         setTitle("");
         setLocation("");
-        setUser("");
 
         setError("");
     };
@@ -215,8 +210,8 @@ const Browse = (props: { username: string }) => {
                         setTitle={setTitle}
                         Location={Location}
                         setLocation={setLocation}
-                        User={User}
-                        setUser={setUser}
+                        Difficulty={tutDifficulty}
+                        setTutDifficulty={setTutDifficulty}
                     />
                 </DialogContent>
                 <div className="tutorialErrorMsg">
@@ -231,9 +226,7 @@ const Browse = (props: { username: string }) => {
                         '&:hover': {
                             backgroundColor: "#028299",
                         },
-                    }}>
-                        Submit
-                    </Button>
+                    }}>Submit</Button>
                 </DialogActions>
             </Dialog>
             <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
