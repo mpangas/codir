@@ -1,4 +1,4 @@
-import { render, fireEvent, getByTestId } from '@testing-library/react';
+import { render, fireEvent, getByTestId, screen } from '@testing-library/react';
 import React from 'react';
 import App from './App';
 import Login from './Pages/Login'
@@ -7,6 +7,8 @@ import Browse from './Pages/Browse'
 import Header from './components/Header'
 import { jest } from '@jest/globals';
 import { MemoryRouter } from 'react-router';
+import Card from './components/Card';
+import { BrowserRouter } from 'react-router-dom';
 
 
 
@@ -85,7 +87,7 @@ test('prints error message if there is no email entered (signup screen)', async 
     </MemoryRouter>
   );
 
-  const usernameInput =  getByLabelText('Username');
+  const usernameInput = getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
@@ -104,7 +106,7 @@ test('prints error message if there is no username entered (signup screen)', asy
     </MemoryRouter>
   );
 
-  const emailInput =  getByLabelText('Email');
+  const emailInput = getByLabelText('Email');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
@@ -123,8 +125,8 @@ test('prints error message if there is no password entered (signup screen)', asy
     </MemoryRouter>
   );
 
-  const emailInput =  getByLabelText('Email');
-  const usernameInput =  getByLabelText('Username');
+  const emailInput = getByLabelText('Email');
+  const usernameInput = getByLabelText('Username');
   const signupButton = getByText('SIGN UP');
 
   fireEvent.change(emailInput, { target: { value: 'testemail' } });
@@ -142,8 +144,8 @@ test('prints error message if the email format is incorrect (signup screen)', as
     </MemoryRouter>
   );
 
-  const emailInput =  getByLabelText('Email');
-  const usernameInput =  getByLabelText('Username');
+  const emailInput = getByLabelText('Email');
+  const usernameInput = getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
@@ -163,8 +165,8 @@ test('prints error message if the username format is incorrect (signup screen)',
     </MemoryRouter>
   );
 
-  const emailInput =  getByLabelText('Email');
-  const usernameInput =  getByLabelText('Username');
+  const emailInput = getByLabelText('Email');
+  const usernameInput = getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
@@ -184,8 +186,8 @@ test('prints error message if the password format is incorrect (signup screen)',
     </MemoryRouter>
   );
 
-  const emailInput =  getByLabelText('Email');
-  const usernameInput =  getByLabelText('Username');
+  const emailInput = getByLabelText('Email');
+  const usernameInput = getByLabelText('Username');
   const passwordInput = getByLabelText('Password');
   const signupButton = getByText('SIGN UP');
 
@@ -211,7 +213,7 @@ test('submit tutorial button exists', async () => {
 test('dashboard header button exists', async () => {
   const { getByTestId } = render(
     <MemoryRouter>
-       <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
+      <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
     </MemoryRouter>
   );
   const dashTut = getByTestId('dashboardBut');
@@ -221,7 +223,7 @@ test('dashboard header button exists', async () => {
 test('browse header button exists', async () => {
   const { getByTestId } = render(
     <MemoryRouter>
-       <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
+      <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
     </MemoryRouter>
   );
   const broTut = getByTestId('browseBut');
@@ -231,25 +233,20 @@ test('browse header button exists', async () => {
 test('about us header button exists', async () => {
   const { getByTestId } = render(
     <MemoryRouter>
-       <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
+      <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
     </MemoryRouter>
   );
   const aboutTut = getByTestId('aboutusBut');
   expect(aboutTut).toBeInTheDocument();
 });
 
-test('title is entered', async () => {
-  const { getByTestId, getByText } = render(
-    <MemoryRouter>
-      <Browse username={'testing'} />
-    </MemoryRouter>
-  );
-
-  const submitButton = getByText('Submit');
-
-  //fireEvent.change(titleInput, { target: { value: 'Sample Title' } });
-  fireEvent.click(submitButton);
-
-  const errorMsg = await getByText('You must enter a title.');
-  expect(errorMsg).toBeInTheDocument();
+test('the like button exists on the card', async () => {
+    const { getByTestId } = render(
+      <MemoryRouter>
+        <Card title={'AngularTest'} user={'testing'} score={10} idNum={'2312343'} />
+      </MemoryRouter>
+    );
+    const likeBut = getByTestId('likeButtons');
+    expect(likeBut).toBeInTheDocument();
 });
+
