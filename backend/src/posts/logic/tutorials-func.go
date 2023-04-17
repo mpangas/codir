@@ -47,6 +47,7 @@ func PostTutorial(c *fiber.Ctx) error {
 		newId = rand.Int()
 	} // gets a unique id
 	newPost.Id = strconv.Itoa(newId)
+	//newPost.Attributes.TutId = newPost.Id
 	newPost.PostTime = time.Now().Unix()
 	newPost.EditTime = time.Now().Unix()
 	newPost.Score = 0
@@ -222,7 +223,7 @@ func Recommend(c *fiber.Ctx) error {
 	var thisSearch []models.Attributes
 	var fullSearch []models.Attributes
 	querySlice := []string{user.Preferences.Technologies, user.Preferences.Languages, user.Preferences.SkillLevel, user.Preferences.Styles}
-	attNames := []string{"technology", "language", "skillLevel", "style"}
+	attNames := []string{"technology", "language", "skill_level", "style"}
 	for i, str := range querySlice {
 		querySlice[i] = "(" + attNames[i] + " = \"" + strings.ReplaceAll(str, ",", "\" OR "+attNames[i]+" = \"") + "\")"
 	}
@@ -238,16 +239,23 @@ func Recommend(c *fiber.Ctx) error {
 		querySlice = querySlice[:len(querySlice)-1]
 	}
 
+	// remove all duplicates and get ids
+	searchIds := make(map[string]bool)
 	for _, attr := range fullSearch {
+		searchIds[attr.TutID] = true
+	}
+
+	// search for associated tutorials
+	for id := range searchIds {
 		var getTutorial models.Tutorial
-		database.DB.Where("id = ?", attr.Id).First(&getTutorial)
+		database.DB.Where("id = ?", id).First(&getTutorial)
 		recommendations = append(recommendations, getTutorial)
 	}
 
 	sort.Slice(recommendations, func(i, j int) bool { return recommendations[i].Score > recommendations[j].Score })
-	recommendations = recommendations[0:4]
-
-	// get associated tutorials
+	if len(recommendations) > 5 {
+		recommendations = recommendations[0:4]
+	}
 
 	return c.JSON(recommendations)
 }

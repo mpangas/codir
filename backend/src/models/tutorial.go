@@ -9,5 +9,5 @@ type Tutorial struct {
 	EditTime int64  `json:"editTime"`
 	Score    int    `json:"score"` // don't pass this in
 	//Tags     []string `json:"tags"`  //Unused
-	Attributes Attributes `json:"attributes" gorm:"foreignKey:Id;references:Id"`
+	Attributes Attributes `json:"attributes" gorm:"foreignKey:TutID;references:Id"`
 }
