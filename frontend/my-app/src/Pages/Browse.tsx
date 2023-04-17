@@ -231,9 +231,7 @@ const Browse = (props: { username: string }) => {
                         '&:hover': {
                             backgroundColor: "#028299",
                         },
-                    }}>
-                        Submit
-                    </Button>
+                    }}>Submit</Button>
                 </DialogActions>
             </Dialog>
             <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>

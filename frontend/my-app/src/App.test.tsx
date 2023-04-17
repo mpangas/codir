@@ -245,7 +245,7 @@ test('title is entered', async () => {
     </MemoryRouter>
   );
 
-  const submitButton = getByTestId('submitBut');
+  const submitButton = getByText('Submit');
 
   //fireEvent.change(titleInput, { target: { value: 'Sample Title' } });
   fireEvent.click(submitButton);
