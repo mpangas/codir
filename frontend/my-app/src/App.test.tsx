@@ -208,16 +208,6 @@ test('submit tutorial button exists', async () => {
   expect(subTut).toBeInTheDocument();
 });
 
-test('submit tutorial button exists', async () => {
-  const { getByTestId } = render(
-    <MemoryRouter>
-      <Browse username={'testing'} />
-    </MemoryRouter>
-  );
-  const subTut = getByTestId('submitTut');
-  expect(subTut).toBeInTheDocument();
-});
-
 test('dashboard header button exists', async () => {
   const { getByTestId } = render(
     <MemoryRouter>
@@ -246,4 +236,20 @@ test('about us header button exists', async () => {
   );
   const aboutTut = getByTestId('aboutusBut');
   expect(aboutTut).toBeInTheDocument();
+});
+
+test('title is entered', async () => {
+  const { getByTestId, getByText } = render(
+    <MemoryRouter>
+      <Browse username={'testing'} />
+    </MemoryRouter>
+  );
+
+  const submitButton = getByTestId('submitBut');
+
+  //fireEvent.change(titleInput, { target: { value: 'Sample Title' } });
+  fireEvent.click(submitButton);
+
+  const errorMsg = await getByText('You must enter a title.');
+  expect(errorMsg).toBeInTheDocument();
 });

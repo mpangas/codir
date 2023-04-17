@@ -226,7 +226,7 @@ const Browse = (props: { username: string }) => {
                     <Button onClick={handleClose} sx={{
                         color: "#0097b2",
                     }}>Cancel</Button>
-                    <Button onClick={handleSubmit} variant="contained" sx={{
+                    <Button data-testid="submitBut" onClick={handleSubmit} variant="contained" sx={{
                         backgroundColor: "#0097b2",
                         '&:hover': {
                             backgroundColor: "#028299",
