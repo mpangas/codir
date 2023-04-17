@@ -3,6 +3,7 @@ import React from 'react';
 import App from './App';
 import Login from './Pages/Login'
 import Signup from './Pages/Signup';
+import Browse from './Pages/Browse'
 import Header from './components/Header'
 import { jest } from '@jest/globals';
 import { MemoryRouter } from 'react-router';
@@ -29,7 +30,7 @@ test('login button header exists', async () => {
       <Header username={''} setUsername={(username: string) => console.log(username)} />
     </MemoryRouter>
   );
-  const loginHeader = getByText('Log In');
+  const loginHeader = getByText('LOG IN');
   expect(loginHeader).toBeInTheDocument();
 });
 
@@ -39,7 +40,7 @@ test('signup button header exists', async () => {
       <Header username={''} setUsername={(username: string) => console.log(username)} />
     </MemoryRouter>
   );
-  const signupHeader = getByText('Sign Up');
+  const signupHeader = getByText('SIGN UP');
   expect(signupHeader).toBeInTheDocument();
 });
 
@@ -197,3 +198,12 @@ test('prints error message if the password format is incorrect (signup screen)',
   expect(errorMsg).toBeInTheDocument();
 });
 
+test('submit tutorial button exists', async () => {
+  const { getByTestId } = render(
+    <MemoryRouter>
+      <Browse username={'testing'} />
+    </MemoryRouter>
+  );
+  const subTut = getByTestId('submitTut');
+  expect(subTut).toBeInTheDocument();
+});

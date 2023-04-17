@@ -193,7 +193,7 @@ const Browse = (props: { username: string }) => {
                 <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35, }}>
                     Browse Tutorials
                 </Typography>
-                <Button variant="contained" sx={{
+                <Button data-testid="submitTut" variant="contained" sx={{
                     ml: 'auto',
                     backgroundColor: "#0097b2",
                     '&:hover': {
