@@ -136,6 +136,7 @@ func EditTutorial(c *fiber.Ctx) error {
 	getTutorial.Title = newTutorial.Title
 	getTutorial.Location = newTutorial.Location
 	getTutorial.EditTime = time.Now().Unix()
+	//Sdatabase.DB.Model(&getTutorial).Association("Attributes").Replace(newTutorial.Attributes)
 
 	// these are all that a PUT request should be able to change. User, id, score, post time are the same
 	database.DB.Save(&getTutorial)

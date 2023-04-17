@@ -45,6 +45,8 @@ func TutorialsRoutes(app *fiber.App) {
 	app.Get("/api/tutorials/search::query", logic.Search)
 	app.Get("/api/tutorials/recommend", logic.Recommend)
 
+	// Routes for attributes.
 	app.Get("/api/tutorials/attributes", logic.GetAllAttributes)
 	app.Get("/api/tutorials/attributes/id::id", logic.GetAttributes)
+	app.Put("/api/tutorials/attributes/id::id", logic.EditAttributes)
 }
