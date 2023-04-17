@@ -227,3 +227,23 @@ test('dashboard header button exists', async () => {
   const dashTut = getByTestId('dashboardBut');
   expect(dashTut).toBeInTheDocument();
 });
+
+test('browse header button exists', async () => {
+  const { getByTestId } = render(
+    <MemoryRouter>
+       <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+  const broTut = getByTestId('browseBut');
+  expect(broTut).toBeInTheDocument();
+});
+
+test('about us header button exists', async () => {
+  const { getByTestId } = render(
+    <MemoryRouter>
+       <Header username={'testing'} setUsername={(username: string) => console.log(username)} />
+    </MemoryRouter>
+  );
+  const aboutTut = getByTestId('aboutusBut');
+  expect(aboutTut).toBeInTheDocument();
+});
