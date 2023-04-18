@@ -182,19 +182,26 @@ function Card(props: { title: string, location: string, score: number, idNum: st
                     transition: 'transform .1s ease-in', '&:hover': { transform: 'scale(1.05)', cursor: 'pointer', border: '2px solid #0097b2' }
                 }}>
                     <CardContent>
-                    <a href="https://www.instagram.com" target="_blank" >
+                    <a href={props.location} target="_blank" >
                         <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 26 }}>
                             {props.title}
                         </Typography>
                     </a>
                         <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
-                            {props.location}
+                            {props.attributes.skillLevel}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15,
+                            marginTop: 1 }}>
+                            {props.attributes.language}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15,  marginTop: 1 }}>
+                            {props.attributes.technology}
                         </Typography>
                     </CardContent>
                     <CardMedia sx={{ display: 'flex', float: "left" }}>
-                        <IconButton sx={{ marginLeft: 0.5, marginTop: 14.5 }} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
+                        <IconButton sx={{ marginLeft: 0.5, marginTop: 7 }} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
                     </CardMedia>
-                    <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
+                    <CardMedia sx={{ display: 'flex', float: "right", marginTop: 7 }}>
                         <IconButton sx={{
                             marginRight: 0.3,
                             transition: 'transform 0.1s linear',
