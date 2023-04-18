@@ -57,6 +57,10 @@ function App() {
     )();
   });
 
+  useEffect(() => {
+    document.title  = "Codir";
+  }, []);
+
   if (isLoading) {
     return (
         <div className="Loading">
