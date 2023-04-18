@@ -1,30 +1,18 @@
 import {
     Button,
     Typography,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     FormControl,
-    TextField,
     Box,
     Container,
-    DialogContentText,
-    Grid,
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
     InputLabel,
     MenuItem,
     Select,
     SelectChangeEvent,
-    ListItemText,
 } from '@mui/material';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import FilterButton from '../components/FilterButton';
-import Card from '../components/Card';
 
 const FormFields = ({
     Title,
@@ -47,11 +35,6 @@ const FormFields = ({
 const Preferences = (props: { username: string }) => {
     // Submit Tutorial
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [Title, setTitle] = useState('');
-    const [Location, setLocation] = useState('');
-    const [User, setUser] = useState('');
-    const [error, setError] = useState("");
 
     const [languages, setLanguage] = useState("All Languages");
     const [technologies, setTechnology] = useState("All Technologies");
@@ -61,10 +44,6 @@ const Preferences = (props: { username: string }) => {
     const [langs, setoption] = useState<string[]>([]);
     const [tools, setoption2] = useState<string[]>([]);
 
-    const titleRegex = /^.{0,18}$/;
-    const locRegex = /^.{0,18}$/;
-    const userRegex = /^.{0,18}$/;
-
     useEffect(() => {
         if (props.username === "" || props.username === undefined) {
             navigate("/login");
@@ -72,6 +51,7 @@ const Preferences = (props: { username: string }) => {
     }, [props.username, navigate]);
 
     const handleSubmit = async () => {
+        console.log("Skill Level: " + skillLevel + " Languages: " + langs + " Technologies: " + tools + " Styles: " + styles)
         const username = props.username;
         const response = await fetch('http://localhost:8000/api/preferences', {
             method: 'PUT',
@@ -86,17 +66,6 @@ const Preferences = (props: { username: string }) => {
             }),
         });
         const data = await response.json();
-        setOpen(false);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-
-        setTitle("");
-        setLocation("");
-        setUser("");
-
-        setError("");
     };
 
     const handleDifficultyChange = (value: string) => {
@@ -255,7 +224,7 @@ const Preferences = (props: { username: string }) => {
                             backgroundColor: "#028299",
                         },
                         width: 150
-                    }} onClick={() => setOpen(true)}>
+                    }} onClick={handleSubmit}>
                         SUBMIT
                     </Button>{/*</Link>*/}
 
