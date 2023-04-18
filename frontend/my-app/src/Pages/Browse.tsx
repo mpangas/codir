@@ -105,6 +105,19 @@ const FormFields = ({
     );
 };
 
+interface Tutorial {
+    id: string;
+    title: string;
+    location: string;
+    score: number;
+    attributes: {
+        skillLevel: string;
+        language: string;
+        technology: string;
+        style: string;
+    };
+}
+
 const Browse = (props: { username: string }) => {
     // Submit Tutorial
     const navigate = useNavigate();
@@ -203,20 +216,7 @@ const Browse = (props: { username: string }) => {
     };
 
     // Tutorials
-    const [tutorials, setTutorials] = useState<
-        {
-            id: string;
-            title: string;
-            location: string;
-            score: number;
-            attributes: {
-                skillLevel: string;
-                language: string;
-                technology: string;
-                style: string;
-            };
-        }[]
-    >([]);
+    const [tutorials, setTutorials] = useState<Tutorial[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const getTutorials = async () => {
@@ -226,20 +226,14 @@ const Browse = (props: { username: string }) => {
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
         })
-        const data = await response.json();
+        const tutData = await response.json();
 
-        setTutorials(data.map((tutorial: any) => ({
-            id: tutorial.id,
-            title: tutorial.title,
-            location: tutorial.location,
-            score: tutorial.score,
-            attributes: {
-                skillLevel: '',
-                language: '',
-                technology: '',
-                style: '',
-            },
-        })));
+        const tutorialsWithAttributes = await Promise.all(tutData.map(async (tutorial: any) => {
+            const { skillLevel, language, technology, style } = await fetchAttributes(tutorial.id);
+            return { ...tutorial, attributes: { skillLevel, language, technology, style } };
+        }));
+
+        setTutorials(tutorialsWithAttributes);
     }
 
     async function fetchAttributes(id: string) {
@@ -254,20 +248,7 @@ const Browse = (props: { username: string }) => {
         return { skillLevel, language, technology, style };
     }
 
-    const [filteredTutorials, setFilteredTutorials] = useState<
-        {
-            id: string;
-            title: string;
-            location: string;
-            score: number;
-            attributes: {
-                skillLevel: string;
-                language: string;
-                technology: string;
-                style: string;
-            };
-        }[]
-    >(tutorials);
+    const [filteredTutorials, setFilteredTutorials] = useState<Tutorial[]>(tutorials);
 
     useEffect(() => {
         const fetchFilteredTutorials = async () => {
@@ -281,7 +262,7 @@ const Browse = (props: { username: string }) => {
             };
 
             const tutorialsWithAttributes = await Promise.all(
-                tutorials.map(async (tutorial: { id: string, title: string, location: string, score: number }) => {
+                tutorials.map(async (tutorial: Tutorial) => {
                     const attributes = await fetchAttributes(tutorial.id);
                     return {
                         ...tutorial,
@@ -309,12 +290,12 @@ const Browse = (props: { username: string }) => {
     const [tutorialCards, setTutorialCards] = useState<React.ReactNode[]>([]);
 
     useEffect(() => {
-        let newCards = filteredTutorials.map((item: { id: string, title: string, location: string, score: number }) => {
-            return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />;
+        let newCards = filteredTutorials.map((item: Tutorial) => {
+            return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} attributes={item.attributes} />;
         });
         if (newCards.length === 0 && language === "All Languages" && technology === "All Technologies" && difficulty === "All Skill Levels" && learningStyle === "All Learning Styles") {
-            newCards = tutorials.map((item: { id: string, title: string, location: string, score: number }) => {
-                return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />;
+            newCards = tutorials.map((item: Tutorial) => {
+                return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} attributes={item.attributes} />;
             });
         }
         setTutorialCards(newCards);

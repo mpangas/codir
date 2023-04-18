@@ -15,8 +15,9 @@ import { Button, IconButton } from '@mui/material';
 import { margin } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { EditAttributes } from '@mui/icons-material';
 
-function Card(props: { title: string, location: string, score: number, idNum: string }) {
+function Card(props: { title: string, location: string, score: number, idNum: string, attributes: {skillLevel: string, language: string, technology: string, style: string} }) {
     const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);

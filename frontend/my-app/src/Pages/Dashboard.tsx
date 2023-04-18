@@ -96,16 +96,16 @@ const Dashboard = (props: { username: string }) => {
         {title: "TITLE14", author: "Author14", likes: "113"},
         {title: "TITLE15", author: "Author15", likes: "114"},
     ];*/
-    const cardList = tutorialArray.map((item: { title: string, location: string, score: number, id: string }) => {
-        return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
-    })
-    const recomList = recommendation.map((item: { title: string, location: string, score: number, id: string }) => {
-        return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
-    })
+    // const cardList = tutorialArray.map((item: { title: string, location: string, score: number, id: string }) => {
+    //     return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
+    // })
+    // const recomList = recommendation.map((item: { title: string, location: string, score: number, id: string }) => {
+    //     return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
+    // })
 
     return (
         <div className="dashboard">
-            <br></br>
+            {/* <br></br>
             <h1 id="dashboardTitle" className="uniform">DASHBOARD</h1>
             <h1 id="welcome">Welcome, {props.username} !</h1>
             <h2 className="uniform">Favorites</h2>
@@ -120,7 +120,7 @@ const Dashboard = (props: { username: string }) => {
             <div className="uniform" id="horizontal"></div>
             <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex' }}>
                 {recomList}
-            </Grid>
+            </Grid> */}
         </div>
     )
 }
