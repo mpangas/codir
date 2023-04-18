@@ -53,13 +53,16 @@ const Preferences = (props: { username: string }) => {
     const [User, setUser] = useState('');
     const [error, setError] = useState("");
 
-    const [languages, setLanguage] = useState("All Languages");
-    const [technologies, setTechnology] = useState("All Technologies");
-    const [skillLevel, setDifficulty] = useState("All Skill Levels");
-    const [styles, setLearningStyle] = useState("All Learning Styles");
+   // const [languages, setLanguage] = useState("All Languages");
+   // const [technologies, setTechnology] = useState("All Technologies");
+    // const [skillLevel, setDifficulty] = useState("All Skill Levels");
+    // const [styles, setLearningStyle] = useState("All Learning Styles");
 
-    const [langs, setoption] = useState<string[]>([]);
-    const [tools, setoption2] = useState<string[]>([]);
+    const [languages, setoption] = useState<string[]>([]);
+    const [technologies, setoption2] = useState<string[]>([]);
+    const [styles, setoption3] = useState<string[]>([]);
+    const [skillLevel, setoption4] = useState<string[]>([]);
+
 
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
@@ -99,33 +102,50 @@ const Preferences = (props: { username: string }) => {
         setError("");
     };
 
-    const handleDifficultyChange = (value: string) => {
-        setDifficulty(value);
+    const handleDifficultyChange = (event: SelectChangeEvent<string[]>) => {
+        const newstuff4 = event.target.value as string[];
+
+        if (newstuff4.length < skillLevel.length) {
+            const remove4 = skillLevel.find((value) => !newstuff4.includes(value))!;
+            setoption4(skillLevel.filter((value) => value !== remove4));
+        } else {
+            const newthing4 = newstuff4.find((value) => !skillLevel.includes(value))!;
+            setoption4([...skillLevel, newthing4]);
+        }
     };
+
     const handleLanguageChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff = event.target.value as string[];
-        if (newstuff.length < langs.length) {
-            const remove = langs.find((value) => !newstuff.includes(value))!;
-            setoption(langs.filter((value) => value !== remove));
+        if (newstuff.length < languages.length) {
+            const remove = languages.find((value) => !newstuff.includes(value))!;
+            setoption(languages.filter((value) => value !== remove));
         } else {
-            const newthing = newstuff.find((value) => !langs.includes(value))!;
-            setoption([...langs, newthing]);
+            const newthing = newstuff.find((value) => !languages.includes(value))!;
+            setoption([...languages, newthing]);
         }
 
     };
     const handleTechnologyChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff2 = event.target.value as string[];
 
-        if (newstuff2.length < tools.length) {
-            const remove2 = tools.find((value) => !newstuff2.includes(value))!;
-            setoption2(tools.filter((value) => value !== remove2));
+        if (newstuff2.length < technologies.length) {
+            const remove2 = technologies.find((value) => !newstuff2.includes(value))!;
+            setoption2(technologies.filter((value) => value !== remove2));
         } else {
-            const newthing2 = newstuff2.find((value) => !tools.includes(value))!;
-            setoption2([...tools, newthing2]);
+            const newthing2 = newstuff2.find((value) => !technologies.includes(value))!;
+            setoption2([...technologies, newthing2]);
         }
     };
-    const handleLearningStyleChange = (value: string) => {
-        setLearningStyle(value);
+    const handleLearningStyleChange = (event: SelectChangeEvent<string[]>) => {
+        const newstuff3 = event.target.value as string[];
+
+        if (newstuff3.length < styles.length) {
+            const remove3 = styles.find((value) => !newstuff3.includes(value))!;
+            setoption3(styles.filter((value) => value !== remove3));
+        } else {
+            const newthing3 = newstuff3.find((value) => !styles.includes(value))!;
+            setoption3([...styles, newthing3]);
+        }
     };
 
     return (
@@ -164,7 +184,7 @@ const Preferences = (props: { username: string }) => {
                         <Select
                             labelId="langs"
                             multiple
-                            value={langs}
+                            value={languages}
                             onChange={handleLanguageChange}
                             renderValue={(selected) => selected.join(', ')}
                         >
@@ -191,7 +211,7 @@ const Preferences = (props: { username: string }) => {
                         <Select
                             labelId="prog-tech"
                             multiple
-                            value={tools}
+                            value={technologies}
                             onChange={handleTechnologyChange}
                             renderValue={(selected) => selected.join(', ')}
                         >
@@ -213,12 +233,23 @@ const Preferences = (props: { username: string }) => {
                     left: '50%',
                     justifyContent: 'center', zIndex: 1
                 }}>
-                    <FilterButton
-                        defaultOption="All Learning Styles"
-                        options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
-                        value={styles}
-                        onChange={handleLearningStyleChange}
-                    />
+                    <FormControl sx={{ minHeight: 110, minWidth: 180, }}>
+                        <InputLabel id="prog-style">Learning Styles</InputLabel>
+                        <Select
+                            labelId="prog-style"
+                            multiple
+                            value={styles}
+                            onChange={handleLearningStyleChange}
+                            renderValue={(selected) => selected.join(', ')}
+                        >
+
+                            {['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials'].map((options3) => (
+                                <MenuItem key={options3} value={options3}>
+                                    {options3}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </Box>
             </Box>
 
@@ -227,22 +258,32 @@ const Preferences = (props: { username: string }) => {
                 transform: 'translateX(-50%)',
                 display: 'flex',
                 position: 'absolute',
-                top: '60%',
+                top: '62%',
                 left: '50%',
                 justifyContent: 'center', zIndex: 1
             }}>
-                <FilterButton
-                    defaultOption="All Skill Levels"
-                    options={['Beginner', 'Intermediate', 'Advanced']}
-                    value={skillLevel}
-                    onChange={handleDifficultyChange}
-                />
+                <FormControl sx={{ minHeight: 110, minWidth: 180, }}>
+                        <InputLabel id="prog-diff">Skill Levels</InputLabel>
+                        <Select
+                            labelId="prog-diff"
+                            multiple
+                            value={skillLevel}
+                            onChange={handleDifficultyChange}
+                            renderValue={(selected) => selected.join(', ')}
+                        >
+                            {['Beginner', 'Intermediate', 'Advanced'].map((options4) => (
+                                <MenuItem key={options4} value={options4}>
+                                    {options4}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
             </Box>
 
 
 
             <Box
-                height="90vh"
+                height="105vh"
                 position="relative"
                 display="flex"
                 justifyContent="center"
