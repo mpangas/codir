@@ -199,7 +199,20 @@ const Browse = (props: { username: string }) => {
     };
 
     // Tutorials
-    const [tutorials, setTutorials] = useState([]);
+    const [tutorials, setTutorials] = useState<
+        {
+            id: string;
+            title: string;
+            location: string;
+            score: number;
+            attributes: {
+                skillLevel: string;
+                language: string;
+                technology: string;
+                style: string;
+            };
+        }[]
+    >([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const getTutorials = async () => {
@@ -210,10 +223,11 @@ const Browse = (props: { username: string }) => {
         })
         const data = await response.json();
 
-        const tutorialData = data.map((item: { title: string, location: string, score: number, }) =>
+        const tutorialData = data.map((item: { id: string, title: string, location: string, score: number, }) =>
             item);
         setTutorials(tutorialData);
     }
+    getTutorials();
 
     async function fetchAttributes(id: string) {
         const response = await fetch(`http://localhost:8000/api/tutorials/attributes/id:${id}`, {
@@ -225,8 +239,6 @@ const Browse = (props: { username: string }) => {
         const { skillLevel, language, technology, style } = data;
         return { skillLevel, language, technology, style };
     }
-
-    getTutorials();
 
     const [filteredTutorials, setFilteredTutorials] = useState<
         {
@@ -241,10 +253,11 @@ const Browse = (props: { username: string }) => {
                 style: string;
             };
         }[]
-    >([]);
+    >(tutorials);
 
     useEffect(() => {
         const fetchFilteredTutorials = async () => {
+            setIsLoading(true);
             const filteredAttributes = {
                 skillLevel: difficulty !== "All Skill Levels" ? difficulty : "",
                 language: language !== "All Languages" ? language : "",
@@ -272,35 +285,20 @@ const Browse = (props: { username: string }) => {
             );
 
             setFilteredTutorials(filteredTutorials);
+            setIsLoading(false);
         };
 
-        setIsLoading(true);
         fetchFilteredTutorials();
-        setIsLoading(false);
     }, [language, technology, difficulty, learningStyle]);
 
-    let tutorialCards = tutorials.map((item: { id: string, title: string, location: string, score: number }) => {
-        return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />
-    })
+    const [tutorialCards, setTutorialCards] = useState<React.ReactNode[]>([]);
 
     useEffect(() => {
-        tutorialCards = filteredTutorials.map((item: { id: string, title: string, location: string, score: number }) => {
-            return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />
-        })
+        const newCards = filteredTutorials.map((item: { id: string, title: string, location: string, score: number }) => {
+            return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />;
+        });
+        setTutorialCards(newCards);
     }, [filteredTutorials]);
-
-    if (isLoading) {
-        return (
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                padding="0"
-            >
-                <CircularProgress />
-            </Box>
-        )
-    }
 
     return (
         <Container maxWidth={false} sx={{
@@ -403,9 +401,23 @@ const Browse = (props: { username: string }) => {
                     />
                 </Box>
             </Box>
-            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex', flexWrap: 'wrap' }}>
-                {tutorialCards}
-            </Grid>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" padding="0" paddingTop="100px">
+                    <CircularProgress />
+                </Box>
+            ) : tutorialCards.length ? (
+                <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex', flexWrap: 'wrap' }}>
+                    {tutorialCards}
+                </Grid>
+            ) : (
+                <Box display="flex" justifyContent="center" alignItems="center" minHeight="30vh">
+                    <Typography variant="h5" color="textSecondary">
+                        No results match your filters.
+                    </Typography>
+                </Box>
+            )}
+
+
         </Container>
     );
 }
