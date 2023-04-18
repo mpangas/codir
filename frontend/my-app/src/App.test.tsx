@@ -240,23 +240,25 @@ test('about us header button exists', async () => {
   expect(aboutTut).toBeInTheDocument();
 });
 
-// test('the like button exists on the card', async () => {
-//     const { getByTestId } = render(
-//       <MemoryRouter>
-//         <Card title={'AngularTest'} location={'testing'} score={10} idNum={'2312343'} />
-//       </MemoryRouter>
-//     );
-//     const likeBut = getByTestId('likeButtons');
-//     expect(likeBut).toBeInTheDocument();
-// });
+test('the like button exists on the card', async () => {
+     const { getByTestId } = render(
+      <MemoryRouter>
+         <Card title={'AngularTest'} location={'testing'} score={10} idNum={'2312343'} 
+           attributes={{skillLevel: "Beginner", language: "Javascript", technology: "Git", style: "Video"}} />
+       </MemoryRouter>
+     );
+     const likeBut = getByTestId('likeButtons');
+    expect(likeBut).toBeInTheDocument();
+});
 
-// test('the dislike button exists on the card', async () => {
-//   const { getByTestId } = render(
-//     <MemoryRouter>
-//       <Card title={'AngularTest'} location={'testing'} score={10} idNum={'2312343'} />
-//     </MemoryRouter>
-//   );
-//   const dislikeBut = getByTestId('dislikeButtons');
-//   expect(dislikeBut).toBeInTheDocument();
-// });
+test('the dislike button exists on the card', async () => {
+   const { getByTestId } = render(
+    <MemoryRouter>
+       <Card title={'AngularTest'} location={'testing'} score={10} idNum={'2312343'} 
+           attributes={{skillLevel: "Beginner", language: "Javascript", technology: "Git", style: "Video"}} />
+     </MemoryRouter>
+  );
+  const dislikeBut = getByTestId('dislikeButtons');
+  expect(dislikeBut).toBeInTheDocument();
+ });
 
