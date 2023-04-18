@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography';
 const Dashboard = (props: { username: string }) => {
     const [tutorialIDArray, setTutorialIDArray] = useState([]);
     const [tutorialArray, setTutorialArray] = useState([]);
+    const [recommendation, setRecommendation] = useState([]);
     const navigate = useNavigate();
     if (props.username === "" || props.username === undefined) {
         navigate("/login");
@@ -64,6 +65,19 @@ const Dashboard = (props: { username: string }) => {
         )();
     }, [props.username, tutorialIDArray]);
 
+    useEffect(() => {
+        (
+            async () => {
+                const response2 = await fetch('http://localhost:8000/api/tutorials/recommend', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                const data = await response2.json();
+                setRecommendation(data);
+            }
+        )();
+    }, [props.username]);
 
     /*const cardData = [
         {title: "TITLE1", author: "Author1", likes: "100"},
@@ -85,6 +99,10 @@ const Dashboard = (props: { username: string }) => {
     const cardList = tutorialArray.map((item: { title: string, location: string, score: number, id: string }) => {
         return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
     })
+    const recomList = recommendation.map((item: { title: string, location: string, score: number, id: string }) => {
+        return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
+    })
+
     return (
         <div className="dashboard">
             <br></br>
@@ -97,6 +115,11 @@ const Dashboard = (props: { username: string }) => {
                 <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: 23, marginTop: 18, marginBottom: 15 }}>
                     Go to <a href="/browse">Browse</a> to add favorites!
                 </Typography>}
+            </Grid>
+            <h2 className="uniform">Recommendations</h2>
+            <div className="uniform" id="horizontal"></div>
+            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex' }}>
+                {recomList}
             </Grid>
         </div>
     )
