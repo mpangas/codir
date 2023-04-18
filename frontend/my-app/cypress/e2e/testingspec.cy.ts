@@ -94,8 +94,8 @@ describe('Submit tutorial button functionality', () => {
   });
 });
 
-describe('first drop down menu functionality', () => {
-  it('ensure all the necessary options are visible on the first drop down menu on the browse page', () => {
+describe('languages drop down menu functionality', () => {
+  it('ensure all the necessary options are visible on the languages drop down menu on the browse page', () => {
     cy.visit('http://localhost:3000/login');
     cy.get('input[type="username"]').type('sample');
     cy.get('input[type="password"]').type('sample');
@@ -137,3 +137,119 @@ describe('first drop down menu functionality', () => {
     cy.contains('VBA').should('exist')
   });
 });
+
+describe('technologies drop down menu functionality', () => {
+  it('ensure all the necessary options are visible on the technologies drop down menu on the browse page', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[type="username"]').type('sample');
+    cy.get('input[type="password"]').type('sample');
+    cy.get('button[id="loginbox"]').click()
+    cy.get('.MuiButton-root').contains("BROWSE").click() 
+    cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Technologies").click()
+    cy.contains('.NET').should('exist')
+    cy.contains('Angular').should('exist')
+    cy.contains('Angular.js').should('exist')
+    cy.contains('Ansible').should('exist')
+    cy.contains('ASP.NET').should('exist')
+    cy.contains('Blazor').should('exist')
+    cy.contains('Cloud Computing').should('exist')
+    cy.contains('CouchDB').should('exist')
+    cy.contains('Django').should('exist')
+    cy.contains('Docker').should('exist')
+    cy.contains('DynamoDB').should('exist')
+    cy.contains('Express').should('exist')
+    cy.contains('FastAPI').should('exist')
+    cy.contains('Flask').should('exist')
+    cy.contains('Flutter').should('exist')
+    cy.contains('Git').should('exist')
+    cy.contains('GitHub').should('exist')
+    cy.contains('GitLab').should('exist')
+    cy.contains('Homebrew').should('exist')
+    cy.contains('jQuery').should('exist')
+    cy.contains('Kubernetes').should('exist')
+    cy.contains('Laravel').should('exist')
+    cy.contains('MariaDB').should('exist')
+    cy.contains('Microsoft SQL Server').should('exist')
+    cy.contains('MongoDB').should('exist')
+    cy.contains('MySQL').should('exist')
+    cy.contains('Next.js').should('exist')
+    cy.contains('Node.js').should('exist')
+    cy.contains('npm').should('exist')
+    cy.contains('NumPy').should('exist')
+    cy.contains('Nuxt.js').should('exist')
+    cy.contains('Oracle').should('exist')
+    cy.contains('Pandas').should('exist')
+    cy.contains('PostgreSQL').should('exist')
+    cy.contains('PyTorch').should('exist')
+    cy.contains('Qt').should('exist')
+    cy.contains('React Native').should('exist')
+    cy.contains('React.js').should('exist')
+    cy.contains('Redis').should('exist')
+    cy.contains('Ruby on Rails').should('exist')
+    cy.contains('SQLite').should('exist')
+    cy.contains('Spring').should('exist')
+    cy.contains('Svelte').should('exist')
+    cy.contains('Terraform').should('exist')
+    cy.contains('TensorFlow').should('exist')
+    cy.contains('Unity 3D').should('exist')
+    cy.contains('Unreal Engine').should('exist')
+    cy.contains('Vue.js').should('exist')
+    cy.contains('Yarn').should('exist')
+  });
+});
+
+
+describe('skill levels drop down menu functionality', () => {
+  it('ensure all the necessary options are visible on the skill levels drop down menu on the browse page', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[type="username"]').type('sample');
+    cy.get('input[type="password"]').type('sample');
+    cy.get('button[id="loginbox"]').click()
+    cy.get('.MuiButton-root').contains("BROWSE").click() 
+    cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Skill Levels").click()
+    cy.contains('Beginner').should('exist')
+    cy.contains('Intermediate').should('exist')
+    cy.contains('Advanced').should('exist')
+  });
+});
+
+describe('learning styles drop down menu functionality', () => {
+  it('ensure all the necessary options are visible on the learning styles drop down menu on the browse page', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[type="username"]').type('sample');
+    cy.get('input[type="password"]').type('sample');
+    cy.get('button[id="loginbox"]').click()
+    cy.get('.MuiButton-root').contains("BROWSE").click() 
+    cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Learning Styles").click()
+    cy.contains('Text Tutorials').should('exist')
+    cy.contains('Video Tutorials').should('exist')
+    cy.contains('Interactive Tutorials').should('exist')
+  });
+});
+
+describe('Submit tutorial button functionality on preferences page', () => {
+  it('The submit tutorial button should be able to be clicked on the preferences page and should redirect to the dashboard', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[type="username"]').type('sample');
+    cy.get('input[type="password"]').type('sample');
+    cy.get('button[id="loginbox"]').click()
+    cy.get('.MuiButton-root').contains("PREFERENCES").click() 
+    cy.get('.MuiButton-root').contains("SUBMIT").click() 
+    cy.contains('Go to Browse to add favorites!').should('exist')
+  });
+});
+
+describe('Browse hyperlink validity', () => {
+  it('Makes sure that the clicking on the text "Browse" in the Dashboard page redirects to the browse page', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[type="username"]').type('sample');
+    cy.get('input[type="password"]').type('sample');
+    cy.get('button[id="loginbox"]').click()
+    cy.get('.MuiButton-root').contains("DASHBOARD").click() 
+    cy.contains("Browse").click() 
+    cy.contains('Browse Tutorials').should('exist')
+  });
+});
+
+
+
