@@ -53,6 +53,14 @@ const Preferences = (props: { username: string }) => {
     const [User, setUser] = useState('');
     const [error, setError] = useState("");
 
+    const [languages, setLanguage] = useState("All Languages");
+    const [technologies, setTechnology] = useState("All Technologies");
+    const [skillLevel, setDifficulty] = useState("All Skill Levels");
+    const [styles, setLearningStyle] = useState("All Learning Styles");
+
+    const [langs, setoption] = useState<string[]>([]);
+    const [tools, setoption2] = useState<string[]>([]);
+
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
     const userRegex = /^.{0,18}$/;
@@ -63,6 +71,24 @@ const Preferences = (props: { username: string }) => {
         }
     }, [props.username, navigate]);
 
+    const handleSubmit = async () => {
+        const username = props.username;
+        const response = await fetch('http://localhost:8000/api/preferences', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              username,
+              skillLevel,
+              languages,
+              technologies,
+              styles, 
+            }),
+        });
+        const data = await response.json();
+        setOpen(false);
+    };
+
     const handleClose = () => {
         setOpen(false);
 
@@ -72,15 +98,6 @@ const Preferences = (props: { username: string }) => {
 
         setError("");
     };
-
-    // Filters
-    const [language, setLanguage] = useState("All Languages");
-    const [technology, setTechnology] = useState("All Technologies");
-    const [difficulty, setDifficulty] = useState("All Skill Levels");
-    const [learningStyle, setLearningStyle] = useState("All Learning Styles");
-
-    const [langs, setoption] = useState<string[]>([]);
-    const [tools, setoption2] = useState<string[]>([]);
 
     const handleDifficultyChange = (value: string) => {
         setDifficulty(value);
@@ -199,7 +216,7 @@ const Preferences = (props: { username: string }) => {
                     <FilterButton
                         defaultOption="All Learning Styles"
                         options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
-                        value={learningStyle}
+                        value={styles}
                         onChange={handleLearningStyleChange}
                     />
                 </Box>
@@ -217,7 +234,7 @@ const Preferences = (props: { username: string }) => {
                 <FilterButton
                     defaultOption="All Skill Levels"
                     options={['Beginner', 'Intermediate', 'Advanced']}
-                    value={difficulty}
+                    value={skillLevel}
                     onChange={handleDifficultyChange}
                 />
             </Box>
@@ -231,7 +248,7 @@ const Preferences = (props: { username: string }) => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Link to="/dashboard" style={{ textDecoration: "none" }}>
+                {/*<Link to="/dashboard" style={{ textDecoration: "none" }}>*/}
                     <Button variant="contained" sx={{
                         backgroundColor: "#0097b2",
                         '&:hover': {
@@ -240,7 +257,7 @@ const Preferences = (props: { username: string }) => {
                         width: 150
                     }} onClick={() => setOpen(true)}>
                         SUBMIT
-                    </Button></Link>
+                    </Button>{/*</Link>*/}
 
             </Box>
 
