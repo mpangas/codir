@@ -153,18 +153,14 @@ const Browse = (props: { username: string }) => {
             setError("Title should have a maximum of 18 characters.");
             return;
         }
-        else if (!locRegex.test(Location)) {
-            setError("Location should have a maximum of 18 characters.");
-            return;
-        }
-        
+
         var attributes = {
             skillLevel: tutDifficulty,
             language: tutLanguage,
             technology: tutTechnology,
             style: tutDeliveryMethod,
         };
-    
+
         const response = await fetch('http://localhost:8000/api/tutorials', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -224,6 +220,7 @@ const Browse = (props: { username: string }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const getTutorials = async () => {
+        setIsLoading(true);
         const response = await fetch('http://localhost:8000/api/tutorials', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -247,6 +244,7 @@ const Browse = (props: { username: string }) => {
     console.log(tutorials);
 
     async function fetchAttributes(id: string) {
+        setIsLoading(true);
         const response = await fetch(`http://localhost:8000/api/tutorials/attributes/id:${id}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -321,6 +319,7 @@ const Browse = (props: { username: string }) => {
             });
         }
         setTutorialCards(newCards);
+        setIsLoading(false)
     }, [tutorials, filteredTutorials]);
 
     return (
@@ -424,11 +423,11 @@ const Browse = (props: { username: string }) => {
                     />
                 </Box>
             </Box>
-            {isLoading || (language == "Select All") ? (
+            {isLoading ? (
                 <Box display="flex" justifyContent="center" alignItems="center" padding="0" paddingTop="100px">
                     <CircularProgress />
                 </Box>
-            ) : tutorialCards.length ? (
+            ) : tutorialCards.length || (language == "All Languages" && technology == "All Technologies" && difficulty == "All Skill Levels" && learningStyle == "All Learning Styles") ? (
                 <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex', flexWrap: 'wrap' }}>
                     {tutorialCards}
                 </Grid>
