@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 /*let response: any = null;
                 for (var i = 0; i < tutorialIDArray.length; i++) {
@@ -92,7 +93,10 @@ const Dashboard = (props: { username: string }) => {
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
             <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex' }}>
-                {cardList}
+                {tutorialArray.length > 0 ? cardList : 
+                <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: 23, marginTop: 18, marginBottom: 15 }}>
+                    Go to <a href="/browse">Browse</a> to add favorites!
+                </Typography>}
             </Grid>
         </div>
     )
