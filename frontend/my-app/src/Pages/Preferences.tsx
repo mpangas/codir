@@ -78,11 +78,11 @@ const Preferences = (props: { username: string }) => {
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify({
-              username,
-              skillLevel,
-              languages,
-              technologies,
-              styles, 
+                username,
+                skillLevel,
+                languages,
+                technologies,
+                styles,
             }),
         });
         const data = await response.json();
@@ -249,15 +249,15 @@ const Preferences = (props: { username: string }) => {
                 alignItems="center"
             >
                 {/*<Link to="/dashboard" style={{ textDecoration: "none" }}>*/}
-                    <Button variant="contained" sx={{
-                        backgroundColor: "#0097b2",
-                        '&:hover': {
-                            backgroundColor: "#028299",
-                        },
-                        width: 150
-                    }} onClick={() => setOpen(true)}>
-                        SUBMIT
-                    </Button>{/*</Link>*/}
+                <Button variant="contained" sx={{
+                    backgroundColor: "#0097b2",
+                    '&:hover': {
+                        backgroundColor: "#028299",
+                    },
+                    width: 150
+                }} onClick={() => setOpen(true)}>
+                    SUBMIT
+                </Button>{/*</Link>*/}
 
             </Box>
 
