@@ -241,7 +241,6 @@ const Browse = (props: { username: string }) => {
             },
         })));
     }
-    console.log(tutorials);
 
     async function fetchAttributes(id: string) {
         setIsLoading(true);

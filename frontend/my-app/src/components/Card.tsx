@@ -181,9 +181,11 @@ function Card(props: { title: string, location: string, score: number, idNum: st
                     transition: 'transform .1s ease-in', '&:hover': { transform: 'scale(1.05)', cursor: 'pointer', border: '2px solid #0097b2' }
                 }}>
                     <CardContent>
+                    <a href="https://www.instagram.com" target="_blank" >
                         <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 26 }}>
                             {props.title}
                         </Typography>
+                    </a>
                         <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
                             {props.location}
                         </Typography>
