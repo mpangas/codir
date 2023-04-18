@@ -16,12 +16,11 @@ import { margin } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-function Card(props: { title: string, user: string, score: number, idNum: string }) {
+function Card(props: { title: string, location: string, score: number, idNum: string }) {
     const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
     const tutorialID = props.idNum;
-    const username = props.user;
     const [favorite, setFavorite] = useState(false);
     const [favoriteArray, setFavoriteArray] = useState([]);
     const navigate = useNavigate();
@@ -182,7 +181,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                         {props.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
-                        {props.user}
+                        {props.location}
                     </Typography>
                 </CardContent>
                 <CardMedia sx={{ display: 'flex', float: "left" }}>
@@ -196,7 +195,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                             transform: 'scale(1.1)'
                         }
                     }} data-testid="likeButtons" onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
-                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>Score: {score}</Typography>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
                     <IconButton 
                         data-testid="dislikeButtons"
                         sx={{

@@ -58,7 +58,7 @@ const Dashboard = (props: { username: string }) => {
                 }, []);
 
                 setTutorialArray(tutorialData);
-            
+
             }
         )();
     }, [props.username, tutorialIDArray]);
@@ -81,8 +81,8 @@ const Dashboard = (props: { username: string }) => {
         {title: "TITLE14", author: "Author14", likes: "113"},
         {title: "TITLE15", author: "Author15", likes: "114"},
     ];*/
-    const cardList = tutorialArray.map((item: { title: string,  user: string, score: number, id: string }) => {
-        return <Card title={item.title} user={item.user} score={item.score} idNum={item.id} key={item.id}/>
+    const cardList = tutorialArray.map((item: { title: string, location: string, score: number, id: string }) => {
+        return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} key={item.id} />
     })
     return (
         <div className="dashboard">
@@ -91,7 +91,7 @@ const Dashboard = (props: { username: string }) => {
             <h1 id="welcome">Welcome, {props.username} !</h1>
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
-            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex'}}>
+            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex' }}>
                 {cardList}
             </Grid>
         </div>

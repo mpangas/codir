@@ -243,7 +243,7 @@ test('about us header button exists', async () => {
 test('the like button exists on the card', async () => {
     const { getByTestId } = render(
       <MemoryRouter>
-        <Card title={'AngularTest'} user={'testing'} score={10} idNum={'2312343'} />
+        <Card title={'AngularTest'} location={'testing'} score={10} idNum={'2312343'} />
       </MemoryRouter>
     );
     const likeBut = getByTestId('likeButtons');
@@ -253,7 +253,7 @@ test('the like button exists on the card', async () => {
 test('the dislike button exists on the card', async () => {
   const { getByTestId } = render(
     <MemoryRouter>
-      <Card title={'AngularTest'} user={'testing'} score={10} idNum={'2312343'} />
+      <Card title={'AngularTest'} location={'testing'} score={10} idNum={'2312343'} />
     </MemoryRouter>
   );
   const dislikeBut = getByTestId('dislikeButtons');

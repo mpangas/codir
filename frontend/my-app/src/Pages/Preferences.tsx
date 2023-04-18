@@ -111,28 +111,6 @@ const Preferences = (props: { username: string }) => {
         setLearningStyle(value);
     };
 
-    // Tutorials
-    const [tutorials, setTutorials] = useState([]);
-
-    useEffect(() => {
-        (
-            async () => {
-                const response = await fetch('http://localhost:8000/api/tutorials', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                })
-                const data = await response.json();
-
-                const tutorialData = data.map((item: { title: string, user: string, score: number, }) =>
-                    item);
-                setTutorials(tutorialData);
-            }
-        )();
-    }, [props.username]);
-
-
-
     return (
         <Container maxWidth={false} sx={{
             minHeight: "60vh",

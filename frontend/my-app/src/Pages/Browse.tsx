@@ -11,9 +11,7 @@ import {
     Container,
     DialogContentText,
     Grid,
-    InputLabel,
-    Select,
-    MenuItem,
+    CircularProgress
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -202,27 +200,107 @@ const Browse = (props: { username: string }) => {
 
     // Tutorials
     const [tutorials, setTutorials] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const getTutorials = async () => {
+        const response = await fetch('http://localhost:8000/api/tutorials', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        const data = await response.json();
+
+        const tutorialData = data.map((item: { title: string, location: string, score: number, }) =>
+            item);
+        setTutorials(tutorialData);
+    }
+
+    async function fetchAttributes(id: string) {
+        const response = await fetch(`http://localhost:8000/api/tutorials/attributes/id:${id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        const data = await response.json();
+        const { skillLevel, language, technology, style } = data;
+        return { skillLevel, language, technology, style };
+    }
+
+    getTutorials();
+
+    const [filteredTutorials, setFilteredTutorials] = useState<
+        {
+            id: string;
+            title: string;
+            location: string;
+            score: number;
+            attributes: {
+                skillLevel: string;
+                language: string;
+                technology: string;
+                style: string;
+            };
+        }[]
+    >([]);
 
     useEffect(() => {
-        (
-            async () => {
-                const response = await fetch('http://localhost:8000/api/tutorials', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                })
-                const data = await response.json();
+        const fetchFilteredTutorials = async () => {
+            const filteredAttributes = {
+                skillLevel: difficulty !== "All Skill Levels" ? difficulty : "",
+                language: language !== "All Languages" ? language : "",
+                technology: technology !== "All Technologies" ? technology : "",
+                style: learningStyle !== "All Learning Styles" ? learningStyle : "",
+            };
 
-                const tutorialData = data.map((item: { title: string, user: string, score: number, }) =>
-                    item);
-                setTutorials(tutorialData);
-            }
-        )();
+            const tutorialsWithAttributes = await Promise.all(
+                tutorials.map(async (tutorial: { id: string, title: string, location: string, score: number }) => {
+                    const attributes = await fetchAttributes(tutorial.id);
+                    return {
+                        ...tutorial,
+                        attributes,
+                    };
+                })
+            );
+
+            const filteredTutorials = tutorialsWithAttributes.filter((tutorial) =>
+                Object.keys(filteredAttributes).every((key) => {
+                    if (!filteredAttributes[key as keyof typeof filteredAttributes]) {
+                        return true;
+                    }
+                    return tutorial.attributes[key as keyof typeof filteredAttributes] === filteredAttributes[key as keyof typeof filteredAttributes];
+                })
+            );
+
+            setFilteredTutorials(filteredTutorials);
+        };
+
+        setIsLoading(true);
+        fetchFilteredTutorials();
+        setIsLoading(false);
     }, [language, technology, difficulty, learningStyle]);
 
-    const tutorialCards = tutorials.map((item: { id: string, title: string, user: string, score: number }) => {
-        return <Card title={item.title} user={item.user} score={item.score} idNum={item.id} />
+    let tutorialCards = tutorials.map((item: { id: string, title: string, location: string, score: number }) => {
+        return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />
     })
+
+    useEffect(() => {
+        tutorialCards = filteredTutorials.map((item: { id: string, title: string, location: string, score: number }) => {
+            return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />
+        })
+    }, [filteredTutorials]);
+
+    if (isLoading) {
+        return (
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                padding="0"
+            >
+                <CircularProgress />
+            </Box>
+        )
+    }
 
     return (
         <Container maxWidth={false} sx={{
