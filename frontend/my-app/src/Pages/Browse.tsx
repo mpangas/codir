@@ -223,11 +223,20 @@ const Browse = (props: { username: string }) => {
         })
         const data = await response.json();
 
-        const tutorialData = data.map((item: { id: string, title: string, location: string, score: number, }) =>
-            item);
-        setTutorials(tutorialData);
+        setTutorials(data.map((tutorial: any) => ({
+            id: tutorial.id,
+            title: tutorial.title,
+            location: tutorial.location,
+            score: tutorial.score,
+            attributes: {
+                skillLevel: '',
+                language: '',
+                technology: '',
+                style: '',
+            },
+        })));
     }
-    getTutorials();
+    console.log(tutorials);
 
     async function fetchAttributes(id: string) {
         const response = await fetch(`http://localhost:8000/api/tutorials/attributes/id:${id}`, {
@@ -258,6 +267,7 @@ const Browse = (props: { username: string }) => {
     useEffect(() => {
         const fetchFilteredTutorials = async () => {
             setIsLoading(true);
+            getTutorials();
             const filteredAttributes = {
                 skillLevel: difficulty !== "All Skill Levels" ? difficulty : "",
                 language: language !== "All Languages" ? language : "",
@@ -294,11 +304,16 @@ const Browse = (props: { username: string }) => {
     const [tutorialCards, setTutorialCards] = useState<React.ReactNode[]>([]);
 
     useEffect(() => {
-        const newCards = filteredTutorials.map((item: { id: string, title: string, location: string, score: number }) => {
+        let newCards = filteredTutorials.map((item: { id: string, title: string, location: string, score: number }) => {
             return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />;
         });
+        if (newCards.length === 0 && language === "All Languages" && technology === "All Technologies" && difficulty === "All Skill Levels" && learningStyle === "All Learning Styles") {
+            newCards = tutorials.map((item: { id: string, title: string, location: string, score: number }) => {
+                return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} />;
+            });
+        }
         setTutorialCards(newCards);
-    }, [filteredTutorials]);
+    }, [tutorials, filteredTutorials]);
 
     return (
         <Container maxWidth={false} sx={{
@@ -401,7 +416,7 @@ const Browse = (props: { username: string }) => {
                     />
                 </Box>
             </Box>
-            {isLoading ? (
+            {isLoading || (language == "Select All") ? (
                 <Box display="flex" justifyContent="center" alignItems="center" padding="0" paddingTop="100px">
                     <CircularProgress />
                 </Box>
