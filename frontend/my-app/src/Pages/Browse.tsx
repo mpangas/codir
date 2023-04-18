@@ -116,6 +116,12 @@ const Browse = (props: { username: string }) => {
     const [tutTechnology, setTutTechnology] = useState('Select the technology');
     const [tutDeliveryMethod, setTutDeliveryMethod] = useState('Select the delivery method');
     const [tutDifficulty, setTutDifficulty] = useState('Select the difficulty');
+    const attributes = {
+        skillLevel: tutDifficulty,
+        language: tutLanguage,
+        technology: tutTechnology,
+        style: tutDeliveryMethod,
+      };
 
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
@@ -157,7 +163,6 @@ const Browse = (props: { username: string }) => {
             setError("Location should have a maximum of 18 characters.");
             return;
         }
-
         const response = await fetch('http://localhost:8000/api/tutorials', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -165,6 +170,7 @@ const Browse = (props: { username: string }) => {
             body: JSON.stringify({
                 Title,
                 Location,
+                attributes
             }),
         });
 
