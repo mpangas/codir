@@ -47,26 +47,16 @@ const FormFields = ({
 const Preferences = (props: { username: string }) => {
     // Submit Tutorial
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [Title, setTitle] = useState('');
-    const [Location, setLocation] = useState('');
-    const [User, setUser] = useState('');
-    const [error, setError] = useState("");
 
    // const [languages, setLanguage] = useState("All Languages");
    // const [technologies, setTechnology] = useState("All Technologies");
     // const [skillLevel, setDifficulty] = useState("All Skill Levels");
     // const [styles, setLearningStyle] = useState("All Learning Styles");
 
-    const [languages, setoption] = useState<string[]>([]);
-    const [technologies, setoption2] = useState<string[]>([]);
-    const [styles, setoption3] = useState<string[]>([]);
-    const [skillLevel, setoption4] = useState<string[]>([]);
-
-
-    const titleRegex = /^.{0,18}$/;
-    const locRegex = /^.{0,18}$/;
-    const userRegex = /^.{0,18}$/;
+    const [language, setoption] = useState<string[]>([]);
+    const [technologie, setoption2] = useState<string[]>([]);
+    const [style, setoption3] = useState<string[]>([]);
+    const [skillLeve, setoption4] = useState<string[]>([]);
 
     useEffect(() => {
         if (props.username === "" || props.username === undefined) {
@@ -76,6 +66,11 @@ const Preferences = (props: { username: string }) => {
 
     const handleSubmit = async () => {
         const username = props.username;
+        console.log(username);
+        var skillLevel = skillLeve.join(",");
+        var languages = language.join(",");
+        var technologies = technologie.join(",");
+        var styles = style.join(",");
         const response = await fetch('http://localhost:8000/api/preferences', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -89,62 +84,55 @@ const Preferences = (props: { username: string }) => {
             }),
         });
         const data = await response.json();
-        setOpen(false);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-
-        setTitle("");
-        setLocation("");
-        setUser("");
-
-        setError("");
+        setoption([]);
+        setoption2([]);
+        setoption3([]);
+        setoption4([])
     };
 
     const handleDifficultyChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff4 = event.target.value as string[];
 
-        if (newstuff4.length < skillLevel.length) {
-            const remove4 = skillLevel.find((value) => !newstuff4.includes(value))!;
-            setoption4(skillLevel.filter((value) => value !== remove4));
+        if (newstuff4.length < skillLeve.length) {
+            const remove4 = skillLeve.find((value) => !newstuff4.includes(value))!;
+            setoption4(skillLeve.filter((value) => value !== remove4));
         } else {
-            const newthing4 = newstuff4.find((value) => !skillLevel.includes(value))!;
-            setoption4([...skillLevel, newthing4]);
+            const newthing4 = newstuff4.find((value) => !skillLeve.includes(value))!;
+            setoption4([...skillLeve, newthing4]);
         }
     };
 
     const handleLanguageChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff = event.target.value as string[];
-        if (newstuff.length < languages.length) {
-            const remove = languages.find((value) => !newstuff.includes(value))!;
-            setoption(languages.filter((value) => value !== remove));
+        if (newstuff.length < language.length) {
+            const remove = language.find((value) => !newstuff.includes(value))!;
+            setoption(language.filter((value) => value !== remove));
         } else {
-            const newthing = newstuff.find((value) => !languages.includes(value))!;
-            setoption([...languages, newthing]);
+            const newthing = newstuff.find((value) => !language.includes(value))!;
+            setoption([...language, newthing]);
         }
 
     };
     const handleTechnologyChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff2 = event.target.value as string[];
 
-        if (newstuff2.length < technologies.length) {
-            const remove2 = technologies.find((value) => !newstuff2.includes(value))!;
-            setoption2(technologies.filter((value) => value !== remove2));
+        if (newstuff2.length < technologie.length) {
+            const remove2 = technologie.find((value) => !newstuff2.includes(value))!;
+            setoption2(technologie.filter((value) => value !== remove2));
         } else {
-            const newthing2 = newstuff2.find((value) => !technologies.includes(value))!;
-            setoption2([...technologies, newthing2]);
+            const newthing2 = newstuff2.find((value) => !technologie.includes(value))!;
+            setoption2([...technologie, newthing2]);
         }
     };
     const handleLearningStyleChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff3 = event.target.value as string[];
 
-        if (newstuff3.length < styles.length) {
-            const remove3 = styles.find((value) => !newstuff3.includes(value))!;
-            setoption3(styles.filter((value) => value !== remove3));
+        if (newstuff3.length < style.length) {
+            const remove3 = style.find((value) => !newstuff3.includes(value))!;
+            setoption3(style.filter((value) => value !== remove3));
         } else {
-            const newthing3 = newstuff3.find((value) => !styles.includes(value))!;
-            setoption3([...styles, newthing3]);
+            const newthing3 = newstuff3.find((value) => !style.includes(value))!;
+            setoption3([...style, newthing3]);
         }
     };
 
@@ -184,7 +172,7 @@ const Preferences = (props: { username: string }) => {
                         <Select
                             labelId="langs"
                             multiple
-                            value={languages}
+                            value={language}
                             onChange={handleLanguageChange}
                             renderValue={(selected) => selected.join(', ')}
                         >
@@ -211,7 +199,7 @@ const Preferences = (props: { username: string }) => {
                         <Select
                             labelId="prog-tech"
                             multiple
-                            value={technologies}
+                            value={technologie}
                             onChange={handleTechnologyChange}
                             renderValue={(selected) => selected.join(', ')}
                         >
@@ -238,7 +226,7 @@ const Preferences = (props: { username: string }) => {
                         <Select
                             labelId="prog-style"
                             multiple
-                            value={styles}
+                            value={style}
                             onChange={handleLearningStyleChange}
                             renderValue={(selected) => selected.join(', ')}
                         >
@@ -267,7 +255,7 @@ const Preferences = (props: { username: string }) => {
                         <Select
                             labelId="prog-diff"
                             multiple
-                            value={skillLevel}
+                            value={skillLeve}
                             onChange={handleDifficultyChange}
                             renderValue={(selected) => selected.join(', ')}
                         >
@@ -296,7 +284,7 @@ const Preferences = (props: { username: string }) => {
                         backgroundColor: "#028299",
                     },
                     width: 150
-                }} onClick={() => setOpen(true)}>
+                }} onClick={handleSubmit}>
                     SUBMIT
                 </Button>{/*</Link>*/}
 
