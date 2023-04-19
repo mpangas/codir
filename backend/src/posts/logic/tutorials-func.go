@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go/v4"
@@ -46,9 +47,15 @@ func PostTutorial(c *fiber.Ctx) error {
 		newId = rand.Int()
 	} // gets a unique id
 	newPost.Id = strconv.Itoa(newId)
+	//newPost.Attributes.TutId = newPost.Id
 	newPost.PostTime = time.Now().Unix()
 	newPost.EditTime = time.Now().Unix()
 	newPost.Score = 0
+
+	print(newPost.Attributes.Language)
+
+	//newTags := models.Attributes{TutID: newPost.Id}
+	//newPost.Attributes = newTags
 
 	if err := database.DB.Create(newPost).Error; err != nil {
 		return c.JSON(fiber.Map{
@@ -129,6 +136,8 @@ func EditTutorial(c *fiber.Ctx) error {
 	getTutorial.Title = newTutorial.Title
 	getTutorial.Location = newTutorial.Location
 	getTutorial.EditTime = time.Now().Unix()
+	//Sdatabase.DB.Model(&getTutorial).Association("Attributes").Replace(newTutorial.Attributes)
+
 	// these are all that a PUT request should be able to change. User, id, score, post time are the same
 	database.DB.Save(&getTutorial)
 
@@ -210,25 +219,98 @@ func Recommend(c *fiber.Ctx) error {
 	// Get user info from db
 	var user models.UserInfo
 	database.DB.First(&user, "username = ?", claims.Issuer)
-	//preferences := []string{user.Preferences.Technology, user.Preferences.Language, user.Preferences.SkillLevel, user.Preferences.Style}
+	var preferences models.Preferences
+	database.DB.Model(&user).Association("Preferences").Find(&preferences)
 
-	// first, check if any match every preference
-	//var thisSearch []models.Tutorial
-	//querySlice := []string{"technology = ?", "AND language = ?", "AND skillLevel = ?", "AND style = ?"}
-	//database.DB.Where("technology = ? AND language = ? AND skillLevel = ? AND style = ?", preferences).Find(&thisSearch)
-	//recommendations = append(recommendations, thisSearch...)
-
-	//query := map[string]interface{}{"technology": user.Preferences.Technology, "language": user.Preferences.Language, "skillLevel": user.Preferences.SkillLevel, "style": user.Preferences.Style}
+	// get the preferences and prepare them to be a query
+	var thisSearch []models.Attributes
+	var fullSearch []models.Attributes
+	querySlice := []string{preferences.Technologies, preferences.Languages, preferences.SkillLevel, preferences.Styles}
+	attNames := []string{"technology", "language", "skill_level", "style"}
+	for i, str := range querySlice {
+		querySlice[i] = "(" + attNames[i] + " = \"" + strings.ReplaceAll(str, ",", "\" OR "+attNames[i]+" = \"") + "\")"
+	}
 
 	//sketchy algorithm
-	// attNames := []string{"technology", "language", "skillLevel", "style"}
-	// for len(recommendations) < 5 && len(query) > 0 {
-	// 	//query := strings.Join(querySlice, "")
-	// 	//database.DB.Where(query, preferences...)
-	// 	database.DB.Where(query).Find(&thisSearch)
-	// 	recommendations = append(recommendations, thisSearch...)
-	// 	delete(query, attNames[len(query)-1])
-	// }
+	// SELECT * from ??? WHERE (technology = "a" OR technology = "b") AND (language = "a") etc...
+	for len(recommendations) < 5 && len(querySlice) > 0 {
+		query := "SELECT * FROM attributes WHERE " + strings.Join(querySlice, " AND ")
+		//database.DB.Where(query).Find(&thisSearch)
+		database.DB.Raw(query).Scan(&thisSearch)
+		// get the
+		fullSearch = append(fullSearch, thisSearch...)
+		querySlice = querySlice[:len(querySlice)-1]
+	}
 
-	return c.JSON(recommendations[0:4])
+	// remove all duplicates and get ids
+	searchIds := make(map[string]bool)
+	for _, attr := range fullSearch {
+		searchIds[attr.TutID] = true
+	}
+
+	// search for associated tutorials
+	for id := range searchIds {
+		var getTutorial models.Tutorial
+		database.DB.Where("id = ?", id).First(&getTutorial)
+		recommendations = append(recommendations, getTutorial)
+	}
+
+	sort.Slice(recommendations, func(i, j int) bool { return recommendations[i].Score > recommendations[j].Score })
+	if len(recommendations) > 5 {
+		recommendations = recommendations[0:4]
+	}
+
+	return c.JSON(recommendations)
+}
+
+func GetAllAttributes(c *fiber.Ctx) error {
+	var allAttributes []models.Attributes
+	database.DB.Find(&allAttributes)
+
+	return c.JSON(allAttributes)
+}
+
+func GetAttributes(c *fiber.Ctx) error {
+	getId := c.Params("id")
+	var getAttributes models.Attributes
+	if errors.Is(database.DB.Where("tut_id = ?", getId).First(&getAttributes).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "This id does not exist",
+		})
+	}
+
+	return c.JSON(getAttributes)
+
+}
+
+func EditAttributes(c *fiber.Ctx) error {
+	getId := c.Params("id")
+	var getAttributes models.Attributes
+
+	// find the attributes to edit
+	if errors.Is(database.DB.Where("tut_id = ?", getId).First(&getAttributes).Error, gorm.ErrRecordNotFound) {
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message": "This id does not exist",
+		})
+	}
+
+	// parse the new info
+	newAttributes := new(models.Attributes)
+	if err := c.BodyParser(newAttributes); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message": "Invalid data",
+		})
+	}
+
+	getAttributes.Language = newAttributes.Language
+	getAttributes.SkillLevel = newAttributes.SkillLevel
+	getAttributes.Style = newAttributes.Style
+	getAttributes.Technology = newAttributes.Technology
+	database.DB.Save(&getAttributes)
+
+	return c.JSON(getAttributes)
+
 }

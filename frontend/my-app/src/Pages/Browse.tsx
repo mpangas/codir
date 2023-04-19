@@ -11,6 +11,7 @@ import {
     Container,
     DialogContentText,
     Grid,
+    CircularProgress
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -22,42 +23,100 @@ const FormFields = ({
     setTitle,
     Location,
     setLocation,
-    User,
-    setUser,
+    Language,
+    setTutLanguage,
+    Technology,
+    setTutTechnology,
+    DeliveryMethod,
+    setTutDeliveryMethod,
+    Difficulty,
+    setTutDifficulty,
 }: {
     Title: string,
     setTitle: (title: string) => void,
     Location: string,
     setLocation: (location: string) => void,
-    User: string,
-    setUser: (user: string) => void,
+    Language: string,
+    setTutLanguage: (language: string) => void,
+    Technology: string,
+    setTutTechnology: (technology: string) => void,
+    DeliveryMethod: string,
+    setTutDeliveryMethod: (deliveryMethod: string) => void,
+    Difficulty: string,
+    setTutDifficulty: (difficulty: string) => void,
 }) => {
     return (
         <FormControl sx={{}}>
             <TextField
-                sx={{ mt: 4 }}
+                data-testid="titleInput"
+                sx={{ mt: 3 }}
                 className="input-box"
                 label="Title"
                 value={Title}
                 onChange={e => setTitle(e.target.value)}
+                inputProps={{ style: { backgroundColor: 'white' } }}
             />
             <TextField
-                sx={{ mt: 4 }}
+                data-testid="locationInput"
+                sx={{ mt: 3 }}
                 className="input-box"
-                label="Location"
+                label="URL"
                 value={Location}
                 onChange={e => setLocation(e.target.value)}
+                inputProps={{ style: { backgroundColor: 'white' } }}
             />
-            <TextField
-                sx={{ mt: 4 }}
-                className="input-box"
-                label="User"
-                value={User}
-                onChange={e => setUser(e.target.value)}
+            <FilterButton
+                defaultOption='Select the programming language'
+                options={['Assembly', 'Bash/Shell', 'C', 'C#', 'C++', 'COBOL', 'Dart', 'Elixir', 'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML/CSS', 'Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'SQL', 'Swift', 'TypeScript', 'VBA']}
+                value={Language}
+                onChange={setTutLanguage}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
+            <FilterButton
+                defaultOption='Select the technology'
+                options={['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn']}
+                value={Technology}
+                onChange={setTutTechnology}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
+            <FilterButton
+                defaultOption='Select the delivery method'
+                options={['Text', 'Video', 'Interactive']}
+                value={DeliveryMethod}
+                onChange={setTutDeliveryMethod}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
+            />
+            <FilterButton
+                defaultOption='Select the difficulty'
+                options={['Beginner', 'Intermediate', 'Experienced']}
+                value={Difficulty}
+                onChange={setTutDifficulty}
+                sx={{ mt: 3, width: '100%' }}
+                size="medium"
+                defaultDisabled={true}
             />
         </FormControl>
     );
 };
+
+interface Tutorial {
+    id: string;
+    title: string;
+    location: string;
+    score: number;
+    attributes: {
+        skillLevel: string;
+        language: string;
+        technology: string;
+        style: string;
+    };
+}
 
 const Browse = (props: { username: string }) => {
     // Submit Tutorial
@@ -65,12 +124,14 @@ const Browse = (props: { username: string }) => {
     const [open, setOpen] = useState(false);
     const [Title, setTitle] = useState('');
     const [Location, setLocation] = useState('');
-    const [User, setUser] = useState('');
-    const [error, setError] = useState("");
+    const [error, setError] = useState('');
+    const [tutLanguage, setTutLanguage] = useState('Select the programming language');
+    const [tutTechnology, setTutTechnology] = useState('Select the technology');
+    const [tutDeliveryMethod, setTutDeliveryMethod] = useState('Select the delivery method');
+    const [tutDifficulty, setTutDifficulty] = useState('Select the difficulty');
 
     const titleRegex = /^.{0,18}$/;
     const locRegex = /^.{0,18}$/;
-    const userRegex = /^.{0,18}$/;
 
     useEffect(() => {
         if (props.username === "" || props.username === undefined) {
@@ -83,37 +144,35 @@ const Browse = (props: { username: string }) => {
 
         setTitle("");
         setLocation("");
-        setUser("");
+        setTutLanguage("Select the programming language");
+        setTutTechnology("Select the technology");
+        setTutDeliveryMethod("Select the delivery method");
+        setTutDifficulty("Select the difficulty");
 
         setError("");
     };
 
     const handleSubmit = async () => {
-        if(Title === '' || Title === undefined) {
+        if (Title === '' || Title === undefined) {
             setError("You must enter a title.");
             return;
         }
-        else if(Location === '' || Location === undefined) {
+        else if (Location === '' || Location === undefined) {
             setError("You must enter a location.");
             return;
         }
-        else if(User === '' || User === undefined) {
-            setError("You must enter a user.");
-            return;
-        }
 
-        if(!titleRegex.test(Title)) {
+        if (!titleRegex.test(Title)) {
             setError("Title should have a maximum of 18 characters.");
             return;
         }
-        else if(!locRegex.test(Location)) {
-            setError("Location should have a maximum of 18 characters.");
-            return;
-        }
-        else if(!userRegex.test(User)) {
-            setError("User should have a maximum of 18 characters.");
-            return;
-        }
+
+        var attributes = {
+            skillLevel: tutDifficulty,
+            language: tutLanguage,
+            technology: tutTechnology,
+            style: tutDeliveryMethod,
+        };
 
         const response = await fetch('http://localhost:8000/api/tutorials', {
             method: 'POST',
@@ -122,17 +181,18 @@ const Browse = (props: { username: string }) => {
             body: JSON.stringify({
                 Title,
                 Location,
-                User,
+                attributes
             }),
         });
 
         const data = await response.json();
         setOpen(false);
-
         setTitle("");
         setLocation("");
-        setUser("");
-
+        setTutLanguage("Select the programming language");
+        setTutTechnology("Select the technology");
+        setTutDeliveryMethod("Select the delivery method");
+        setTutDifficulty("Select the difficulty");
         setError("");
     };
 
@@ -152,32 +212,98 @@ const Browse = (props: { username: string }) => {
         setTechnology(value);
     };
     const handleLearningStyleChange = (value: string) => {
+        if(value === "Text Tutorials") value = "Text";
+        else if(value === "Video Tutorials") value = "Video";
+        else if(value === "Interactive Tutorials") value = "Interactive";
         setLearningStyle(value);
     };
 
     // Tutorials
-    const [tutorials, setTutorials] = useState([]);
+    const [tutorials, setTutorials] = useState<Tutorial[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const getTutorials = async () => {
+        setIsLoading(true);
+        const response = await fetch('http://localhost:8000/api/tutorials', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        const tutData = await response.json();
+
+        const tutorialsWithAttributes = await Promise.all(tutData.map(async (tutorial: any) => {
+            const { skillLevel, language, technology, style } = await fetchAttributes(tutorial.id);
+            return { ...tutorial, attributes: { skillLevel, language, technology, style } };
+        }));
+
+        setTutorials(tutorialsWithAttributes);
+    }
+
+    async function fetchAttributes(id: string) {
+        setIsLoading(true);
+        const response = await fetch(`http://localhost:8000/api/tutorials/attributes/id:${id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        const data = await response.json();
+        const { skillLevel, language, technology, style } = data;
+        return { skillLevel, language, technology, style };
+    }
+
+    const [filteredTutorials, setFilteredTutorials] = useState<Tutorial[]>(tutorials);
 
     useEffect(() => {
-        (
-            async () => {
-                const response = await fetch('http://localhost:8000/api/tutorials', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
+        const fetchFilteredTutorials = async () => {
+            setIsLoading(true);
+            getTutorials();
+            const filteredAttributes = {
+                skillLevel: difficulty !== "All Skill Levels" ? difficulty : "",
+                language: language !== "All Languages" ? language : "",
+                technology: technology !== "All Technologies" ? technology : "",
+                style: learningStyle !== "All Learning Styles" ? learningStyle : "",
+            };
+
+            const tutorialsWithAttributes = await Promise.all(
+                tutorials.map(async (tutorial: Tutorial) => {
+                    const attributes = await fetchAttributes(tutorial.id);
+                    return {
+                        ...tutorial,
+                        attributes,
+                    };
                 })
-                const data = await response.json();
+            );
 
-                const tutorialData = data.map((item: { title: string, user: string, score: number, }) =>
-                    item);
-                setTutorials(tutorialData);
-            }
-        )();
-    }, [props.username]);
+            const filteredTutorials = tutorialsWithAttributes.filter((tutorial) =>
+                Object.keys(filteredAttributes).every((key) => {
+                    if (!filteredAttributes[key as keyof typeof filteredAttributes]) {
+                        return true;
+                    }
+                    return tutorial.attributes[key as keyof typeof filteredAttributes] === filteredAttributes[key as keyof typeof filteredAttributes];
+                })
+            );
 
-    const tutorialCards = tutorials.map((item: { id: string, title: string, user: string, score: number }) => {
-        return <Card title={item.title} user={item.user} score={item.score} idNum={item.id} />
-    })
+            setFilteredTutorials(filteredTutorials);
+            setIsLoading(false);
+        };
+
+        fetchFilteredTutorials();
+    }, [language, technology, difficulty, learningStyle]);
+
+    const [tutorialCards, setTutorialCards] = useState<React.ReactNode[]>([]);
+
+    useEffect(() => {
+        let newCards = filteredTutorials.map((item: Tutorial) => {
+            return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} attributes={item.attributes} />;
+        });
+        if (newCards.length === 0 && language === "All Languages" && technology === "All Technologies" && difficulty === "All Skill Levels" && learningStyle === "All Learning Styles") {
+            newCards = tutorials.map((item: Tutorial) => {
+                return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} attributes={item.attributes} />;
+            });
+        }
+        setTutorialCards(newCards);
+        setIsLoading(false)
+    }, [tutorials, filteredTutorials]);
 
     return (
         <Container maxWidth={false} sx={{
@@ -193,7 +319,7 @@ const Browse = (props: { username: string }) => {
                 <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35, }}>
                     Browse Tutorials
                 </Typography>
-                <Button variant="contained" sx={{
+                <Button data-testid="submitTut" variant="contained" sx={{
                     ml: 'auto',
                     backgroundColor: "#0097b2",
                     '&:hover': {
@@ -212,8 +338,14 @@ const Browse = (props: { username: string }) => {
                         setTitle={setTitle}
                         Location={Location}
                         setLocation={setLocation}
-                        User={User}
-                        setUser={setUser}
+                        Language={tutLanguage}
+                        setTutLanguage={setTutLanguage}
+                        Technology={tutTechnology}
+                        setTutTechnology={setTutTechnology}
+                        DeliveryMethod={tutDeliveryMethod}
+                        setTutDeliveryMethod={setTutDeliveryMethod}
+                        Difficulty={tutDifficulty}
+                        setTutDifficulty={setTutDifficulty}
                     />
                 </DialogContent>
                 <div className="tutorialErrorMsg">
@@ -223,23 +355,27 @@ const Browse = (props: { username: string }) => {
                     <Button onClick={handleClose} sx={{
                         color: "#0097b2",
                     }}>Cancel</Button>
-                    <Button onClick={handleSubmit} variant="contained" sx={{
+                    <Button data-testid="submitBut" onClick={handleSubmit} variant="contained" sx={{
                         backgroundColor: "#0097b2",
                         '&:hover': {
                             backgroundColor: "#028299",
                         },
-                    }}>
-                        Submit
-                    </Button>
+                    }}>Submit</Button>
                 </DialogActions>
             </Dialog>
-            <Box sx={{ display: 'flex', ml: '5%', my: 2, width: 200 }}>
+            <Box sx={{ display: 'flex', ml: 10.25, my: 1, width: 200 }}>
+                <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="h5" component="div" sx={{ display: 'flex', fontSize: 18, whiteSpace: 'nowrap', mr: 2 }}>
+                        Filter By:
+                    </Typography>
+                </Box>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
                         defaultOption='All Languages'
                         options={['Assembly', 'Bash/Shell', 'C', 'C#', 'C++', 'COBOL', 'Dart', 'Elixir', 'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML/CSS', 'Java', 'JavaScript', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'SQL', 'Swift', 'TypeScript', 'VBA']}
                         value={language}
                         onChange={handleLanguageChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
@@ -248,6 +384,7 @@ const Browse = (props: { username: string }) => {
                         options={['.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', 'Blazor', 'Cloud Computing', 'CouchDB', 'Django', 'Docker', 'DynamoDB', 'Express', 'FastAPI', 'Flask', 'Flutter', 'Git', 'GitHub', 'GitLab', 'Homebrew', 'jQuery', 'Kubernetes', 'Laravel', 'MariaDB', 'Microsoft SQL Server', 'MongoDB', 'MySQL', 'Next.js', 'Node.js', 'npm', 'NumPy', 'Nuxt.js', 'Oracle', 'Pandas', 'PostgreSQL', 'PyTorch', 'Qt', 'React Native', 'React.js', 'Redis', 'Ruby on Rails', 'SQLite', 'Spring', 'Svelte', 'Terraform', 'TensorFlow', 'Unity 3D', 'Unreal Engine', 'Vue.js', 'Yarn']}
                         value={technology}
                         onChange={handleTechnologyChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
@@ -256,20 +393,36 @@ const Browse = (props: { username: string }) => {
                         options={['Beginner', 'Intermediate', 'Advanced']}
                         value={difficulty}
                         onChange={handleDifficultyChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
                 <Box sx={{ flex: 1 }}>
                     <FilterButton
                         defaultOption="All Learning Styles"
                         options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
-                        value={learningStyle}
+                        value={learningStyle==="All Learning Styles" ? learningStyle : `${learningStyle} Tutorials`}
                         onChange={handleLearningStyleChange}
+                        sx={{ m: 1, width: 180, }}
                     />
                 </Box>
             </Box>
-            <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex', flexWrap: 'wrap' }}>
-                {tutorialCards}
-            </Grid>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" padding="0" paddingTop="100px">
+                    <CircularProgress />
+                </Box>
+            ) : tutorialCards.length || (language == "All Languages" && technology == "All Technologies" && difficulty == "All Skill Levels" && learningStyle == "All Learning Styles") ? (
+                <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex', flexWrap: 'wrap' }}>
+                    {tutorialCards}
+                </Grid>
+            ) : (
+                <Box display="flex" justifyContent="center" alignItems="center" minHeight="30vh">
+                    <Typography variant="h5" color="textSecondary">
+                        No results match your filters.
+                    </Typography>
+                </Box>
+            )}
+
+
         </Container>
     );
 }

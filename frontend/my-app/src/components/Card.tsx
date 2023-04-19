@@ -11,17 +11,17 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { margin } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { EditAttributes } from '@mui/icons-material';
 
-function Card(props: { title: string, user: string, score: number, idNum: string }) {
+function Card(props: { title: string, location: string, score: number, idNum: string, attributes: {skillLevel: string, language: string, technology: string, style: string} }) {
     const [score, setScore] = useState<number>(props.score);
     const [like, setLike] = useState(false);
     const [dislike, setdislike] = useState(false);
     const tutorialID = props.idNum;
-    const username = props.user;
     const [favorite, setFavorite] = useState(false);
     const [favoriteArray, setFavoriteArray] = useState([]);
     const navigate = useNavigate();
@@ -164,7 +164,7 @@ function Card(props: { title: string, user: string, score: number, idNum: string
                 const data = await response.json();
                 const favorited = data.map((item: { isFavorite: boolean; }) =>
                     item.isFavorite);
-                if(favorited == true) {
+                if (favorited == true) {
                     setFavorite(true);
                 }
                 else {
@@ -176,36 +176,52 @@ function Card(props: { title: string, user: string, score: number, idNum: string
 
     return (
         <div className="Card">
-            <Cards sx={{ width: 315, height: 260, marginTop: 6, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)' }}>
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 26 }}>
-                        {props.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
-                        {props.user}
-                    </Typography>
-                </CardContent>
-                <CardMedia sx={{ display: 'flex', float: "left" }}>
-                    <IconButton sx={{ marginLeft: 0.5, marginTop: 14.5 }} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
-                </CardMedia>
-                <CardMedia sx={{ display: 'flex', float: "right", marginTop: 15 }}>
-                    <IconButton sx={{
-                        marginRight: 0.3,
-                        transition: 'transform 0.1s linear',
-                        '&:hover': {
-                            transform: 'scale(1.1)'
-                        }
-                    }} onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
-                    <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
-                    <IconButton sx={{
-                        marginRight: 0.5,
-                        transition: 'transform 0.1s linear',
-                        '&:hover': {
-                            transform: 'scale(1.1)'
-                        }
-                    }} onClick={handleDecrement} > {dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon />}</IconButton>
-                </CardMedia>
-            </Cards>
+            {/*<a href="https://www.instagram.com" target="_blank" className="noUnderline">*/}
+                <Cards sx={{
+                    width: 315, height: 260, marginTop: 6, color: 'black', mx: 5, borderRadius: 5, boxShadow: '0px 2.75px 2.75px rgba(0, 0, 0, .75)',
+                    transition: 'transform .1s ease-in', '&:hover': { transform: 'scale(1.05)', cursor: 'pointer', border: '2px solid #0097b2' }
+                }}>
+                    <CardContent>
+                    <a href={props.location} target="_blank" >
+                        <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 26 }}>
+                            {props.title}
+                        </Typography>
+                    </a>
+                        <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15 }}>
+                            {props.attributes.skillLevel}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15,
+                            marginTop: 1 }}>
+                            {props.attributes.language}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: "center", fontSize: 15,  marginTop: 1 }}>
+                            {props.attributes.technology}
+                        </Typography>
+                    </CardContent>
+                    <CardMedia sx={{ display: 'flex', float: "left" }}>
+                        <IconButton sx={{ marginLeft: 0.5, marginTop: 7 }} onClick={handleFavorite}>{favorite ? <FavoriteIcon sx={{ color: 'red' }}></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}</IconButton>
+                    </CardMedia>
+                    <CardMedia sx={{ display: 'flex', float: "right", marginTop: 7 }}>
+                        <IconButton sx={{
+                            marginRight: 0.3,
+                            transition: 'transform 0.1s linear',
+                            '&:hover': {
+                                transform: 'scale(1.1)'
+                            }
+                        }} data-testid="likeButtons" onClick={handleIncrement} >{like ? <ThumbUpIcon sx={{ color: 'black' }} /> : <ThumbUpOffAltIcon />}</IconButton >
+                        <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 1, marginRight: 0.5 }}>{score}</Typography>
+                        <IconButton
+                            data-testid="dislikeButtons"
+                            sx={{
+                                marginRight: 0.5,
+                                transition: 'transform 0.1s linear',
+                                '&:hover': {
+                                    transform: 'scale(1.1)'
+                                }
+                            }} onClick={handleDecrement} > {dislike ? <ThumbDownIcon sx={{ color: 'black' }} /> : <ThumbDownOffAltOutlinedIcon />}</IconButton>
+                    </CardMedia>
+                </Cards>
+            {/*</a>*/}
         </div >
     );
 }

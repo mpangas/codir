@@ -8,8 +8,9 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import LogoPic from '../image/CodirLogo.png';
 import { ListItemIcon, ListItemText, MenuList } from '@mui/material';
-import Person2Icon from '@mui/icons-material/Person2';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from 'react-router-dom';
 
 const Header = (props: { username: string, setUsername: (username: string) => void }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -53,7 +54,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             className="auth-btn"
             href="/login"
             onClick={handleClick1}
-            >
+          >
             LOG IN
           </Button>
           <Button
@@ -80,123 +81,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
     menu = (
       <div className="header-menu">
         <Button
-          sx={{
-            textTransform: "none",
-            color: "black",
-            fontWeight: "500",
-            backgroundColor: "transparent",
-            fontSize: "16px",
-            height: "40px",
-            "&:hover": {
-              color: "#0097b2",
-              backgroundColor: "transparent",
-            },
-            "&:focus": {
-              outline: "none",
-              textDecoration: "none",
-            },
-            "&:after": {
-              position: 'absolute',
-              content: '""',
-              width: '100%',
-              transform: 'scaleX(0)',
-              height: '2px',
-              bottom: 0,
-              left: 0,
-              backgroundColor: '#0097b2',
-              transformOrigin: 'bottom right',
-              transition: 'transform 0.30s ease-out',
-            },
-            "&:hover:after": {
-              transform: 'scaleX(1)',
-              transformOrigin: 'bottom left',
-            },
-            marginRight: "20px",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-          className="nav-btn"
-          href="/test"
-        >TEST</Button>
-        <Button
-          sx={{
-            textTransform: "none",
-            color: "black",
-            fontWeight: "500",
-            backgroundColor: "transparent",
-            fontSize: "16px",
-            height: "40px",
-            "&:hover": {
-              color: "#0097b2",
-              backgroundColor: "transparent",
-            },
-            "&:focus": {
-              outline: "none",
-              textDecoration: "none",
-            },
-            "&:after": {
-              position: 'absolute',
-              content: '""',
-              width: '100%',
-              transform: 'scaleX(0)',
-              height: '2px',
-              bottom: 0,
-              left: 0,
-              backgroundColor: '#0097b2',
-              transformOrigin: 'bottom right',
-              transition: 'transform 0.30s ease-out',
-            },
-            "&:hover:after": {
-              transform: 'scaleX(1)',
-              transformOrigin: 'bottom left',
-            },
-            marginRight: "20px",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-          className="nav-btn"
-          href="/dashboard"
-        >DASHBOARD</Button>
-        <Button
-          sx={{
-            textTransform: "none",
-            color: "black",
-            fontWeight: "500",
-            backgroundColor: "transparent",
-            fontSize: "16px",
-            height: "40px",
-            "&:hover": {
-              color: "#0097b2",
-              backgroundColor: "transparent",
-            },
-            "&:focus": {
-              outline: "none",
-              textDecoration: "none",
-            },
-            "&:after": {
-              position: 'absolute',
-              content: '""',
-              width: '100%',
-              transform: 'scaleX(0)',
-              height: '2px',
-              bottom: 0,
-              left: 0,
-              backgroundColor: '#0097b2',
-              transformOrigin: 'bottom right',
-              transition: 'transform 0.30s ease-out',
-            },
-            "&:hover:after": {
-              transform: 'scaleX(1)',
-              transformOrigin: 'bottom left',
-            },
-            marginRight: "20px",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-          className="nav-btn"
-          href="/browse"
-        >BROWSE</Button>
-        <Button
+          data-testid="aboutusBut"
           sx={{
             textTransform: "none",
             color: "black",
@@ -236,6 +121,7 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
           href="/about"
         >ABOUT US</Button>
         <Button
+          data-testid="browseBut"
           sx={{
             textTransform: "none",
             color: "black",
@@ -272,8 +158,48 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             marginBottom: "auto",
           }}
           className="nav-btn"
-          href="/preferences"
-        >PREFERENCES</Button>
+          href="/browse"
+        >BROWSE</Button>
+        <Button
+          data-testid="dashboardBut"
+          sx={{
+            textTransform: "none",
+            color: "black",
+            fontWeight: "500",
+            backgroundColor: "transparent",
+            fontSize: "16px",
+            height: "40px",
+            "&:hover": {
+              color: "#0097b2",
+              backgroundColor: "transparent",
+            },
+            "&:focus": {
+              outline: "none",
+              textDecoration: "none",
+            },
+            "&:after": {
+              position: 'absolute',
+              content: '""',
+              width: '100%',
+              transform: 'scaleX(0)',
+              height: '2px',
+              bottom: 0,
+              left: 0,
+              backgroundColor: '#0097b2',
+              transformOrigin: 'bottom right',
+              transition: 'transform 0.30s ease-out',
+            },
+            "&:hover:after": {
+              transform: 'scaleX(1)',
+              transformOrigin: 'bottom left',
+            },
+            marginRight: "20px",
+            marginTop: "auto",
+            marginBottom: "auto",
+          }}
+          className="nav-btn"
+          href="/dashboard"
+        >DASHBOARD</Button>
         <React.Fragment>
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
             <Tooltip title="">
@@ -325,11 +251,11 @@ const Header = (props: { username: string, setUsername: (username: string) => vo
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
             <MenuList>
-              <MenuItem>
+              <MenuItem component={Link} to="/preferences">
                 <ListItemIcon>
-                  <Person2Icon fontSize="medium" />
+                  <ManageAccountsIcon fontSize="medium" />
                 </ListItemIcon>
-                <ListItemText>Profile</ListItemText>
+                <ListItemText>Preferences</ListItemText>
               </MenuItem>
               <MenuItem id="logout" href="/login" onClick={logout}>
                 <ListItemIcon>
