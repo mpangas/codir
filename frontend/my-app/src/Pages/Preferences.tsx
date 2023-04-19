@@ -16,9 +16,9 @@ const Preferences = (props: { username: string }) => {
     const navigate = useNavigate();
 
     const [language, setoption] = useState<string[]>([]);
-    const [technologies, setoption2] = useState<string[]>([]);
+    const [technologiesOp, setoption2] = useState<string[]>([]);
     const [style, setoption3] = useState<string[]>([]);
-    const [skillLevel, setoption4] = useState('');
+    const [skillLevelOp, setoption4] = useState('');
 
     useEffect(() => {
         if (props.username === "" || props.username === undefined) {
@@ -29,9 +29,9 @@ const Preferences = (props: { username: string }) => {
     const handleSubmit = async () => {
         const username = props.username;
         console.log(username);
-        var skill = skillLevel;
+        var skillLevel = skillLevelOp;
         var languages = language.join(",");
-        var tech = technologies.join(",");
+        var technologies = technologiesOp.join(",");
         var styles = style.join(",");
         const response = await fetch('http://localhost:8000/api/preferences', {
             method: 'PUT',
@@ -39,9 +39,9 @@ const Preferences = (props: { username: string }) => {
             credentials: 'include',
             body: JSON.stringify({
                 username,
-                skill,
+                skillLevel,
                 languages,
-                tech,
+                technologies,
                 styles,
             }),
         });
@@ -70,12 +70,12 @@ const Preferences = (props: { username: string }) => {
     const handleTechnologyChange = (event: SelectChangeEvent<string[]>) => {
         const newstuff2 = event.target.value as string[];
 
-        if (newstuff2.length < technologies.length) {
-            const remove2 = technologies.find((value) => !newstuff2.includes(value))!;
-            setoption2(technologies.filter((value) => value !== remove2));
+        if (newstuff2.length < technologiesOp.length) {
+            const remove2 = technologiesOp.find((value) => !newstuff2.includes(value))!;
+            setoption2(technologiesOp.filter((value) => value !== remove2));
         } else {
-            const newthing2 = newstuff2.find((value) => !technologies.includes(value))!;
-            setoption2([...technologies, newthing2]);
+            const newthing2 = newstuff2.find((value) => !technologiesOp.includes(value))!;
+            setoption2([...technologiesOp, newthing2]);
         }
     };
     const handleLearningStyleChange = (event: SelectChangeEvent<string[]>) => {
@@ -134,7 +134,7 @@ const Preferences = (props: { username: string }) => {
                     <Select
                         labelId="prog-tech"
                         multiple
-                        value={technologies}
+                        value={technologiesOp}
                         label="Technologies"
                         onChange={handleTechnologyChange}
                         renderValue={(selected) => selected.join(', ')}
@@ -170,7 +170,7 @@ const Preferences = (props: { username: string }) => {
                     <Select
                         labelId="prog-diff"
                         label="Skill Levels"
-                        value={skillLevel}
+                        value={skillLevelOp}
                         onChange={handleDifficultyChange}
                     >
                         {['Beginner', 'Intermediate', 'Advanced'].map((options4) => (
