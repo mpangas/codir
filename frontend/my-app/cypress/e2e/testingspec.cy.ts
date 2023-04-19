@@ -70,17 +70,17 @@ describe('Login and about page navigation', () => {
 });
 
 
-describe('Login and preferences navigation', () => {
-  it('should login to the account then navigate to preferences page', () => {
-    cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('testing');
-    cy.get('input[type="password"]').type('testing');
-    cy.get('button[id="loginbox"]').click()
-    cy.get('.MuiButton-root').contains("PREFERENCES").click() 
-    cy.url().should('include', 'http://localhost:3000/preferences')
-    cy.contains('Personal Preferences').should('exist')
-  });
-});
+// describe('Login and preferences navigation', () => {
+//   it('should login to the account then navigate to preferences page', () => {
+//     cy.visit('http://localhost:3000/login');
+//     cy.get('input[type="username"]').type('testing');
+//     cy.get('input[type="password"]').type('testing');
+//     cy.get('button[id="loginbox"]').click()
+//     cy.get('.MuiButton-root').contains("PREFERENCES").click() 
+//     cy.url().should('include', 'http://localhost:3000/preferences')
+//     cy.contains('Personal Preferences').should('exist')
+//   });
+// });
 
 describe('Submit tutorial button functionality', () => {
   it('The submit tutorial button should be able to be clicked on and show the necessary text and functionality', () => {
@@ -227,17 +227,17 @@ describe('learning styles drop down menu functionality', () => {
   });
 });
 
-// describe('Submit tutorial button functionality on preferences page', () => {
-//   it('The submit tutorial button should be able to be clicked on the preferences page and should redirect to the dashboard', () => {
-//     cy.visit('http://localhost:3000/login');
-//     cy.get('input[type="username"]').type('testing');
-//     cy.get('input[type="password"]').type('testing');
-//     cy.get('button[id="loginbox"]').click()
-//     cy.get('.MuiButton-root').contains("PREFERENCES").click() 
-//     cy.get('.MuiButton-root').contains("SUBMIT").click() 
-//     cy.contains('Go to Browse to add favorites!').should('exist')
-//   });
-// });
+describe('Submit tutorial button functionality on preferences page', () => {
+  it('The submit tutorial button should be able to be clicked on the preferences page and should redirect to the dashboard', () => {
+    cy.visit('http://localhost:3000/signup');
+    cy.get('input[id="emailbox"]').type('brandnew2@brand.com');
+    cy.get('input[type="username"]').type('brandnew2');
+    cy.get('input[type="password"]').type('brandnew2');
+    cy.get('button[id="signupbox"]').click()
+    cy.get('.MuiButton-root').contains("SUBMIT").click() 
+    cy.contains('Go to Browse to add favorites!').should('exist')
+  });
+});
 
 describe('Browse hyperlink validity', () => {
   it('Makes sure that the clicking on the text "Browse" in the Dashboard page redirects to the browse page', () => {
@@ -263,6 +263,15 @@ describe('Preferences hyperlink validity', () => {
   });
 });
 
-
+describe('Sign up button to preferences page', () => {
+  it('As soon as a user signs up they will be redirected to the preferences page', () => {
+    cy.visit('http://localhost:3000/signup');
+    cy.get('input[id="emailbox"]').type('brandnew@brand.com');
+    cy.get('input[type="username"]').type('brandnew');
+    cy.get('input[type="password"]').type('brandnew');
+    cy.get('button[id="signupbox"]').click()
+    cy.contains('Personal Preferences').should('exist')
+  });
+});
 
 
