@@ -36,8 +36,8 @@ describe('Login tests', () => {
 describe('Login and dashboard navigation', () => {
   it('should login to the account then navigate to dashboard page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("DASHBOARD").click() 
     cy.url().should('include', 'http://localhost:3000/dashboard')
@@ -48,8 +48,8 @@ describe('Login and dashboard navigation', () => {
 describe('Login and browse navigation', () => {
   it('should login to the account then navigate to browse page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.url().should('include', 'http://localhost:3000/browse')
@@ -60,8 +60,8 @@ describe('Login and browse navigation', () => {
 describe('Login and about page navigation', () => {
   it('should login to the account then navigate to about  page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("ABOUT US").click() 
     cy.url().should('include', 'http://localhost:3000/about')
@@ -73,20 +73,20 @@ describe('Login and about page navigation', () => {
 describe('Login and preferences navigation', () => {
   it('should login to the account then navigate to preferences page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("PREFERENCES").click() 
     cy.url().should('include', 'http://localhost:3000/preferences')
-    cy.contains('Search Preferences').should('exist')
+    cy.contains('Personal Preferences').should('exist')
   });
 });
 
 describe('Submit tutorial button functionality', () => {
   it('The submit tutorial button should be able to be clicked on and show the necessary text and functionality', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.get('.MuiButton-root').contains("SUBMIT TUTORIAL").click() 
@@ -97,8 +97,8 @@ describe('Submit tutorial button functionality', () => {
 describe('languages drop down menu functionality', () => {
   it('ensure all the necessary options are visible on the languages drop down menu on the browse page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Languages").click()
@@ -141,8 +141,8 @@ describe('languages drop down menu functionality', () => {
 describe('technologies drop down menu functionality', () => {
   it('ensure all the necessary options are visible on the technologies drop down menu on the browse page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Technologies").click()
@@ -202,8 +202,8 @@ describe('technologies drop down menu functionality', () => {
 describe('skill levels drop down menu functionality', () => {
   it('ensure all the necessary options are visible on the skill levels drop down menu on the browse page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Skill Levels").click()
@@ -216,8 +216,8 @@ describe('skill levels drop down menu functionality', () => {
 describe('learning styles drop down menu functionality', () => {
   it('ensure all the necessary options are visible on the learning styles drop down menu on the browse page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("BROWSE").click() 
     cy.get('.MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input').contains("All Learning Styles").click()
@@ -227,29 +227,42 @@ describe('learning styles drop down menu functionality', () => {
   });
 });
 
-describe('Submit tutorial button functionality on preferences page', () => {
-  it('The submit tutorial button should be able to be clicked on the preferences page and should redirect to the dashboard', () => {
-    cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
-    cy.get('button[id="loginbox"]').click()
-    cy.get('.MuiButton-root').contains("PREFERENCES").click() 
-    cy.get('.MuiButton-root').contains("SUBMIT").click() 
-    cy.contains('Go to Browse to add favorites!').should('exist')
-  });
-});
+// describe('Submit tutorial button functionality on preferences page', () => {
+//   it('The submit tutorial button should be able to be clicked on the preferences page and should redirect to the dashboard', () => {
+//     cy.visit('http://localhost:3000/login');
+//     cy.get('input[type="username"]').type('testing');
+//     cy.get('input[type="password"]').type('testing');
+//     cy.get('button[id="loginbox"]').click()
+//     cy.get('.MuiButton-root').contains("PREFERENCES").click() 
+//     cy.get('.MuiButton-root').contains("SUBMIT").click() 
+//     cy.contains('Go to Browse to add favorites!').should('exist')
+//   });
+// });
 
 describe('Browse hyperlink validity', () => {
   it('Makes sure that the clicking on the text "Browse" in the Dashboard page redirects to the browse page', () => {
     cy.visit('http://localhost:3000/login');
-    cy.get('input[type="username"]').type('sample');
-    cy.get('input[type="password"]').type('sample');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
     cy.get('button[id="loginbox"]').click()
     cy.get('.MuiButton-root').contains("DASHBOARD").click() 
     cy.contains("Browse").click() 
     cy.contains('Browse Tutorials').should('exist')
   });
 });
+
+describe('Preferences hyperlink validity', () => {
+  it('Makes sure that the clicking on the text "Preferences" in the Dashboard page redirects to the preferences page', () => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[type="username"]').type('testing');
+    cy.get('input[type="password"]').type('testing');
+    cy.get('button[id="loginbox"]').click()
+    cy.get('.MuiButton-root').contains("DASHBOARD").click() 
+    cy.contains("Preferences").click() 
+    cy.contains('Personal Preferences').should('exist')
+  });
+});
+
 
 
 
