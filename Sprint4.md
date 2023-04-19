@@ -78,6 +78,12 @@
   - [POST /api/favorites/add](#post-apifavoritesadd)
   - [DELETE /api/favorites/remove](#delete-apifavoritesremove)
 
+[Preferences](#preferences)
+
+- [Routes](#routes-3)
+  - [GET /api/preferences](#get-apipreferences)
+  - [PUT /api/favorites/add](#put-apipreferences)
+
 ## Login
 
 Login Information has the following structure:
@@ -246,5 +252,22 @@ Accepts: The ID of a tutorial that is to be removed from the user's favorites.
 
 Returns: A success message if the removal succeeded, or an error if the user is not currently authenticated or if the request body was incorrectly formatted.
 
+## Preferences
+
+### Routes
+
+#### GET /api/preferences
+
+Used to retreive the Preferences object attached with the currently authenticated user
+
+Returns: An object with each property of hte Preferences model
+
+#### PUT /api/preferences
+
+Used to update the Preferences object attached to the currently authetnicated user
+
+Accepts: A Preferences model object that contains each attribute associated with the model
+
+Returns: A success message if the operation is successful or an error otherwise.
 
 
