@@ -30,12 +30,25 @@
 - Unit Test # 17: Tests to make sure the like button icon is present within the borders/margins of the Card in the Dashboard Page. 
 - Unit Test # 18: Tests to make sure the dislike button icon is present within the borders/margins of the Card in the Dashboard Page. 
 
-### Sprint 3 Cypress Tests
+### Cypress Tests
 
-- Cypress Test #1: Tests to make sure that the website can be logged into and can be navigated to the 'Dashboard' page of our site.
-- Cypress Test #2: Tests to make sure that the website can be logged into and can be navigated to the 'Browse' page of our site.
-- Cypress Test #3: Tests to make sure that the website can be logged into and can be navigated to the 'About Us' page of our site.
-- Cypress Test #4: Tests to make sure that the website can be logged into and can be navigated to the 'Test' page of our site.
+- Cypress Test #1: Makes sure login button is available and can be clicked on.
+- Cypress Test #2: Makes sure the sign up button is available and can be clicked on.
+- Cypress Test #3: Ensures that a user can sign up for the website.
+- Cypress Test #4: Ensures that logging into the website works.
+- Cypress Test #5: Tests to make sure that the website can be logged into and can be navigated to the 'Dashboard' page of our site.
+- Cypress Test #6: Tests to make sure that the website can be logged into and can be navigated to the 'Browse' page of our site.
+- Cypress Test #7: Tests to make sure that the website can be logged into and can be navigated to the 'About Us' page of our site.
+- Cypress Test #8: Ensures that the ‘Submit Tutorial’ button in the Browse page works and shows the correct information when clicked on.
+- Cypress Test #9: Ensures that the necessary options are present when clicked on the “All Languages” drop down menu on the Browse page which displays a list of         programming languages.
+- Cypress Test #10: Ensures that the necessary options are present when clicked on the “All Technologies” drop down menu on the Browse page which displays a list of     technologies.
+- Cypress Test #11: Ensures that the necessary options are present when clicked on the “All Skill Levels” drop down menu on the Browse page which displays a list of     skill levels.
+- Cypress Test #12: Ensures that the necessary options are present when clicked on the “All Learning Styles” drop down menu on the Browse page which displays a list of   different learning styles.
+- Cypress Test #13: Ensures that when the submit button is clicked on the Preferences Page, the website is redirected to the Dashboard page.
+- Cypress Test #14: Ensures that the hyperlink with the text “Browse” on the Dashboard page redirects to the Browse Page.
+- Cypress Test #15: Ensures that the hyperlink with the text “Preferences” on the Dashboard page redirects to the Preferences Page.
+- Cypress Test #16: Ensures that when a user signs up for an account, they are redirected to the Preferences Page.
+
 
 ## Backend - Work Completed
 - 
