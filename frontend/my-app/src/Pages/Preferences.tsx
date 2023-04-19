@@ -103,11 +103,11 @@ const Preferences = (props: { username: string }) => {
                 sx={{ flexDirection: 'column' }}
             >
                 <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 35, }}>
-                    Search Preferences
+                    Personal Preferences
                 </Typography>
 
-                <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", fontSize: 16, marginTop: 5 }}>
-                    Welcome to the preferences section! Please select your following preferences/options to best match your learning interests! Click submit to proceed to the Dashboard.
+                <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: "center", alignItems: 'center',  fontSize: 16, marginTop: 5 }}>
+                    Welcome to the preferences section! Here you can select tutorial preferences so we can effectively help you achieve your learning goals!
                 </Typography>
 
                 <FormControl sx={{ minWidth: 250, mt: 5 }}>
