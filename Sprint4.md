@@ -1,7 +1,12 @@
 # Sprint 4 Documentation
 
 ## Frontend - Work Completed
-- 
+- Created a Preferences Page (a user is directed to this page once signed up) in order to set the interests and the preferences for the tutorials that individual users expect. 
+- Created a Recommendations section under the Dashboard Page in order to view the recommended tutorials that share attributes with the preferred tutorials.
+- Added more unit test cases that test the existence of buttons from the navigation bar once logged in and checks whether the like and dislike buttons exist within the margins of each card. 
+- Redesigned the landing page for enhancing the visual aesthetic of our website by illustrating its functionalities through icons, adding more images, and making additional style changes. 
+- Redesigned the Browse page by adding various filters for the user to choose from in order to view the ones that they are interested in. 
+
 ## Frontend - Cypress & Unit Tests
 
 ### Unit Tests
