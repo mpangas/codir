@@ -23,6 +23,12 @@
 - Unit Test # 10: Tests to make sure that an error message "Email address should adhere to this format: example@example.com" is printed when a user tries to sign up with an email that does that not fit the email format/requirements on the sign up page.
 - Unit Test # 11: Tests to make sure that an error message "The username must contain only alphanumeric and 6-20 characters." is printed when a user tries to sign up with a username that does not fit the username format/requirements on the sign up page.
 - Unit Test # 12: Tests to make sure that an error message "The password should contain 6-20 characters." is printed when a user tries to sign up with a password that does not fit the password format/requirements on the sign up page.
+- Unit Test # 13: Tests to make sure that the "Submit Tutorial" button is visible on the Browse Page once the user is logged in. 
+- Unit Test # 14: Tests to make sure that the "Dashboard" button exists on the Header Bar once the user is logged in. 
+- Unit Test # 15: Tests to make sure that the "Browse" button exists on the Header Bar once the user is logged in. 
+- Unit Test # 16: Tests to make sure that the "About Us" button exists on the Header Bar once the user is logged in. 
+- Unit Test # 17: Tests to make sure the like button icon is present within the borders/margins of the Card in the Dashboard Page. 
+- Unit Test # 18: Tests to make sure the dislike button icon is present within the borders/margins of the Card in the Dashboard Page. 
 
 ### Sprint 3 Cypress Tests
 
