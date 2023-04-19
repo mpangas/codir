@@ -163,7 +163,10 @@ const Dashboard = (props: { username: string }) => {
             <h2 className="uniform">Recommendations</h2>
             <div className="uniform" id="horizontal"></div>
             <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex' }}>
-                {recomList}
+                {recomList.length > 0 ? recomList :
+                    <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: 23, marginTop: 18, marginBottom: 15 }}>
+                        Go to <a href="/preferences">Preferences</a> to get recommendations!
+                    </Typography>}
             </Grid>
         </div>
     )
