@@ -6,13 +6,16 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
+	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"github.com/mpangas/codir/backend/src/database"
 	"github.com/mpangas/codir/backend/src/login/logic"
+	"github.com/mpangas/codir/backend/src/models"
 	posts "github.com/mpangas/codir/backend/src/posts/logic"
 	"github.com/stretchr/testify/assert"
 )
@@ -33,6 +36,8 @@ type testTutPut struct {
 	Title    string `json:"title"`
 	Location string `json:"location"`
 }
+
+const SecretKey = "secret"
 
 func TestGet(t *testing.T) {
 	err := godotenv.Load()
@@ -151,6 +156,99 @@ func TestDelete(t *testing.T) {
 	t.Log(string(body))
 	assert.Equal(t, 200, resp.StatusCode)
 }
+
+func TestGetPreferences(t *testing.T) {
+	err := godotenv.Load()
+	if err != nil {
+		t.Fatalf("Error loading .env file: %v", err)
+	}
+	pass := os.Getenv("DB_PASS")
+	database.Connect(pass)
+
+	app := fiber.New()
+	app.Get("/api/preferences", logic.GetPreferences)
+
+	// Create a mock JWT token for testing
+	claims := &jwt.StandardClaims{
+		Issuer: "batman",
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		t.Fatalf("Error signing token: %v", err)
+	}
+
+	// Create a mock request with the JWT token as a cookie
+	req := httptest.NewRequest(http.MethodGet, "/api/preferences", nil)
+	req.AddCookie(&http.Cookie{
+		Name:  "jwt",
+		Value: tokenString,
+	})
+	resp, err := app.Test(req, -1)
+	if err != nil {
+		t.Fatalf("Error sending request: %v", err)
+	}
+
+	body, _ := io.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	t.Log(resp.StatusCode)
+	t.Log(string(body))
+	assert.Equal(t, 200, resp.StatusCode)
+}
+
+func TestUpdatePreferences(t *testing.T) {
+	err := godotenv.Load()
+	if err != nil {
+		t.Fatalf("Error loading .env file: %v", err)
+	}
+	pass := os.Getenv("DB_PASS")
+	database.Connect(pass)
+
+	app := fiber.New()
+	app.Post("/api/preferences", logic.UpdatePreferences)
+
+	// Create a mock JWT token for testing
+	claims := &jwt.StandardClaims{
+		Issuer: "batman",
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(SecretKey))
+	if err != nil {
+		t.Fatalf("Error signing token: %v", err)
+	}
+
+	// Create a mock request with new preferences
+	newPrefs := &models.Preferences{
+		SkillLevel:   "Advanced",
+		Languages:    "Go,Perl",
+		Technologies: "Docker",
+		Styles:       "Text",
+	}
+	reqBody, err := json.Marshal(newPrefs)
+	if err != nil {
+		t.Fatalf("Error marshaling request body: %v", err)
+	}
+	req := httptest.NewRequest(http.MethodPost, "/api/preferences", bytes.NewBuffer(reqBody))
+	req.Header.Set("Content-Type", "application/json")
+	req.AddCookie(&http.Cookie{
+		Name:  "jwt",
+		Value: tokenString,
+	})
+	resp, err := app.Test(req, -1)
+	if err != nil {
+		t.Fatalf("Error sending request: %v", err)
+	}
+
+	// Check response status code and message
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Expected status code %d, but got %d", http.StatusOK, resp.StatusCode)
+	}
+
+	assert.Equal(t, 200, resp.StatusCode)
+}
+
+// Tutorial Tests
 
 func TestTutorialPost(t *testing.T) {
 	err := godotenv.Load()
