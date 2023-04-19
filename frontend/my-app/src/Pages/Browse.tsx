@@ -400,7 +400,7 @@ const Browse = (props: { username: string }) => {
                     <FilterButton
                         defaultOption="All Learning Styles"
                         options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
-                        value={`${learningStyle} Tutorials`}
+                        value={learningStyle==="All Learning Styles" ? learningStyle : `${learningStyle} Tutorials`}
                         onChange={handleLearningStyleChange}
                         sx={{ m: 1, width: 180, }}
                     />
