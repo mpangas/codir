@@ -157,7 +157,7 @@ const Preferences = (props: { username: string }) => {
                         onChange={handleLearningStyleChange}
                         renderValue={(selected) => selected.join(', ')}
                     >
-                        {['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials'].map((options3) => (
+                        {['Text', 'Video', 'Interactive'].map((options3) => (
                             <MenuItem key={options3} value={options3}>
                                 {options3}
                             </MenuItem>

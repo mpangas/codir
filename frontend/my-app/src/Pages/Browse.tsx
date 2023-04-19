@@ -212,6 +212,9 @@ const Browse = (props: { username: string }) => {
         setTechnology(value);
     };
     const handleLearningStyleChange = (value: string) => {
+        if(value === "Text Tutorials") value = "Text";
+        else if(value === "Video Tutorials") value = "Video";
+        else if(value === "Interactive Tutorials") value = "Interactive";
         setLearningStyle(value);
     };
 
@@ -397,7 +400,7 @@ const Browse = (props: { username: string }) => {
                     <FilterButton
                         defaultOption="All Learning Styles"
                         options={['Text Tutorials', 'Video Tutorials', 'Interactive Tutorials']}
-                        value={learningStyle}
+                        value={`${learningStyle} Tutorials`}
                         onChange={handleLearningStyleChange}
                         sx={{ m: 1, width: 180, }}
                     />
