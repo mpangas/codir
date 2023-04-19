@@ -104,8 +104,8 @@ func TestSignin(t *testing.T) {
 
 	// Make mock request body
 	testUser := testBody{
-		Email:    "test@gmail.com",
-		Username: "test",
+		Email:    "tester@gmail.com",
+		Username: "tester",
 		Password: "password",
 	}
 
@@ -136,8 +136,8 @@ func TestDelete(t *testing.T) {
 
 	// Make mock request body
 	testUser := testBody{
-		Email:    "test@gmail.com",
-		Username: "test",
+		Email:    "tester@gmail.com",
+		Username: "tester",
 		Password: "password",
 	}
 
@@ -170,7 +170,7 @@ func TestGetPreferences(t *testing.T) {
 
 	// Create a mock JWT token for testing
 	claims := &jwt.StandardClaims{
-		Issuer: "batman",
+		Issuer: "tester",
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(SecretKey))
@@ -210,7 +210,7 @@ func TestUpdatePreferences(t *testing.T) {
 
 	// Create a mock JWT token for testing
 	claims := &jwt.StandardClaims{
-		Issuer: "batman",
+		Issuer: "tester",
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(SecretKey))
