@@ -27,8 +27,8 @@ const Preferences = (props: { username: string }) => {
     }, [props.username, navigate]);
 
     const handleSubmit = async () => {
+        navigate("/dashboard")
         const username = props.username;
-        console.log(username);
         var skillLevel = skillLevelOp;
         var languages = language.join(",");
         var technologies = technologiesOp.join(",");
@@ -181,7 +181,6 @@ const Preferences = (props: { username: string }) => {
                     </Select>
                 </FormControl>
 
-                {/*<Link to="/dashboard" style={{ textDecoration: "none" }}>*/}
                 <Button variant="contained" sx={{
                     backgroundColor: "#0097b2",
                     '&:hover': {
@@ -191,7 +190,7 @@ const Preferences = (props: { username: string }) => {
                     mt: 5
                 }} onClick={handleSubmit}>
                     SUBMIT
-                </Button>{/*</Link>*/}
+                </Button>
             </Box>
         </Container>
 

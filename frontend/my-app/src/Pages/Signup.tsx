@@ -57,7 +57,7 @@ function Signup(props: { setUsername: (username: string) => void}) {
 
         const data = await response.json();
         if (response.status === 200) {
-            navigate("/login");
+            navigate("/preferences");
             props.setUsername(username);
         } else {
             console.log(data.message);
