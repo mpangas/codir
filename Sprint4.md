@@ -51,7 +51,12 @@
 
 
 ## Backend - Work Completed
-- 
+- Added a Preferences model and established a one-to-one relationship between User and Preferences. Configured this model to include different properties that a user would be associated with a user's profile.
+- Added a Attributes model and established a one-to-one relationship between Tutorial and Attributes. Configured this model to include different attributes that a tutorial would have upon creation.
+- Added functions for preferences to retrieve and update the objects for a given user
+- Added functions for attributes to retrieve and update the objects for a given tutorial
+- Developed a recommendation algorithm that returns tutorials for a user based on their chosen preferences
+- Created additional unit tests to evaluate the effectiveness of added functionality
 
 ## Backend - Unit Tests
 ### User Tests
@@ -59,6 +64,8 @@
 - Test 2: [/api/signup](#post-apisignup) - This unit test simulates a POST request to the api/signup path which executes a function to create a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
 - Test 3: [/api/signin](#post-apisignin) - This unit test simulates a POST request to the api/signin path which executes a function to verify if a user is in the database given mock parameters and create a cookie if the user exists. It checks if the status code of the response is 200 to determine if the request is successful.
 - Test 4: [/api/delete](#delete-apidelete) - This unit test simulates a DELETE request to the api/delete path which executes a function to delete a user in the database given mock parameters. It checks if the status code of the response is 200 to determine if the request is successful.
+- Test 5: [GET /api/preferences](#get-apipreferences) - This unit test sends a GET request to retrieve the Preferences object associated with the user and all of its attributes. It does this by creating a mock JWT token and requesting the bearer's preferences.
+- Test 6: [PUT /api/preferences](#put-apipreferences) - This unit test sends a PUT request to update the Preferences object associated with the user with the provided attributes. It does this by creating a mock JWT token and updating the bearer's preferences.
 
 ### Tutorial Tests
 - Test 5: [POST /api/tutorials](#post-apitutorials) - This unit test simulates a POST to /api/tutorials with a mock tutorial object to create the tutorial in the database, checking for status code 200 to determine if the request was successful.
@@ -68,6 +75,8 @@
 - Test 9: [DELETE /api/tutorials/id:{id}](#delete-apitutorialsidid) - This unit test simulates a DELETE with an ID variable corresponding with a tutorial already in the database to /api/tutorials/id:{id} in order to delete that tutorial, checking for status code 200 to determine if the request was successful.
 - Test 10: [PUT /api/tutorials/id:{id}/up](#put-apitutorialsididup) - This unit test simulates a PUT with an ID variable to /api/tutorials/id:{id}/up in order to increment the score of the tutorial with that ID up, checking for status code 200 to determine if the request was successful.
 - Test 11: [PUT /api/tutorials/id:{id}/down](#put-apitutorialsididdown) - This unit test simulates a PUT with an ID variable to /api/tutorials/id:{id}/down in order to increment the score of the tutorial with that ID down, checking for status code 200 to determine if the request was successful.
+- Test 12: [GET /api/tutorials/attributes](#get-apitutorialsattributes) - This unit test simualtes a GET request to retrieve all Attributes objects stored in the database.
+- Test 13 [GET /api/tutorials/recommend](#get-apitutorialsrecommend) - This unit test sends a GET request to retrieve all recommendations for the authenticated user. It is given a mock JWT token and generates recommendation based on that user's preferences and all existing tutorials.
 
 ## API Documentation
 
