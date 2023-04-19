@@ -150,7 +150,7 @@ const Dashboard = (props: { username: string }) => {
         <div className="dashboard">
             <br></br>
             <h1 id="dashboardTitle" className="uniform">DASHBOARD</h1>
-            <h1 id="welcome">Welcome, {props.username} !</h1>
+            <h1 id="welcome">Welcome, {props.username}!</h1>
             <h2 className="uniform">Favorites</h2>
             <div className="uniform" id="horizontal"></div>
             <Grid container spacing={2} sx={{ justifyContent: 'space-around', display: 'flex' }}>
