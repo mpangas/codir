@@ -75,6 +75,12 @@
   - [PUT /api/tutorials/id:{id}/up](#put-apitutorialsididup)
   - [PUT /api/tutorials/id:{id}/down](#put-apitutorialsididdown)
   - [GET /api/tutorials/search:{search}](#get-apitutorialssearchsearch)
+  - [GET /api/tutorials/recommend](#get-apitutorialsrecommend)
+
+- [Attribute Routes](#attributes-routes)
+  - [GET /api/tutorials/attributes](#get-apitutorialsattributes)
+  - [GET /api/tutorials/attributes/id::id](#get-apitutorialsattributesidid)
+  - [PUT /api/tutorials/attributes/id::id](#put-apitutorialsattributesidid)
 
 [Favorites](#favorites)
 
@@ -172,7 +178,7 @@ A tutorial has the following structure:
 
 Used to create a new tutorial post in the database.
 
-Accepts: A tutorial object containing the `title`, `location`, and `user` of the tutorial.
+Accepts: A tutorial object containing the `title`, `location`, and `user` of the tutorial, along with the `attributes` containing the `skillLevel`, `language`, `technology`, and `style` (see below).
 
 Returns: The new post object if the creation was successful, or an error if the object was incorrectly formatted or the `location` was not unique.
 
@@ -224,6 +230,46 @@ Used to get an object containing all tutorials whose `title`s contain the string
 The `search` string in the API call must be a percent-encoded string with spaces represented as '+' and other special characters represented as "%" followed by their ASCII value.
 
 Returns: An object containing all tutorials with `title`s containing the string.
+
+#### GET /api/tutorials/recommend
+
+Used to get recommended tutorials based on the preferences set by the current user. Because of this, the user has to be authenticated to use this.
+
+Returns: An object of 5 or less tutorials matching the preferences of the current user. An error will be returned if the user is not yet authenticated.
+
+### Attributes Routes
+
+Currently, attributes need to be edited and retrieved separately of the tutorials they describe. An `attributes` object must contain the following:
+
+`skillLevel`: 'Beginner', 'Intermediate', 'Advanced'
+
+`language`: 'Assembly', 'Bash/Shell', 'C', 'C#', 'C++', etc.
+
+`technology`: '.NET', 'Angular', 'Angular.js', 'Ansible', 'ASP.NET', etc.
+
+`style`: 'Text Tutorials', 'Video Tutorials', 'Interactive Tutorials'
+
+The 5th value, `tutID`, matches the ID of the tutorial being described; this is assigned automatically.
+
+#### GET /api/tutorials/attributes
+
+Used to get all attributes currently in the database.
+
+Returns: an object containing all attributes.
+
+#### GET /api/tutorials/attributes/id::id
+
+Used to get a single `attributes` matching the ID given in the API call.
+
+Returns: an object containing the attributes matching the ID, or an error if none exists.
+
+#### PUT /api/tutorials/attributes/id::id
+
+Used to edit an attributes object matching the ID given in the API call.
+
+Accepts: An object describing the `skillLevel`, `language`, `technology`, and `style` that the new object is to have (see above).
+
+Returns: The object that was edited, or an error if no object exists with that ID or the input was formatted incorrectly.
 
 ## Favorites
 
