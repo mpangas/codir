@@ -91,11 +91,58 @@ const Dashboard = (props: { username: string }) => {
         )();
     }, [props.username]);
 
+    async function fetchAttributes(id: string) {
+        const response = await fetch(`http://localhost:8000/api/tutorials/attributes/id:${id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+        if (!response.ok) {
+            throw new Error(`Failed to fetch tutorial attributes for ID ${id}`);
+        }
 
-    const cardList = tutorialArray.map((item: Tutorial) => {
+        const data = await response.json();
+        const { skillLevel, language, technology, style } = data;
+        return { skillLevel, language, technology, style };
+    }
+
+    const [tutorialArrayAttributed, setTutorialArrayAttributed] = useState<Tutorial[]>([]);
+    const [recommendationAttributed, setRecommendationAttributed] = useState<Tutorial[]>([]);
+
+    const fetchFilteredTutorials = async () => {
+        const tutorialsWithAttributes = await Promise.all(
+            tutorialArray.map(async (tutorial: Tutorial) => {
+                const attributes = await fetchAttributes(tutorial.id);
+                return {
+                    ...tutorial,
+                    attributes,
+                };
+            })
+        );
+        setTutorialArrayAttributed(tutorialsWithAttributes);
+
+        const recommendationsWithAttributes = await Promise.all(
+            recommendation.map(async (tutorial: Tutorial) => {
+                const attributes = await fetchAttributes(tutorial.id);
+                return {
+                    ...tutorial,
+                    attributes,
+                };
+            })
+        );
+        setRecommendationAttributed(recommendationsWithAttributes);
+    };
+
+    useEffect(() => {
+        fetchFilteredTutorials();
+    }, [tutorialArray, recommendation]);
+
+
+    const cardList = tutorialArrayAttributed.map((item: Tutorial) => {
         return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} attributes={item.attributes} />;
     });
-    const recomList = recommendation.map((item: Tutorial ) => {
+    const recomList = recommendationAttributed.map((item: Tutorial) => {
+        console.log(recommendation)
         return <Card title={item.title} location={item.location} score={item.score} idNum={item.id} attributes={item.attributes} />;
     });
 
